@@ -1,0 +1,187 @@
+*{
+    box-sizing: border-box;
+}
+
+body 
+{
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container
+{
+    width: 100%;
+    min-width: 320px;
+}
+
+.mainNav
+{
+    background-color: cadetblue;
+    display: none;
+}
+
+.mainNav ul 
+{
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.mainNav ul li 
+{
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+}
+
+.mainNav ul li a 
+{
+    display: inline-block;
+    width: 100%;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    padding: 8px 0;
+}
+
+header 
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.logo
+{
+    flex: 1;
+}
+
+.logo img 
+{
+    max-width: 70px;
+    padding: 5px;
+}
+
+img 
+{
+    width: 100%;
+}
+
+.loginLink 
+{
+    flex: 0;
+}
+
+.loginLink > ul 
+{
+    list-style: none;
+    padding-left:  0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.loginLink > ul > li 
+{
+    border: 1px solid #000;
+}
+
+.loginLink > ul > li:first-child
+{
+    margin-right: 4px;
+}
+
+.loginLink > ul > li > a
+{
+    padding: 4px 2px;
+    color: #000;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+}
+
+.burgerMenu
+{
+    flex: 0;
+    padding: 13px 11px 0 11px;
+}
+
+.bars
+{
+    float: right;
+    cursor: pointer;
+}
+
+.bar1,.bar2,.bar3 
+{
+    width: 30px;
+    height: 5px;
+    margin: 5px 0;
+    background-color: #000;
+}
+
+.mainContent 
+{
+    margin: 0 10px;
+}
+
+
+/* Main Content */
+
+.siteTitle{
+    display: flex;
+    justify-content: center;
+    font-size: 60px;
+}
+
+.siteDesc{
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+}
+
+.siteContent img{
+    display: flex;
+    justify-content: center;
+}
+
+
+/*form stying*/
+
+label 
+{
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+input[type ='text'], input[type="email"], textarea
+{
+    width: 100%;
+    padding: 15px 10px;
+}
+
+input[type ='text'], input[type="password"], textarea
+{
+    width: 100%;
+    padding: 15px 10px;
+
+}
+
+input[type="submit"]
+{
+    padding: 15px 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+form > div 
+{
+    margin: 50px;
+}
+
+.form 
+{
+
+    padding-top: 5%;
+    width: 100%;
+}

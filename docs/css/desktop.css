@@ -1,0 +1,59 @@
+@media screen and (min-width:800px) {
+    .mainNav { display:block !important; }
+}
+header, .mainContent, .row 
+{
+    max-width: 720px;
+    padding: 0 5px;
+    margin: auto;
+}
+
+.container
+{
+    max-width: 1920px;
+    margin:auto;
+}
+
+.burgerMenu
+{
+    display:none;
+}
+
+header nav ul li h1
+{
+    display:flex;
+    padding:0;
+    margin:5px;
+    font-size:1.2rem;
+    color: #DDEAF2;
+}
+
+header, .mainContent, .row 
+{
+    max-width: 1200px;
+    padding: 0 5px;
+    margin: auto;
+}
+
+.mainNav 
+{
+    padding: 8px 0;
+    height: auto;
+    display: block;
+}
+
+.mainNav, .row ul 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.mainNav ul li a {
+    font-size:14pt;
+}
+
+.mainNav > div > ul > li 
+{
+    border: none;
+    padding: 10;
+}
