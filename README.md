@@ -1,8 +1,8 @@
-# Dronfield Club Application
+## Dronfield Club Application
 
-This is a membership tracking application for Dronfield Swimming Club in the Group Software Development module.
+This is a membership tracking application for Dronfield Swimming Club in the Group Software Development module using HTML, CSS, PHP, MySQL and JavaScript.
 
-# How to Clone
+## How to Clone
 `git clone https://github.com/b9035802/dronfield-club-app`
 
 # Pushing Changes
@@ -17,6 +17,7 @@ check your package repository
 ## Git basics
  ``` sh 
  git init 
+ // Set up a git repo, if not already configured
  
  git status
  // To check how the repository status has changed
@@ -30,10 +31,6 @@ check your package repository
  git log 
  // Chek the history of changes in the repo 
  ```
-
-## Make an Github account and repo
-
-[Github](https://github.com/)
 
 ## Add remote Github repo to local repo(folder)
 To push it to the github server later you have to add the remote repository
