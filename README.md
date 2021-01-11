@@ -1,4 +1,4 @@
-## Dronfield Club Application
+# Dronfield Club Application
 
 This is a membership tracking application for Dronfield Swimming Club in the Group Software Development module using HTML, CSS, PHP, MySQL and JavaScript.
 
@@ -39,7 +39,6 @@ To push it to the github server later you have to add the remote repository
  git remote add <remote name Ex: origin> <remote_repository_url>
  ```
 ## Push to & pull the remote repo
-
 ``` sh
  git push -u origin master
  ```
@@ -47,6 +46,7 @@ To push it to the github server later you have to add the remote repository
 
 ## Differences 
 Checking what is different from the last commit
+
 ```
 git diff HEAD
 ```
@@ -69,6 +69,7 @@ git checkout -- <filename>
 
 ## Branch
 Creating a branch to work on a copy of the code without affecting the main/master branch
+
 ``` sh
 git branch <branch_name>
 
