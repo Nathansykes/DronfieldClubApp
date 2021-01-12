@@ -1,10 +1,11 @@
-*{
+@import url('https://fonts.googleapis.com/css?family=Lato|Montserrat&display=swap');
+ *{
     box-sizing: border-box;
 }
 
 body 
 {
-    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    font-family: Lato, Montserrat, sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -14,6 +15,13 @@ body
     width: 100%;
     min-width: 320px;
 }
+
+.darkMode /* PLACEHOLDER SEE ISSUE #3*/ /* CURRENTLY HIDES LOGIN BUTTON */
+{
+    background-color: black;
+    color: white;
+}
+
 
 .mainNav
 {
@@ -45,6 +53,15 @@ body
     padding: 8px 0;
 }
 
+.link:active{
+    color: lightslategray !important;
+}
+
+.link:hover{
+    color: lightslategray !important;
+    
+}
+
 header 
 {
     display: flex;
@@ -61,6 +78,7 @@ header
 {
     max-width: 70px;
     padding: 5px;
+    margin-top: 12.5px;
 }
 
 img 
@@ -73,6 +91,7 @@ img
     justify-content: right;
     padding: 0px 0px 0px 15px;
     margin-top: 10px;
+    margin-bottom: 10px;
     flex: 0;
 }
 
@@ -96,15 +115,17 @@ img
 
 .loginLink > ul > li > a
 {
-    padding: 5px 10px;
+    padding: 10px;
     color: #000;
     text-decoration: none;
     display: inline-block;
-    width: 75px;
+    width: 100px;
+    text-align: center;
 }
 
 .burgerMenu
 {
+    margin-top: 12.5px;
     flex: 0;
     padding: 13px 11px 0 11px;
 }
@@ -126,6 +147,7 @@ img
 .mainContent 
 {
     margin: 0 10px;
+    text-align: center;
 }
 
 
@@ -144,9 +166,20 @@ img
 }
 
 .siteContent img{
-    background-image: src="https://cdn.discordapp.com/attachments/788419191870324769/798172367808888832/img-d59a1e029c9958cf333e15513f30d61d.png" alt="";
+    background-image: src='https://cdn.discordapp.com/attachments/788419191870324769/798172367808888832/img-d59a1e029c9958cf333e15513f30d61d.png' alt='';
     display: flex;
     justify-content: center;
+}
+
+.sectionBreak 
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: cadetblue;
+}
+
+.sectionDesc{
+    font-size: 18px;
 }
 
 /* Section 1 */
@@ -165,6 +198,34 @@ img
     transition: 0.3s;
 }
 
+.cards 
+{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2px 16px;
+    justify-content: space-between;
+}
+
+.card
+{
+    flex-basis: 100%;
+    padding: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    margin-bottom: 25px;
+    margin-top: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+
+.card img{
+    /*border-radius: 25px;*/
+    border-radius: 5px 5px 0 0;
+}
 
 /*form stying*/
 
@@ -175,10 +236,16 @@ label
     padding-bottom: 10px;
 }
 
-input[type ='text'], input[type="email"], textarea
+input[type ='text'],[type ='tel'], input[type="email"], textarea
 {
     width: 100%;
     padding: 15px 10px;
+}
+input[type ='date']
+{
+    width: 100%;
+    padding: 15px 10px;
+    font-size: 1rem;
 }
 
 input[type ='text'], input[type="password"], textarea
@@ -190,6 +257,8 @@ input[type ='text'], input[type="password"], textarea
 /*button styling*/
 input[type="submit"] 
 {
+    margin-left: auto;
+    margin-right: auto;
     padding: 15px 10px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -202,7 +271,159 @@ form > div
 
 .form 
 {
-
+    text-align: left;
     padding-top: 5%;
     width: 100%;
+    flex-basis: 100%;
+}
+
+.mobileTable 
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mobileTable th
+{
+    text-align:center;
+
+}
+
+.desktopTable
+{
+    display:none;
+}
+
+
+
+form > div 
+{
+    margin: 50px;
+}
+
+.form 
+{
+    text-align: left;
+    padding-top: 5%;
+    width: 100%;
+    flex-basis: 100%;
+}
+
+.desktopTable
+{
+    display:none;
+}
+/*footer styling*/
+
+form > div 
+{
+    margin: 50px;
+}
+
+.form 
+{
+    text-align: left;
+    padding-top: 5%;
+    width: 100%;
+    flex-basis: 100%;
+}
+
+.desktopTable
+{
+    display:none;
+}
+/*footer styling*/
+
+form > div 
+{
+    margin: 50px;
+}
+
+.form 
+{
+    text-align: left;
+    padding-top: 5%;
+    width: 100%;
+    flex-basis: 100%;
+}
+
+.desktopTable
+{
+    display:none;
+}
+/*footer styling*/
+
+form > div 
+{
+    margin: 50px;
+}
+
+.form 
+{
+    text-align: left;
+    padding-top: 5%;
+    width: 100%;
+    flex-basis: 100%;
+}
+
+.desktopTable
+{
+    display:none;
+}
+/*footer styling*/
+
+form > div 
+{
+    margin: 50px;
+}
+
+.form 
+{
+    text-align: left;
+    padding-top: 5%;
+    width: 100%;
+    flex-basis: 100%;
+}
+
+.desktopTable
+{
+    display:none;
+}
+/*footer styling*/
+
+form > div 
+{
+    margin: 50px;
+}
+
+.form 
+{
+    text-align: left;
+    padding-top: 5%;
+    width: 100%;
+    flex-basis: 100%;
+}
+
+.desktopTable
+{
+    display:none;
+}
+/*footer styling*/
+
+footer 
+{
+    background-color: cadetblue;
+    color: #fff;
+    padding: 0 10px;
+}
+
+footer .row 
+{
+    display: flex;
+    flex-direction: column;
+}
+
+footer .row address 
+{
+    padding: 15px 0 5px 5px;
 }

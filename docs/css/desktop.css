@@ -3,13 +3,18 @@
     { 
         display:block !important; 
     }
-    
 }
+
 header, .mainContent, .row 
 {
     max-width: 720px;
     padding: 0 5px;
     margin: auto;
+}
+
+.burgerMenu 
+{
+    display: none;
 }
 
 .container
@@ -18,9 +23,10 @@ header, .mainContent, .row
     margin:auto;
 }
 
-.burgerMenu
+.darkMode /* PLACEHOLDER SEE ISSUE #3*/ 
 {
-    display:none;
+    background-color: black;
+    color: white;
 }
 
 header nav ul li h1
@@ -60,5 +66,42 @@ header, .mainContent, .row
 .mainNav > div > ul > li 
 {
     border: none ;
-    padding: 10 ;
+    padding: 10px ;
+}
+
+.card
+{
+    flex-basis: 30%;
+    padding: 5px;
+}
+
+.form 
+{
+    display: inline-block;
+    width: 100%;
+    /*flex-basis: 100%;*/
+}
+
+table 
+{
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x:auto;
+}
+
+table, td, th
+{
+    border: 1px solid  cadetblue;
+}
+
+th 
+{
+    height: 70px;
+}
+
+th, td 
+{
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: left;
 }
