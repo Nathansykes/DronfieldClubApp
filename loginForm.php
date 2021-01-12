@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/mobile.css">
     <link rel="stylesheet" href="css/desktop.css" media="only screen and (min-width : 800px)"/>
 </head>
-<body onresize="resizeFunction()">
+<body>
     <div class="container">
         <header>
             <!--logo-->
@@ -49,14 +49,19 @@
          <main>
              <div class="mainContent">
                  <!--content goes here-->
+                 <h1 class="siteTitle">Dronfield Swimming Club | Login </h1>
                  <!--Here is the login form which will execute the php script-->
-                <form action="login.php" method="post" enctype="multipart/form-data">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required>
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                    <input type="submit" name="submit">
-                </form>
+                 <div class="form">
+                    <form action="login.php" method="post" enctype="multipart/form-data">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                        <br><br>
+                        <input type="submit" name="submit">
+                        <br><br>
+                    </form>
+                 </div>
              </div>
          </main>
     </div>
@@ -64,13 +69,18 @@
     <script src="scripts/jquery-3.4.1.min.js"></script>
     <script src="scripts/main.js"></script>
 
+    
     <?php
+    
+
     include "connect.php";
     //This is the message the user will recive if they enter invalid details
     if (isset($_GET['credit']) && $_GET['credit'] == "false")
         {
             echo "<br>Either username/password is incorrect, try again";
         }
+
+    
     ?>
     
 </body>

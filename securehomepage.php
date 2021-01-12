@@ -1,3 +1,22 @@
+<?php
+
+session_start();
+
+//$secure = $_COOKIE("Secure");
+
+//Checks if the cookie is true, welcomes back user
+//if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
+if ($_SESSION['valid'])
+    {
+        echo "Welcome back ".$_COOKIE["User"]."! ";
+    }   
+else {
+    //If not the user cannot view the page in full
+    die("Access to content denied") ;
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,13 +24,13 @@
     <!-- Viewport here -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dronfield Swimming Club - Home</title>
-    <!-- attach styles here
+    <!-- attach styles here 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-     -->
+    -->
     <link rel="stylesheet" href="css/mobile.css">
     <link rel="stylesheet" href="css/desktop.css" media="only screen and (min-width : 800px)"/>
 </head>
-<body onresize="resizeFunction()">
+<body>
     <div class="container">
         <header>
             <!--logo-->
@@ -53,7 +72,7 @@
                  <div class="cotainer-fluid">
                     <div class="site-content">
                         <div class="d-flex flex-column">
-                                <h1 class="siteTitle">Dronfield Swimming Club | Welcome! </h1>
+                                <h1 class="siteTitle">Dronfield Swimming Club | Secure Homepage </h1>
                                 <img src="https://cdn.discordapp.com/attachments/788419191870324769/798172367808888832/img-d59a1e029c9958cf333e15513f30d61d.png" alt="" />
                                 <p class="siteDesc">Our swimming club has been around for over 30 years! With an incredible team behind us, 
                                     we welcomes all coaches and faculty staff to our online application!
@@ -73,45 +92,34 @@
                  </div>
                  
 
-                 <div class="row justify-content-center text-center">
-                     <div class="col-md-4">
-                        <div class="card" style="width: 21.5rem;">
-                            <img src="https://cdn.discordapp.com/attachments/788419191870324769/798246299937013770/pretty-progress-bars-755.png" alt="cardImage1" class="card-img-top">
+                 <div class="col-md-4">
+                     <div class="row justify-content-center text-center">
+                        <div class="infoCard" style="width: 20rem;">
+                            <img src="https://cdn.discordapp.com/attachments/788419191870324769/798218579031359488/progress-bar-square.png" alt="cardImage1" class="card-img-top">
                             <div class="card-body">
                                 <h3 class="cardTitle">Track Progress!</h3>
                                 <p class="cardDesc">As a coach, this application gives you the ability to track your swimmers progress throughout each session, allows you to identify
                                     areas that need to be worked on, and gives you an insight across completed sessions to see how much the swimmer has improved. 
                             </div>
                         </div>
-                    </div>
 
-                <div class="col-md-4">
-                    <div class="card" style="width: 21.5rem;">
-                        <img src="https://cdn.discordapp.com/attachments/788419191870324769/798229896551858226/smiling-female-coach-writing-clipboard-portrait-near-poolside-90451677.png" alt="cardImage2" class="card-img-top">
-                        <div class="card-body">
-                            <h3 class="cardTitle">Conduct a test!</h3>
-                            <p class="cardDesc">When you as a coach feel your class is ready to progress in to the next group, this application provides you the feature to conduct a test,
-                                in which you can set up desired milestones for the swimmers to attempt to acheive certain thresholds and evaluate
-                                whether you feel they are ready to move to the next group!
+                        <div class="col-md-4">
+                            <div class="infoCard" style="width: 20rem;">
+                                <img src="https://cdn.discordapp.com/attachments/788419191870324769/798229896551858226/smiling-female-coach-writing-clipboard-portrait-near-poolside-90451677.png" alt="cardImage1" class="card-img-top">
+                                <div class="card-body">
+                                    <h3 class="cardTitle">Conduct a test!</h3>
+                                    <p class="cardDesc">As  
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                
+                        
 
-                <div class="col-md-4">
-                    <div class="card" style="width: 21.5rem;">
-                        <img src="https://media.discordapp.net/attachments/788419191870324769/798251713290829845/20161219_0415_GK_Sheffield_1200x800px-1200x743.png?width=1092&height=676" alt="cardImage2" class="card-img-top">
-                        <div class="card-body">
-                            <h3 class="cardTitle">Complete control!</h3>
-                            <p class="cardDesc">This application allows the coach to be completely in control and commit changes such as removing or adding swimmers to certain groups, conduct notes about a certain 
-                                swimmers performance, 
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </div>
+     
 
-    
+                     </div>
+             </div>
+
+             
 
          </main>
     </div>
