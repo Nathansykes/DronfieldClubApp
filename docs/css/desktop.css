@@ -5,12 +5,46 @@
     }
 }
 
+header
+{
+    background-color: white;
+    width:100%
+}
 header, .mainContent, .row 
 {
-    max-width: 720px;
+    
     padding: 0 5px;
     margin: auto;
 }
+
+.loginLink > ul 
+{
+    list-style: none;
+    padding-left:  0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.loginLink > ul > li 
+{
+    border: 1px solid #000;
+}
+
+.loginLink > ul > li:first-child
+{
+    margin-right: 4px;
+}
+
+.loginLink > ul > li > a
+{
+    padding: 10px;
+    color: #000;
+    text-decoration: none;
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+}
+
 
 .burgerMenu 
 {
@@ -21,6 +55,16 @@ header, .mainContent, .row
 {
     max-width: 1920px;
     margin:auto;
+    min-height: 100%;
+    overflow: auto;
+}
+
+
+.logo img 
+{
+    max-width: 50px;
+    padding: 5px;
+    margin-top: 5px;
 }
 
 .darkMode /* PLACEHOLDER SEE ISSUE #3*/ 
@@ -29,19 +73,17 @@ header, .mainContent, .row
     color: white;
 }
 
-header nav ul li h1
-{
-    
-    display:flex ;
-    padding:0 ;
-    margin:5px ;
-    font-size:1.2rem ;
-    color: #DDEAF2 ;
+header nav ul li h1 {
+    display: flex;
+    padding: 0;
+    margin: 5px;
+    font-size: 1.2rem;
+    color: #476082;
 }
 
 header, .mainContent, .row 
 {
-    max-width: 1200px ;
+    max-width: 1200px;
     padding: 0 5px ;
     margin: auto ;
 }
@@ -51,6 +93,7 @@ header, .mainContent, .row
     padding: 8px 0 ;
     height: auto ;
     display: block ;
+    background-color: #2e3e74;
 }
 
 .mainNav, .row ul 
@@ -82,26 +125,34 @@ header, .mainContent, .row
     /*flex-basis: 100%;*/
 }
 
-table 
+input.updateClassButton
 {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 15%;
+    cursor: pointer;
+}
+
+.newMemberbutton
+{
+    width: 200px;
+    height: 50px
+}
+
+.main{
+    min-height: 100%;
+    overflow: auto;
+}
+
+
+footer {
+    position: relative;
+    bottom: 0;
     width: 100%;
-    border-collapse: collapse;
-    overflow-x:auto;
+    background-color: #2e3e74;
+    color: white;
 }
 
-table, td, th
-{
-    border: 1px solid  cadetblue;
-}
-
-th 
-{
-    height: 70px;
-}
-
-th, td 
-{
-    padding-left: 15px;
-    padding-right: 15px;
-    text-align: left;
-}

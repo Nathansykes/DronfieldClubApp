@@ -1,12 +1,14 @@
 (function(){
-    $(".burgerMenu").on("click", function(ev) {
-    ev.preventDefault();
-    $(this).toggleClass("animateBurger");
-    $(".mainNav").slideToggle("fast");
+    $(".burgerMenu").on("click", function(ev) 
+    {
+        ev.preventDefault();
+        $(this).toggleClass("animateBurger");
+        $(".mainNav").slideToggle("fast");
     });
+    
     $(window).on("resize", function(ev) {
         //console.info(window.innerWidth);
-        if (window.innerWidth > 720) {
+        if (window.innerWidth > 800) {
         $("nav ul").attr("style", "");
         }
     });
@@ -26,3 +28,20 @@
     navHighlight('.mainNav ul li a', 'index.html', 'current'); /* menu link selector, home page, highlight class */
     }
 )();
+
+function OpenRows(clickedRow)//rows id passed in from database management.php
+{
+    var elements = document.querySelectorAll(".tableRowButton,.tableRow");
+
+    for(var i = 0;i < elements.length ;i++)
+    {
+        if(clickedRow == elements[i].id)
+        {
+            elements.item(i).classList.toggle("hidden");
+
+        }
+            
+    }
+    
+
+}

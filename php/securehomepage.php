@@ -18,15 +18,12 @@ else {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <!-- Viewport here -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dronfield Swimming Club - Home</title>
-    <!-- attach styles here
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-     -->
+    <!--<link rel="icon" type="image/png" href="../images/favicon.png"/>-->
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
 </head>
@@ -36,7 +33,7 @@ else {
             <!--logo-->
             <div class="logo">
                 <!--image logo will go here-->
-                <img src="https://media.discordapp.net/attachments/788419191870324769/798146408313782282/LOGO.png" alt="" />
+                <img src="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
 
             </div>
             <!--login-->
@@ -62,7 +59,7 @@ else {
                 
                 <ul>
                     <li><a href="securehomepage.php">Home</a></li>
-                    <li><a href="../html/classes.html">Classes</a></li>
+                    <li><a href="classes.php">Classes</a></li>
                     <li><a href="../html/testing.html">Conduct a Test</a></li>
                     <?php
                     if ($_SESSION['accessLevel'] == 2) 
@@ -87,8 +84,8 @@ else {
                 <div class="sectionBreak">
                     <h1 class="sectionTitle">The Main Features</h1>
                     <p class="sectionDesc">& how they benefit you!</p>
-                    <br><br>
                 </div>
+                <br><br>
                 <div class="cards">
 
                     <div class="card">
@@ -126,22 +123,18 @@ else {
                     </div>
 
                 </div>
-                <br><br>
-                <br><br>
-                <br><br>
              </div>
 
              <!--Boostrap cards informing Coaches what they can do with the application-->    
 
          </main>
-         <footer>
-            <div class="row">
-                <address>
-                  Dronfield Sports Centre<br />
-                  Dronfield<br />
-                  Derbyshire<br />
-                  S42 6NG
-    <!--javaScript files will be executed here-->
+    <footer>
+        <div class="row">
+            <address>
+                Dronfield Sports Centre<br /> Dronfield<br /> Derbyshire<br /> S42 6NG
+            </address>
+        </div>
+    </footer>
     <script src="../scripts/jquery-3.4.1.min.js"></script>
     <script src="../scripts/main.js"></script>
 </body>

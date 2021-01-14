@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <!-- Viewport here -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Login</title>
-    <!-- attach styles here -->
+    <!--<link rel="icon" type="image/png" href="../images/favicon.png"/>-->
     <link rel="stylesheet" href="../css/mobile.css">
-    <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 720px)"/>
-    <link rel="icon" type="image/png" href="../images/FAV.png"/>
+    <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 720px)" />
+    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" />
 </head>
 <body>
     <div class="container">
@@ -16,6 +15,7 @@
             <!--logo-->
             <div class="logo">
                 <!--image logo will go here-->
+                <img src="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
             </div>
             <!--login-->
             <div class="loginLink">
@@ -39,24 +39,9 @@
             <div class="row">
                 <ul>
                     <li><a href="../html/index.html">Home</a></li>
-                    <li><a href="../html/classes.html">Classes</a></li>
-                    <li><a href="../html/testing.html">Conduct a Test</a></li>
                 </ul>
             </div>
         </nav>
-
-         <!-- TESTING -->
-         <script>
-            function darkMode() {
-                var element = document.body;
-                var element2 = document.loginLink;
-                element.classList.toggle("darkMode");
-                element2.classList.toggle("darkMode");
-            }
-        </script>
-        <button onclick="darkMode()"> Toggle Dark Mode </button> 
-            <!-- TESTING -->
-
         <!--the main content for the site-->
         <main>
             <div class="mainContent">
@@ -64,5 +49,14 @@
             </div>
         </main>
     </div>
-  </body>
+    <footer>
+        <div class="row">
+            <address>
+                Dronfield Sports Centre<br /> Dronfield<br /> Derbyshire<br /> S42 6NG
+            </address>
+        </div>
+    </footer>
+    <script src="../scripts/jquery-3.4.1.min.js"></script>
+    <script src="../scripts/main.js"></script>
+</body>
 </html>

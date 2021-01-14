@@ -5,9 +5,11 @@
 
 body 
 {
+    width: 100%;
     font-family: Lato, Montserrat, sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 0; 
+    background-color: #fefefe;
 }
 
 .container
@@ -16,16 +18,16 @@ body
     min-width: 320px;
 }
 
-.darkMode /* PLACEHOLDER SEE ISSUE #3*/ /* CURRENTLY HIDES LOGIN BUTTON */
+.darkMode /* SEE ISSUE #3 */
 {
     background-color: black;
     color: white;
-}
+}/* TODO: Set a cookie to make dark theme persist between pages, fix login button font and border */
 
 
 .mainNav
 {
-    background-color: cadetblue;
+    background-color: #476082;
     display: none;
 }
 
@@ -38,7 +40,8 @@ body
 
 .mainNav ul li 
 {
-    border-bottom: 1px solid #ccc;
+    border-top: 0.5px solid #ccc;
+    border-bottom: 0.5px solid #ccc;
     padding: 5px;
 }
 
@@ -49,7 +52,7 @@ body
     width: 100%;
     font-weight: bold;
     text-decoration: none;
-    color: #fff;
+    color: rgb(255, 252, 251);
     padding: 8px 0;
 }
 
@@ -62,11 +65,16 @@ body
     
 }
 
-header 
-{
+header {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    background-color: #2e3e74; /* Was #2e3e74, change to something lighter ,, background-color: #476082;*/
+}
+
+h2 
+{
+    float: left;
 }
 
 .logo
@@ -76,9 +84,9 @@ header
 
 .logo img 
 {
-    max-width: 70px;
+    max-width: 50px;
     padding: 5px;
-    margin-top: 12.5px;
+    margin-top: 2px;
 }
 
 img 
@@ -90,9 +98,8 @@ img
 {
     justify-content: right;
     padding: 0px 0px 0px 15px;
-    margin-top: 10px;
-    margin-bottom: 10px;
     flex: 0;
+    font-size: 14px;
 }
 
 .loginLink > ul 
@@ -106,6 +113,14 @@ img
 .loginLink > ul > li 
 {
     border: 1px solid #000;
+    box-shadow: #476082;
+    background-color: whitesmoke;
+}
+
+.loginLink > ul > li >a:hover
+{
+    border: 1px solid #2e3e74;
+    font-weight: bold;
 }
 
 .loginLink > ul > li:first-child
@@ -115,19 +130,26 @@ img
 
 .loginLink > ul > li > a
 {
-    padding: 10px;
+    border: 1px solid lightblue;
+    padding-top: 5px;
+    padding-bottom: 5px;
     color: #000;
     text-decoration: none;
     display: inline-block;
-    width: 100px;
+    width: 70px;
     text-align: center;
+    font-size: 16px;
+
 }
 
 .burgerMenu
 {
-    margin-top: 12.5px;
+    margin-top: 11px;
     flex: 0;
-    padding: 13px 11px 0 11px;
+    padding-left: 5px;
+    padding-right: 10px;
+    padding-top: 0px;
+    padding-bottom: 10px;
 }
 
 .bars
@@ -141,13 +163,14 @@ img
     width: 30px;
     height: 5px;
     margin: 5px 0;
-    background-color: #000;
+    background-color: white;
 }
 
 .mainContent 
 {
     margin: 0 10px;
     text-align: center;
+    margin-bottom:100px;
 }
 
 
@@ -156,7 +179,7 @@ img
 .siteTitle{
     display: flex;
     justify-content: center;
-    font-size: min(5vw, 50px);
+    font-size: min(10vw, 50px);
 }
 
 .siteDesc{
@@ -171,15 +194,19 @@ img
     justify-content: center;
 }
 
-.sectionBreak 
-{
+.sectionBreak {
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: cadetblue;
+    background-color: #2e3e74;
+}
+
+.sectionTitle{
+    color: white;
 }
 
 .sectionDesc{
     font-size: 18px;
+    color: white;
 }
 
 /* Section 1 */
@@ -211,8 +238,8 @@ img
     flex-basis: 100%;
     padding: 5px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    margin-bottom: 25px;
-    margin-top: 25px;
+    margin-bottom: 50px;
+    margin-top: 15px;
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -236,7 +263,20 @@ label
     padding-bottom: 10px;
 }
 
-input[type ='text'],[type ='tel'], input[type="email"], textarea
+#classDay 
+{
+    width: 100%;
+    padding: 15px 10px;
+}
+
+#classDa
+{
+    width: 100%;
+    padding: 15px 10px;
+}
+
+
+input[type ='text'],[type ='tel'], input[type="email"], input[type="time"], textarea
 {
     width: 100%;
     padding: 15px 10px;
@@ -262,11 +302,20 @@ input[type="submit"]
     padding: 15px 10px;
     padding-top: 10px;
     padding-bottom: 10px;
+    cursor: pointer;
+}
+.newMemberbutton
+{
+    width: 100%;
+    height: 50px
 }
 
-form > div 
-{
-    margin: 50px;
+.updateButton{
+    font-size: 17px;
+}
+
+.deleteButton{
+    font-size: 17px;
 }
 
 .form 
@@ -276,49 +325,85 @@ form > div
     width: 100%;
     flex-basis: 100%;
 }
-
-.mobileTable 
-{
-    margin-left: auto;
-    margin-right: auto;
+.hidden{
+    display:none !important;
 }
 
-.mobileTable th
+.topRow
 {
-    text-align:center;
-
+    background-color: rgb(220, 245, 255);
 }
 
-.desktopTable
+input.updateClassButton
 {
-    display:none;
+    width:100%;
+}
+
+input.updateClassButton
+{
+    width:100%;
+}
+
+input.updateClassButton
+{
+    width:100%;
+}
+
+.table 
+{
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x:auto;
+}
+
+.table, td, th
+{
+    border: 1px solid  cadetblue;
+}
+
+th 
+{
+    height: 70px;
+}
+
+th, td 
+{
+    padding: 10px;
+    text-align: left;
+}
+
+tr 
+{
+    vertical-align: center;
+}
+td 
+{
+    vertical-align: center;
+    border: none;
+    border-top: 1px solid  cadetblue;
+    border-bottom: 1px solid  cadetblue;
+}
+
+.topRow 
+{
+    cursor: pointer;
+    vertical-align: top;
+    text-align: left;
 }
 
 
+tr:hover 
+{
+    background-color: #e6f9ff;
+}
 
 form > div 
 {
     margin: 50px;
 }
 
-.form 
-{
-    text-align: left;
-    padding-top: 5%;
-    width: 100%;
-    flex-basis: 100%;
-}
-
-.desktopTable
-{
-    display:none;
-}
 /*footer styling*/
 
-form > div 
-{
-    margin: 50px;
-}
 
 .form 
 {
@@ -332,89 +417,14 @@ form > div
 {
     display:none;
 }
+
 /*footer styling*/
-
-form > div 
-{
-    margin: 50px;
-}
-
-.form 
-{
-    text-align: left;
-    padding-top: 5%;
+footer {
     width: 100%;
-    flex-basis: 100%;
-}
-
-.desktopTable
-{
-    display:none;
-}
-/*footer styling*/
-
-form > div 
-{
-    margin: 50px;
-}
-
-.form 
-{
-    text-align: left;
-    padding-top: 5%;
-    width: 100%;
-    flex-basis: 100%;
-}
-
-.desktopTable
-{
-    display:none;
-}
-/*footer styling*/
-
-form > div 
-{
-    margin: 50px;
-}
-
-.form 
-{
-    text-align: left;
-    padding-top: 5%;
-    width: 100%;
-    flex-basis: 100%;
-}
-
-.desktopTable
-{
-    display:none;
-}
-/*footer styling*/
-
-form > div 
-{
-    margin: 50px;
-}
-
-.form 
-{
-    text-align: left;
-    padding-top: 5%;
-    width: 100%;
-    flex-basis: 100%;
-}
-
-.desktopTable
-{
-    display:none;
-}
-/*footer styling*/
-
-footer 
-{
-    background-color: cadetblue;
-    color: #fff;
-    padding: 0 10px;
+    left: 0;
+    bottom: 0;
+    background-color: #2e3e74;
+    color: white;
 }
 
 footer .row 

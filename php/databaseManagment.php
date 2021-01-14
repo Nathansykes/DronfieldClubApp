@@ -6,7 +6,7 @@ session_start();
 
 //Checks if the cookie is true, welcomes back user
 //if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
-if ($_SESSION['valid'])
+if (($_SESSION['valid']) && ($_SESSION['accessLevel'] == 2))
     {
         echo "Welcome back ".$_COOKIE["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
@@ -34,7 +34,7 @@ else {
             <!--logo-->
             <div class="logo">
                 <!--image logo will go here-->
-                <img src="https://media.discordapp.net/attachments/788419191870324769/798146408313782282/LOGO.png" alt="" />
+                <img src="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
 
             </div>
             <!--login-->
@@ -59,8 +59,8 @@ else {
         <nav class="mainNav">
             <div class="row">
                 <ul>
-                    <li><a href="../html/index.html">Home</a></li>
-                    <li><a href="../html/classes.html">Classes</a></li>
+                    <li><a href="securehomepage.php">Home</a></li>
+                    <li><a href="classes.php">Classes</a></li>
                     <li><a href="../html/testing.html">Conduct a Test</a></li>
                     <?php
                     if ($_SESSION['accessLevel'] == 2) // Access 1 is a coach, 2 is admin
@@ -90,58 +90,80 @@ else {
                 //echo $_GET['message'];
                 //Student table
                 echo "<br>
-                        <div class= 'form'>
-                        <table class= 'table'>
-                        <tr>
-
-                        </tr>";
-                    //Rows from the database	
+                <div class= 'form'>";
+                echo "<form action='newStudentForm.php' method='post' enctype='multipart/form-data'>";
+                echo "<input class= 'newMemberButton' type='submit' name='insert' value='Create New' required";
+                echo "<br>";
+                echo "</form>";
+                echo "<table class= 'table'>";
+                echo "<tr>";
+                $counter=0;
                 while ($row=mysqli_fetch_row($result))
                     {	
-                        echo "<tr>";
-                        echo "<td>". $row[0]. "</td>";
-                        echo "<td>". $row[1]. "</td>";
-                        echo "<td>". $row[2]. "</td>";
-                        echo "<td>". $row[3]. "</td>";
-                        echo "<td>". $row[4]. "</td>";
-                        echo "<td>". $row[5]. "</td>";
-                        echo "<td>". $row[6]. "</td>";
-                        echo "<td>". $row[7]. "</td>";
-                        echo "<td>"
+                        $counter++;
+                        echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Number: </span><br/>". $row[0]. "</td>";
+                        echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Name: </span><br/>". $row[1]. "</td>";
+                        echo "</tr>";
+
+                        echo "<tr id=member".$counter." class='tableRow hidden'>";
+                        echo "<td><span style='font-weight:bold'>Student DOB: </span><br />". $row[2]."</td>";
+                        echo "<td><span style='font-weight:bold'>Address: </span><br />". $row[3]."</td>";
+                        echo "</tr>";
+
+                        echo "<tr id=member".$counter." class='tableRow hidden'>";
+                        echo "<td><span style='font-weight:bold'>Parent Name: </span><br />". $row[4]."</td>";
+                        echo "<td><span style='font-weight:bold'>Parent Email: </span><br />". $row[5]."</td>";
+                        echo "</tr>";
+
+                        echo "<tr id=member".$counter." class='tableRow hidden'>";
+                        echo "<td><span style='font-weight:bold'>Phone No: </span><br />". $row[6]."</td>";
+                        echo "<td><span style='font-weight:bold'>Medical Information: </span><br />". $row[7]."</td>";
+                        echo "</tr>";
+
+
+                        echo "<tr id=member".$counter." class='tableRow hidden'>";
+                        echo "<td id=member".$counter." class='tableRow hidden'>";                //Rows from the database	
                         ?>
-
-                        
-                    
-                            <form action="deleteRecord.php" method="post" onsubmit="">
-                                <input type="hidden" name="studentIdToDelete" value="<?php echo $row[0]; ?>">
-                                <input type="submit" name="delete" value="Delete">
-                            </form>
-                        
-                            <form action="updateRecordForm.php" method="post" onsubmit="">
+                            <form action="updateStudentForm.php" method="post" onsubmit="">
                                 <input type="hidden" name="studentIdToUpdate" value="<?php echo $row[0]; ?>">
-                                <input type="submit" name="update" value="Update">
+                                <input type="submit" name="update" value="Update" class="updateButton">
                             </form>
-                        
-
                         <?php
-                
                         echo "</td>";
-                        echo "<tr>";
+                        echo "<td class='tableRow'>";
+                        ?>
+                            <form action="deleteStudent.php" method="post" onsubmit="">
+                                <input type="hidden" name="studentIdToDelete" value="<?php echo $row[0]; ?>">
+                                <input type="submit" name="delete" value="Delete" class="deleteButton" onclick="return confirm('Are you sure?')">
+                            </form>
+                        <?php
+                        echo "</td>";
+                        echo "</tr>";
                         echo "</form>";
+                        
                     }
                     //Form for insert function
-                echo "<tr>";
-                    echo "<form action='newRecordForm.php' method='post' enctype='multipart/form-data'>";
-                    echo "<td><input type='submit' name='insert' value='Create New' required></td>";
-                echo "<tr>";     
+                
+                    
+                    
                 echo "</table>";
-                echo "</form>";
+                
+                
                 echo "</div";
                 ?>
-                <br>    
              </div>
-         </main>
+            
+        </main>
+        <br/><br/>
     </div>
+    <footer>
+        <div class="row">
+            <address>
+                Dronfield Sports Centre<br /> Dronfield<br /> Derbyshire<br /> S42 6NG
+            </address>
+        </div>
+    </footer>            
+    
     <!--javaScript files will be executed here-->
     <script src="../scripts/jquery-3.4.1.min.js"></script>
     <script src="../scripts/main.js"></script>

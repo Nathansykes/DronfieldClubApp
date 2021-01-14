@@ -15,7 +15,7 @@
             <!--logo-->
             <div class="logo">
                 <!--image logo will go here-->
-                <img src="https://media.discordapp.net/attachments/788419191870324769/798146408313782282/LOGO.png" alt="" />
+                <img src="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
 
             </div>
             <!--login-->
@@ -40,8 +40,8 @@
             <div class="row">
                 <ul>
                     <li><a href="../html/index.html">Home</a></li>
-                    <li><a href="../html/classes.html">Classes</a></li>
-                    <li><a href="../html/testing.html">Conduct a Test</a></li>
+                    <!-- <li><a href="../html/classes.html">Classes</a></li>
+                    <li><a href="../html/testing.html">Conduct a Test</a></li> -->
                 </ul>
             </div>
         </nav>
@@ -65,6 +65,14 @@
              </div>
          </main>
     </div>
+
+    <footer>
+        <div class="row">
+            <address>
+                Dronfield Sports Centre<br /> Dronfield<br /> Derbyshire<br /> S42 6NG
+            </address>
+        </div>
+    </footer>
     <!--javaScript files will be executed here-->
     <script src="../scripts/jquery-3.4.1.min.js"></script>
     <script src="../scripts/main.js"></script>
