@@ -22,7 +22,7 @@ check your package repository
  // To check how the repository status has changed
  
  git add <untracked_files>
- // To add untracked files use wildcards (*.txt *.js etc.)
+ // To add untracked files. Use wildcards (*.txt *.js etc.), if you want to add all files use git add .
  
  git commit -m "<message for describing what's changed>"
  
