@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <!-- Viewport here -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Dronfield Swimming Club - Login</title>
+    <title>Dronfield Swimming Club - Sign Up</title>
     <!-- attach styles here -->
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
@@ -50,27 +50,24 @@
          <main>
              <div class="mainContent">
                  <!--content goes here-->
-                 <h1 class="siteTitle">Dronfield Swimming Club | Login </h1>
+                 <h1 class="siteTitle">Dronfield Swimming Club | Sign Up </h1>
                  <!--Here is the login form which will execute the php script-->
                  <div class="form">
-
-
-                    <form action="../php/login.php" method="post" enctype="multipart/form-data">
-                        <label for="username">Username</label>
+                    <form action="../php/hashGenerate.php" method="post" enctype="multipart/form-data">
+                        <label for="username">Enter Username</label>
                         <input type="text" id="username" name="username" required>
-                        <label for="password">Password</label>
+                        <label for="password">Enter Password</label>
                         <input type="password" id="password" name="password" required>
-                        <input type="hidden" name="destination" value="login">
-                        <br><br>
-                        <input type="submit" name="submit" class="newMemberbutton">
+                        <label for="password2">Confirm Password</label>
+                        <input type="password" id="password2" name="password2" required>
+                        <label for="signupKey">Enter Sign Up Key </label>
+                        <input type="password" id="signUpKey" name="signUpKey" required>
+                        <input type="hidden" name="destination" value="signUp">
+                        <br><br><br>
+                        <input type="submit" name="submit" value="Sign Up" class="newMemberbutton" >
                         <br><br>
                     </form>
-
-                    
-                </div>
-                <div id="signUpLink">
-                    <a href="signUpForm.php">Don't have an account? | Sign Up Here!</a>
-                </div>
+                 </div>
              </div>
          </main>
     </div>
@@ -92,7 +89,7 @@
     
     ?>
 
-     <footer>
+      <footer>
         <div class="row">
             <address>
                 Dronfield Sports Centre<br /> Dronfield<br /> Derbyshire<br /> S42 6NG

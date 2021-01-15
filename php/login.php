@@ -14,15 +14,39 @@
     $cookie = $_GET['cookie'];
     
     
+    $sql2 = "SELECT userPass FROM users";
+    $result = mysqli_query($link, $sql2);
+    $sql = "";
+
+    while($row=mysqli_fetch_row($result))
+    {
+        echo "\npassword is \n". $row[0];
+        echo "\npassword is \n". $pass;
+
+        $storedPassword = $row[0];
+        
+        if((password_verify($pass,$storedPassword)))
+        {
+            echo "\n this did work :) \n";
+            $sql = "SELECT * FROM users WHERE userName ='$user'";
+            $pass = "";
+            break; 
+        }
+        else 
+        {
+            echo "\n did not work :( \n";
+            
+        }
+    }
+    $pass="";
     
     //This will select all of my user records
-    $sql = "SELECT * FROM users WHERE userName ='$user' AND userPass = '$pass'";
     
-    $result = mysqli_query($link, $sql);
+    $result2 = mysqli_query($link, $sql);
     
     //Checking user details are correct against the database
-    if (mysqli_num_rows($result) == 1) {
-        $row = mysqli_fetch_array($result);
+    if (mysqli_num_rows($result2) == 1) {
+        $row = mysqli_fetch_array($result2);
         //Stores user's accessLevel for secure page
         
         //Checks if cookie has not been created
@@ -53,7 +77,7 @@
     } else {
         //Login Page
         session_destroy();
-        header("location: LoginForm.php?credit=false");
+        header("location: LoginForm.php?credit=false $pass");
         exit;
     }
 ?>

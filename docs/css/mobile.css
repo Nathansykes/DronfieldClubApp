@@ -5,6 +5,7 @@
 
 body 
 {
+    height: 100%;
     width: 100%;
     font-family: Lato, Montserrat, sans-serif;
     margin: 0;
@@ -142,6 +143,12 @@ img
 
 }
 
+#signUpLink > a
+{
+    font-size: 16px;
+    color: gray;
+}
+
 .burgerMenu
 {
     margin-top: 11px;
@@ -168,9 +175,11 @@ img
 
 .mainContent 
 {
+    height: 100%;
     margin: 0 10px;
     text-align: center;
     margin-bottom:100px;
+    
 }
 
 

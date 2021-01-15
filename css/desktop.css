@@ -88,6 +88,11 @@ header, .mainContent, .row
     margin: auto ;
 }
 
+.mainContent
+{
+    height: 100%;
+}
+
 .mainNav 
 {
     padding: 8px 0 ;
@@ -138,6 +143,7 @@ input.updateClassButton
 
 .newMemberbutton
 {
+    justify-content: center;
     width: 200px;
     height: 50px
 }
@@ -147,10 +153,10 @@ input.updateClassButton
     overflow: auto;
 }
 
-
 footer {
-    position: relative;
+    margin-top: 12%;
     bottom: 0;
+    left: 0;
     width: 100%;
     background-color: #2e3e74;
     color: white;
