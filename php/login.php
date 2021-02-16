@@ -14,29 +14,46 @@
     $cookie = $_GET['cookie'];
     
     
+    echo $user;
+
+    if(strpbrk($user, ';:"=-+/*_%&|\''))
+    {
+        header("Location: loginForm.php?invalidcharacters");
+        exit (0);
+    }
+    if(strpbrk($pass, ';:"=-+/*&_%|\''))
+    {
+        header("Location: loginForm.php?invalidcharacters");
+        exit (0);
+    }
+
     $sql2 = "SELECT userPass FROM users";
     $result = mysqli_query($link, $sql2);
     $sql = "";
 
+    $correct = false;
+
     while($row=mysqli_fetch_row($result))
     {
-        echo "\npassword is \n". $row[0];
-        echo "\npassword is \n". $pass;
-
         $storedPassword = $row[0];
         
         if((password_verify($pass,$storedPassword)))
         {
-            echo "\n this did work :) \n";
             $sql = "SELECT * FROM users WHERE userName ='$user'";
             $pass = "";
+            $correct = true;
             break; 
         }
         else 
         {
-            echo "\n did not work :( \n";
+            $correct = false;
             
         }
+    }
+
+    if(!$correct)
+    {
+       header("Location: loginForm.php?password_incorrect");
     }
     $pass="";
     
@@ -77,7 +94,7 @@
     } else {
         //Login Page
         session_destroy();
-        header("location: LoginForm.php?credit=false $pass");
+        header("location: LoginForm.php?credit=false");
         exit;
     }
 ?>

@@ -4,10 +4,11 @@
     <meta charset="UTF-8" />
     <!-- Viewport here -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Home</title>
+    <title>Dronfield Swimming Club - New Student Form</title>
     <!-- attach styles here -->
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
+    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png"/>
 </head>
 
 <?php
@@ -28,13 +29,13 @@ else {
         <header>
             <!--logo-->
             <div class="logo">
-                <img src="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
+                <!--image logo will go here-->
             </div>
             <!--login-->
             <div class="loginLink">
                 <ul>
                     <li>
-                    <a href="logout.php">Logout</a>
+                        <a href="logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -52,8 +53,16 @@ else {
             <div class="row">
                 <ul>
                     <li><a href="securehomepage.php">Home</a></li>
-                    <li><a href="../html/classes.html">Classes</a></li>
-                    <li><a href="conductTestForm.php">Conduct a Test</a></li>
+                    <li><a href="classes.php">Classes</a></li>
+                    <li><a href="../html/testing.html">Conduct a Test</a></li>
+                    <?php
+                    if ($_SESSION['accessLevel'] == 2) // Access 1 is a coach, 2 is admin
+                    {
+                        ?>
+                        <li><a href="databaseManagment.php">Manage Members</a></li>
+                        <?php
+                    }
+                    ?>
                 </ul>
             </div>
         </nav>
@@ -61,43 +70,31 @@ else {
          <main>
              <div class="mainContent">
                  <!--content goes here-->
-                 <h1 class="siteTitle">Dronfield Swimming Club | New Class</h1>
+                 <h1 class="siteTitle">Dronfield Swimming Club | Update </h1>
                  <!--Here is the login form which will execute the php script-->
 
-                 <?php
-
-                    include "connect.php";
-
-                    $studentIdToUpdate = $_POST['studentIdToUpdate'];
-                    $update = $_POST['update'];
-
-                    $sql = "SELECT * FROM  Students WHERE studentNum = '$studentIdToUpdate'";
-                    $result = mysqli_query($link, $sql);
-                 ?>
 
                  <div class="form">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <label for="studentNum">Student Number</label>
-                        <input type="text" id="studentNum" name="studentNum">
-                        <label for="studentName">Student's Name</label>
-                        <input type="text" id="studentName" name="studentName">
-                        <label for="studentDOB">Student's Date of Birth</label>
-                        <input  type="date" id="studentDOB" name="studentDOB">
-                        <label for="studentAddress">Student's Home Address</label>
-                        <input type="text" id="studentAddress" name="studentAddress">
-                        <label for="parentName">Student's Parent's Name (Only One Required)</label>
-                        <input type="text" id="parentName" name="parentName">
-                        <label for="parentEmail">Parent's Email</label>
-                        <input type="email" id="parentEmail" name="parentEmail">
-                        <label for="parentPhone">Parent's Phone</label>
-                        <input type="tel" id="parentPhone" name="parentPhone">
-                        <label for="studentMedical">Student's Medical Information</label>
-                        <textarea  id="studentMedical" name="studentMedical"></textarea>
-                        <br><br>
-                        <input type="submit" name="submit">
+                    <form action="manageUsers.php" method="POST">
+                        <input type="submit" name="submit" value="Generate A New Key">
                         <br><br>
                     </form>
                  </div>
+                 <?php
+
+                    include "connect.php";
+                    $key = $_POST['key'];
+
+                    if($key != "")
+                    {
+                        ?>
+                            <h1>Key has been made!</h1>
+                            <button onclick="copyToClipboard('<?php echo $key; ?>')">Copy Key To Clipboard</button>
+                            
+                        <?php
+                    }
+                 ?>
+                 
              </div>
          </main>
     </div>

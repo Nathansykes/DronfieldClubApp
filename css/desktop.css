@@ -5,10 +5,9 @@
     }
 }
 
-header
-{
+header {
     background-color: white;
-    width:100%
+    width: 100%
 }
 header, .mainContent, .row 
 {
@@ -55,8 +54,7 @@ header, .mainContent, .row
 {
     max-width: 1920px;
     margin:auto;
-    min-height: 100%;
-    overflow: auto;
+    min-height: 70vh;
 }
 
 
@@ -130,15 +128,27 @@ header, .mainContent, .row
     /*flex-basis: 100%;*/
 }
 
+
+
+input.registerClassButton
+{
+    width:50%;
+    margin-left:50%;
+}
+
 input.updateClassButton
 {
-    margin-left: auto;
-    margin-right: auto;
+    
     padding: 15px 10px;
     padding-top: 10px;
     padding-bottom: 10px;
-    width: 15%;
+    width: 50%;
     cursor: pointer;
+}
+
+.registerSubmit
+{
+    width: 20%;
 }
 
 .newMemberbutton

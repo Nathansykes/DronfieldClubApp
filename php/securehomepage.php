@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dronfield Swimming Club - Home</title>
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)" />
+    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png"/>
+</head>
 <?php
 
 session_start();
@@ -10,24 +20,14 @@ if ($_SESSION['valid'])
     {
         echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
-else {
-    //If not the user cannot view the page in full
-    die("Access to content denied") ;
+else {  
+    //If not the user cannot view the page in full, send them back to home with noaccess
+    header("Location: ../html/index.html? no_access");
 }
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Dronfield Swimming Club - Home</title>
-    <!--<link rel="icon" type="image/png" href="../images/favicon.png"/>-->
-    <link rel="stylesheet" href="../css/mobile.css">
-    <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
-</head>
-<body onresize="resizeFunction()">
+<body>
     <div class="container">
         <header>
             <!--logo-->
@@ -60,7 +60,7 @@ else {
                 <ul>
                     <li><a href="securehomepage.php">Home</a></li>
                     <li><a href="classes.php">Classes</a></li>
-                    <li><a href="../html/testing.html">Conduct a Test</a></li>
+                    <li><a href="conductTestForm.php">Conduct a Test</a></li>
                     <?php
                     if ($_SESSION['accessLevel'] == 2) 
                     {
@@ -126,8 +126,9 @@ else {
              </div>
 
              <!--Boostrap cards informing Coaches what they can do with the application-->    
+            </main>
+        </div>
 
-         </main>
     <footer>
         <div class="row">
             <address>
@@ -135,6 +136,7 @@ else {
             </address>
         </div>
     </footer>
+
     <script src="../scripts/jquery-3.4.1.min.js"></script>
     <script src="../scripts/main.js"></script>
 </body>

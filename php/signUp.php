@@ -15,6 +15,27 @@
     $passConfirm = $_POST['password2'];
     $signUpKey = $_POST['signUpKey'];
     
+        if(strpbrk($user, ';:"=-+/_%*&|\''))
+        {
+            header("Location: signUpForm.php?invalidcharacters");
+            exit (0);
+        }
+        if(strpbrk($pass, ';:"=-+/_%*&|\''))
+        {
+            header("Location: signUpForm.php?invalidcharacters");
+            exit (0);
+        }
+        if(strpbrk($passConfirm, ';:"=-+_%/*&|\''))
+        {
+            header("Location: signUpForm.php?invalidcharacters");
+            exit (0);
+        }
+        if(strpbrk($signUpKey, ';:"=-+/_%*&|\''))
+        {
+            header("Location: signUpForm.php?invalidcharacters");
+            exit (0);
+        }
+
     $sql = "SELECT * FROM userKey";
     $result = mysqli_query($link, $sql);
 
@@ -32,12 +53,12 @@
     $key = "";
     while($row=mysqli_fetch_row($result))
     {
-        $key = $row[0];
+        $storedKey = $row[0];
         
-        if($signUpKey == $key)
+        if(password_verify($signUpKey,$storedKey))
         {
             //access level 1
-            $sql = "INSERT into users(userName,userPass,accessLevel) VALUES('$user','$pass',$counter)";
+            $sql = "INSERT into users(userName,userPass,accessLevel) VALUES('$user','$pass',1)";
             if (mysqli_query($link, $sql))
             {
                 header("Location: signUpForm.php? message=signup success");
@@ -56,7 +77,7 @@
     }
     if(!$created)
     {
-        header("Location: signUpForm.php? message=signup bottom failed");
+        header("Location: signUpForm.php? message=signup failed");
 
     }
 

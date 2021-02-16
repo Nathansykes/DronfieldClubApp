@@ -4,25 +4,38 @@
     <meta charset="UTF-8" />
     <!-- Viewport here -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Home</title>
+    <title>Dronfield Swimming Club - New Student Form</title>
     <!-- attach styles here -->
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
+    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png"/>
 </head>
+
+<?php
+session_start();
+//Checks if the cookie is true, welcomes back user
+if (($_SESSION['valid']) && ($_SESSION['accessLevel'] == 2))
+    {
+        echo "Welcome back ".$_COOKIE["User"].",  Access Level: ".$_SESSION['accessLevel'];
+    }   
+else {
+    //If not the user cannot view the page in full
+    header("Location: ../html/index.html? no_access");
+}
+?>
+
 <body>
     <div class="container">
         <header>
             <!--logo-->
             <div class="logo">
                 <!--image logo will go here-->
-                <
-
             </div>
             <!--login-->
             <div class="loginLink">
                 <ul>
                     <li>
-                        <a href="../php/loginForm.php">Login</a>
+                        <a href="logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -66,19 +79,19 @@
                  <div class="form">
                     <form action="../php/createNewStudent.php" method="post" enctype="multipart/form-data">
                         <label for="studentNum">Student Number</label>
-                        <input type="text" id="studentNum" name="studentNum">
+                        <input type="text" id="studentNum" name="studentNum" required>
                         <label for="studentName">Student's Name</label>
-                        <input type="text" id="studentName" name="studentName">
+                        <input type="text" id="studentName" name="studentName" required>
                         <label for="studentDOB">Student's Date of Birth</label>
-                        <input  type="date" id="studentDOB" name="studentDOB">
+                        <input  type="date" id="studentDOB" name="studentDOB" required>
                         <label for="studentAddress">Student's Home Address</label>
-                        <input type="text" id="studentAddress" name="studentAddress">
+                        <input type="text" id="studentAddress" name="studentAddress" required>
                         <label for="parentName">Student's Parent's Name (Only One Required)</label>
-                        <input type="text" id="parentName" name="parentName">
+                        <input type="text" id="parentName" name="parentName" required>
                         <label for="parentEmail">Parent's Email</label>
-                        <input type="email" id="parentEmail" name="parentEmail">
+                        <input type="email" id="parentEmail" name="parentEmail" required>
                         <label for="parentPhone">Parent's Phone</label>
-                        <input type="tel" id="parentPhone" name="parentPhone">
+                        <input type="tel" id="parentPhone" name="parentPhone" required>
                         <label for="studentMedical">Student's Medical Information</label>
                         <textarea  id="studentMedical" name="studentMedical"></textarea>
                         <br><br>

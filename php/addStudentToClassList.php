@@ -1,21 +1,3 @@
-<?php
-
-session_start();
-
-//$secure = $_COOKIE("Secure");
-
-//Checks if the cookie is true, welcomes back user
-//if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
-if (($_SESSION['valid']) && ($_SESSION['accessLevel'] == 2))
-    {
-        echo "Welcome back ".$_COOKIE["User"].",  Access Level: ".$_SESSION['accessLevel'];
-    }   
-else {
-    //If not the user cannot view the page in full
-    die("Access to content denied") ;
-}
-
-?>
 
 <!DOCTYPE html>
 <html>
@@ -28,6 +10,20 @@ else {
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
 </head>
+
+<?php
+session_start();
+//Checks if the cookie is true, welcomes back user
+if (($_SESSION['valid']) && ($_SESSION['accessLevel'] == 2))
+    {
+        echo "Welcome back ".$_COOKIE["User"].",  Access Level: ".$_SESSION['accessLevel'];
+    }   
+else {
+    //If not the user cannot view the page in full
+    header("Location: ../html/index.html? no_access");
+}
+?>
+
 <body>
     <div class="container">
         <header>
@@ -61,7 +57,7 @@ else {
                 <ul>
                     <li><a href="securehomepage.php">Home</a></li>
                     <li><a href="classes.php">Classes</a></li>
-                    <li><a href="../html/testing.html">Conduct a Test</a></li>
+                    <li><a href="conductTestForm.php">Conduct a Test</a></li>
                     <?php
                     if ($_SESSION['accessLevel'] == 2) // Access 1 is a coach, 2 is admin
                     {

@@ -4,12 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dronfield Swimming Club - Conduct a Test</title>
-    <!--<link rel="icon" type="image/png" href="../images/favicon.png"/>-->
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 720px)" />
     <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" />
-
 </head>
+
+<?php
+session_start();
+//Checks if the cookie is true, welcomes back user
+if (($_SESSION['valid']) && ($_SESSION['accessLevel'] == 2))
+    {
+        echo "Welcome back ".$_COOKIE["User"].",  Access Level: ".$_SESSION['accessLevel'];
+    }   
+else {
+    //If not the user cannot view the page in full
+    header("Location: ../html/index.html? no_access");
+}
+?>
+
 <body>
     <div class="container">
         <header>
@@ -22,7 +34,7 @@
             <div class="loginLink">
                 <ul>
                     <li>
-                        <a href="../php/login.php">Login</a>
+                        <a href="logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -39,9 +51,17 @@
         <nav class="mainNav">
             <div class="row">
                 <ul>
-                    <li><a href="../php/securehomepage.php">Home</a></li>
-                    <li><a href="../php/classes.php">Classes</a></li>
-                    <li><a href="testing.html">Conduct a Test</a></li>
+                    <li><a href="securehomepage.php">Home</a></li>
+                    <li><a href="classes.php">Classes</a></li>
+                    <li><a href="conductTestForm.php">Conduct a Test</a></li>
+                    <?php
+                    if ($_SESSION['accessLevel'] == 2) // Access 1 is a coach, 2 is admin
+                    {
+                        ?>
+                        <li><a href="databaseManagment.php">Manage Members</a></li>
+                        <?php
+                    }
+                    ?>
                 </ul>
             </div>
         </nav>
@@ -49,6 +69,19 @@
         <main>
             <div class="mainContent">
                 <!--content goes here-->
+                <h2>Update Students</h2>
+                <br>
+                <div class="form"> <!--Form for updating users-->
+                <?php
+                 //Student table
+
+                $studentNum = "";
+                $sql = "SELECT studentNum FROM  classmember WHERE classId = '$classToUpdate'";
+                $result = mysqli_query($link, $sql);
+                
+                ?>
+                <div class= "form">
+
             </div>
         </main>
     </div>

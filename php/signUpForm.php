@@ -57,14 +57,14 @@
                         <label for="username">Enter Username</label>
                         <input type="text" id="username" name="username" required>
                         <label for="password">Enter Password</label>
-                        <input type="password" id="password" name="password" required>
-                        <label for="password2">Confirm Password</label>
-                        <input type="password" id="password2" name="password2" required>
+                        <input type="password" id="password" name="password" onkeyup='checkPasswordsMatch()' required>
+                        <label for="confirm_password">Confirm Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password" onkeyup='checkPasswordsMatch()' required>
                         <label for="signupKey">Enter Sign Up Key </label>
                         <input type="password" id="signUpKey" name="signUpKey" required>
                         <input type="hidden" name="destination" value="signUp">
                         <br><br><br>
-                        <input type="submit" name="submit" value="Sign Up" class="newMemberbutton" >
+                        <input disabled = true type="submit" name="signUpSubmit" id="signUpSubmit" value="Sign Up" class="newMemberbutton" >
                         <br><br>
                     </form>
                  </div>
@@ -75,6 +75,7 @@
     <!--javaScript files will be executed here-->
     <script src="../scripts/jquery-3.4.1.min.js"></script>
     <script src="../scripts/main.js"></script>
+    
     
     <?php
     
