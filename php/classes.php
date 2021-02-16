@@ -1,21 +1,3 @@
-<?php
-
-session_start();
-
-//$secure = $_COOKIE("Secure");
-
-//Checks if the cookie is true, welcomes back user
-//if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
-if (($_SESSION['valid']) && (($_SESSION['accessLevel'] == 1) || ($_SESSION['accessLevel'] == 2)))
-    {
-        echo "Welcome back ".$_COOKIE["User"].",  Access Level: ".$_SESSION['accessLevel'];
-    }   
-else {
-    //If not the user cannot view the page in full
-    die("Access to content denied") ;
-}
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +11,24 @@ else {
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 720px)"/>
     <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png"/>
 </head>
+<?php
+
+session_start();
+
+//$secure = $_COOKIE("Secure");
+
+//Checks if the cookie is true, welcomes back user
+//if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
+if (($_SESSION['valid']) && (($_SESSION['accessLevel'] == 1) || ($_SESSION['accessLevel'] > 1)))
+    {
+        echo "Welcome back ".$_COOKIE["User"].",  Access Level: ".$_SESSION['accessLevel'];
+    }   
+else {
+    //If not the user cannot view the page in full
+    header("Location: ../html/index.html? no_access");
+}
+
+?>
 <body>
     <div class="container">
         <header>
@@ -41,7 +41,7 @@ else {
             <div class="loginLink">
                 <ul>
                     <li>
-                        <a href="../php/loginForm.php">Login</a>
+                    <a href="logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -60,7 +60,7 @@ else {
                 <ul>
                     <li><a href="securehomepage.php">Home</a></li>
                     <li><a href="classes.php">Classes</a></li>
-                    <li><a href="../html/testing.html">Conduct a Test</a></li>
+                    <li><a href="conductTestForm.php">Conduct a Test</a></li>
                     <?php
                     if ($_SESSION['accessLevel'] == 2) 
                     {
@@ -83,7 +83,7 @@ else {
 
                 include "connect.php";
 
-                $sql = "SELECT * FROM  `Classes` ORDER BY  `classDay` DESC LIMIT 0 , 30";
+                $sql = "SELECT * FROM  `Classes` ORDER BY  `classId` ASC LIMIT 0 , 30";
                 $result = mysqli_query($link, $sql);
                 $classId = 0;
                 $studentNum = "";
@@ -92,86 +92,109 @@ else {
                 //Student table
                 echo "<br>
                 <div class= 'form'>";
-                echo "<form action='newStudentForm.php' method='post' enctype='multipart/form-data'>";
+                echo "<form action='newClassForm.php' method='post' enctype='multipart/form-data'>"; // SEeE Trello
                 echo "<input class= 'newMemberButton' type='submit' name='insert' value='Create New' required";
                 echo "<br>";
                 echo "</form>";
+                echo "<br>";
                 echo "<table class= 'table'>";
                 echo "<tr>";
                 $counter=0;
+
+                //$list= array();
+
                 while ($row=mysqli_fetch_row($result))
                 {	
+                    
                     $datetime =strtotime($row[2]);
                     $time = date('H:i',$datetime);
 
                     $counter++;
+
+                    //$list[]=$counter;
+
+                    
                     echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Class Number: </span><br/>". $row[0]. "</td>";
                     echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Day: </span><br/>". $row[1]. "</td>";
                     echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Time: </span><br/>". $time. "</td>";
                     echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Staff: </span><br/>". $row[3]. "</td>";
                     echo "</tr>";
-                    $classId = $row[0];
+                    $classId = $row[0]; 
 
-                } 
-                echo "</tr>";
-                    echo "<td id=member".$counter." class='tableRow hidden' colspan='4'>";
-                    ?>
+                    echo "</tr>";
+                        echo "<td id=member".$counter." class='tableRow hidden' colspan='2'>";
+                        ?>
                             <form action="updateClassForm.php" method="post" onsubmit="">
                                 <input type="hidden" name="classToUpdate" value="<?php echo $classId; ?>">
                                 <input type="submit" name="editClass" value="Update Class" class="updateClassButton">
                             </form>
-                        <?php
-                        echo "</td>";
-                    echo "</tr>";
-                
-                $sql = "SELECT studentNum FROM  classmember WHERE classId = '$classId'";
-                $result = mysqli_query($link, $sql);
-                
-                while ($row=mysqli_fetch_row($result))
-                {	
-                    echo "<tr id=member".$counter." class='tableRow hidden'>";
-                    echo "<td class='classRecord' colspan='2'><span style='font-weight:bold'>Student Number: </span><br/>". $row[0]."</td>";
-                    $studentNum = $row[0];
+                            </td>
 
-                    $sql2 = "SELECT studentName FROM  students WHERE studentNum = '$studentNum'";
-                    $result2 = mysqli_query($link, $sql2);
+                            <?php
+                            echo "<td id=member".$counter." class='tableRow hidden' colspan='2'>";
+                            ?>
+
+                            <form action="registrationForm.php" method="post" onsubmit="">
+                                <input type="hidden" name="classToRegister" value="<?php echo $classId; ?>">
+                                <input type="submit" name="registerClass" value="Register Class" class="registerClassButton">
+                            </form>
+                            </td>
+                        </tr>
+                        
+                        <?php
+                        
                     
-                    while ($row2=mysqli_fetch_row($result2))
+                    $sqlA = "SELECT studentNum FROM  classmember WHERE classId = '$classId'";
+                    $resultA = mysqli_query($link, $sqlA);
+                    
+                    while ($rowA=mysqli_fetch_row($resultA))
                     {	
+                        echo "<tr id='member$counter' class='tableRow hidden'>";
+                        echo "<td class='classRecord' colspan='2'><span style='font-weight:bold'>Student Number: </span><br/>". $rowA[0]."</td>";
+                        $studentNum = $rowA[0];
+    
+                        $sql2 = "SELECT studentName FROM  students WHERE studentNum = '$studentNum'";
+                        $result2 = mysqli_query($link, $sql2);
                         
-                        echo "<td class='classRecord' colspan='2'><span style='font-weight:bold'>Student Name: </span><br />". $row2[0]."</td>";
+                        while ($row2=mysqli_fetch_row($result2))
+                        {	
+                            
+                            echo "<td class='classRecord' colspan='2'><span style='font-weight:bold'>Student Name: </span><br />". $row2[0]."</td>";
+                            
+                        }
                         
+                       
+                    
+                        while ($row2=mysqli_fetch_row($result2))
+                        {	
+                            
+                            echo "<td class='classRecord' colspan='2'><span style='font-weight:bold'>Student Name: </span><br />". $row2[0]."</td>";
+                            
+                        }
+                        
+                        
+                    
+                        while ($row2=mysqli_fetch_row($result2))
+                        {	
+                            
+                            echo "<td class='classRecord' colspan='2'><span style='font-weight:bold'>Student Name: </span><br />". $row2[0]."</td>";
+                            
+                        }
+                        
+                        
+                    
+                        while ($row2=mysqli_fetch_row($result2))
+                        {	
+                            
+                            echo "<td class='classRecord' colspan='2'><span style='font-weight:bold'>Student Name: </span><br />". $row2[0]."</td>";
+                            
+                        }
+                        echo "</tr>";
                     }
                     
-                    echo "</form>";
+                } 
                 
-                    while ($row2=mysqli_fetch_row($result2))
-                    {	
-                        
-                        echo "<td class='classRecord' colspan='2'><span style='font-weight:bold'>Student Name: </span><br />". $row2[0]."</td>";
-                        
-                    }
-                    
-                    echo "</form>";
                 
-                    while ($row2=mysqli_fetch_row($result2))
-                    {	
-                        
-                        echo "<td class='classRecord' colspan='2'><span style='font-weight:bold'>Student Name: </span><br />". $row2[0]."</td>";
-                        
-                    }
-                    
-                    echo "</form>";
-                
-                    while ($row2=mysqli_fetch_row($result2))
-                    {	
-                        
-                        echo "<td class='classRecord' colspan='2'><span style='font-weight:bold'>Student Name: </span><br />". $row2[0]."</td>";
-                        
-                    }
-                    
-                    echo "</form>";
-                }
                 
                 echo "</table>";
                     ?>

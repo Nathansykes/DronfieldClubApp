@@ -1,21 +1,3 @@
-<?php
-
-session_start();
-
-//$secure = $_COOKIE("Secure");
-
-//Checks if the cookie is true, welcomes back user
-//if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
-if (($_SESSION['valid']) && ($_SESSION['accessLevel'] == 2))
-    {
-        echo "Welcome back ".$_COOKIE["User"].",  Access Level: ".$_SESSION['accessLevel'];
-    }   
-else {
-    //If not the user cannot view the page in full
-    die("Access to content denied") ;
-}
-
-?>
 
 <!DOCTYPE html>
 <html>
@@ -23,11 +5,26 @@ else {
     <meta charset="UTF-8" />
     <!-- Viewport here -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Home</title>
+    <title>Dronfield Swimming Club - Student Records</title>
     <!-- attach styles here -->
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
+    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png"/>
 </head>
+
+<?php
+session_start();
+//Checks if the cookie is true, welcomes back user
+if (($_SESSION['valid']) && ($_SESSION['accessLevel'] == 2))
+    {
+        echo "Welcome back ".$_COOKIE["User"].",  Access Level: ".$_SESSION['accessLevel'];
+    }   
+else {
+    //If not the user cannot view the page in full
+    header("Location: ../html/index.html? no_access");
+}
+?>
+
 <body>
     <div class="container">
         <header>
@@ -35,7 +32,6 @@ else {
             <div class="logo">
                 <!--image logo will go here-->
                 <img src="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
-
             </div>
             <!--login-->
             <div class="loginLink">
@@ -61,7 +57,7 @@ else {
                 <ul>
                     <li><a href="securehomepage.php">Home</a></li>
                     <li><a href="classes.php">Classes</a></li>
-                    <li><a href="../html/testing.html">Conduct a Test</a></li>
+                    <li><a href="conductTestForm.php">Conduct a Test</a></li>
                     <?php
                     if ($_SESSION['accessLevel'] == 2) // Access 1 is a coach, 2 is admin
                     {
@@ -84,25 +80,36 @@ else {
 
                 include "connect.php";
 
-                $sql = "SELECT * FROM  `Students` ORDER BY  `studentNum` DESC LIMIT 0 , 30";
+                $sql = "SELECT * FROM  `Students` ORDER BY  `studentName` ASC LIMIT 0 , 30";
                 $result = mysqli_query($link, $sql);
 
                 //echo $_GET['message'];
                 //Student table
-                echo "<br>
-                <div class= 'form'>";
-                echo "<form action='newStudentForm.php' method='post' enctype='multipart/form-data'>";
-                echo "<input class= 'newMemberButton' type='submit' name='insert' value='Create New' required";
-                echo "<br>";
-                echo "</form>";
-                echo "<table class= 'table'>";
-                echo "<tr>";
+                ?>
+                <br>
+                <div class= 'form'>
+
+                <form action='manageUsersForm.php' method='post' enctype='multipart/form-data'>
+                <input class= 'newMemberButton' type='submit' name='insert' value='Manage Users' required>
+                </form>
+
+                <br><br>
+
+                <form action='newStudentForm.php' method='post' enctype='multipart/form-data'>
+                <input class= 'newMemberButton' type='submit' name='insert' value='Create New' required>
+                </form>
+
+                <br><br>
+                <table class= 'table'>
+                <tr>
+
+                <?php
                 $counter=0;
                 while ($row=mysqli_fetch_row($result))
                     {	
                         $counter++;
-                        echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Number: </span><br/>". $row[0]. "</td>";
                         echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Name: </span><br/>". $row[1]. "</td>";
+                        echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Number: </span><br/>". $row[0]. "</td>";
                         echo "</tr>";
 
                         echo "<tr id=member".$counter." class='tableRow hidden'>";

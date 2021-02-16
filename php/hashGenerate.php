@@ -7,6 +7,18 @@
 
 <?php
 
+
+if ($_SESSION['valid'])
+    {
+        echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+    }   
+else {  
+    //If not the user cannot view the page in full, send them back to home with noaccess
+    header("Location: ../html/index.html? no_access");
+}
+
+
+
 $user = $_POST['username'];
 $pass = $_POST['password'];
 $passConfirm = $_POST['password2'];

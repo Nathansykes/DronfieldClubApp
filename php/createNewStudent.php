@@ -9,7 +9,7 @@ if ($_SESSION['valid'])
     }   
 else {
     //If not the user cannot view the page in full
-    die("Access to content denied") ;
+    header("Location: ../html/index.html? no_access");
 }
 
 ?>

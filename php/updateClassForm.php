@@ -1,4 +1,14 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <!-- Viewport here -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home</title>
+    <!-- attach styles here -->
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
+</head>
 <?php
 
 session_start();
@@ -13,22 +23,10 @@ if ($_SESSION['valid'])
     }   
 else {
     //If not the user cannot view the page in full
-    die("Access to content denied") ;
+    header("Location: ../html/index.html? no_access");
 }
 
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8" />
-    <!-- Viewport here -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Home</title>
-    <!-- attach styles here -->
-    <link rel="stylesheet" href="../css/mobile.css">
-    <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
-</head>
 <body>
     <div class="container">
         <header>
@@ -42,7 +40,7 @@ else {
             <div class="loginLink">
                 <ul>
                     <li>
-                        <a href="../php/loginForm.php">Login</a>
+                    <a href="logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -61,7 +59,7 @@ else {
                 <ul>
                     <li><a href="securehomepage.php">Home</a></li>
                     <li><a href="classes.php">Classes</a></li>
-                    <li><a href="../html/testing.html">Conduct a Test</a></li>
+                    <li><a href="conducTestForm.php">Conduct a Test</a></li>
                     <?php
                     if ($_SESSION['accessLevel'] == 2) 
                     {
@@ -102,6 +100,17 @@ else {
 
                     $sql = "SELECT * FROM  classes WHERE classId = '$classToUpdate'";
                     $result = mysqli_query($link, $sql);
+                    
+                    //$row=mysqli_fetch_row($result);
+
+
+                    
+
+                    ?>
+                    <script>
+                    
+                    </script>
+                <?php 
                  ?>
 
 
@@ -110,30 +119,75 @@ else {
                  <h2>Update Class</h2>
                  <br><br>
                  <br><br>
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <input name="classToUpdate" type="hidden" value="<?php echo $_POST['classIdToUpdate']; ?>">
+                    <form action="updateClass.php" method="post" enctype="multipart/form-data">
+                        <input name="classToUpdate" type="hidden" value="<?php echo $classToUpdate; ?>">
                         <label for="classDay">Day of the Week</label>
                             <select name="classDay" id="classDay">
-                            <option value="monday">Monday</option>
-                            <option value="tuesday">Tuesday</option>
-                            <option value="wednesday">Wednesday</option>
-                            <option value="thursday">Thursday</option>
-                            <option value="friday">Friday</option>
-                            <option value="saturday">Saturday</option>
-                            <option value="sunday">Sunday</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
                             </select>
                         <label for="classTime">Time (24hr)</label>
                         <input type="time" id="classTime" name="classTime">
                         <label for="classStaff">Staff</label>
                         <input type="text" id="classStaff" name="classStaff">
                         <br><br>
-                        <input type="submit" name="submit" class="newMemberbutton">
+                        <input type="submit" name="update" class="newMemberbutton">
                         <br><br>
                     </form>
+                    
+                    <script>
+                        <?php
+                        while ($row=mysqli_fetch_row($result))
+                        {	
+
+                            $classDay = $row[1];
+                            $classTime = $row[2];
+                            $classStaff = $row[3];
+
+                            $datetime=strtotime($classTime);
+                            $time=date('H:i',$datetime);
+
+                            ?>
+                            var temp;
+                            var classDay = document.getElementById("classDay");
+                            var i = 0;
+
+                            for (i = 0; i < 7; i++) // seven days in a week
+                            {
+                                
+
+                                
+                                console.info(classDay[i].value);
+
+                                if(classDay[i].value == "<?php echo $classDay; ?>")
+                                {
+                                    classDay.selectedIndex = i;
+
+                                    console.info(classDay.selectedIndex);
+                                    console.info("changed");
+                                    console.info("<?php echo $classDay; ?>");
+                                    break;
+                                }
+                                
+                            }
+                            console.info("<?php echo $time; ?>");
+                            console.info("<?php echo $classStaff; ?>");
+                            
+                            document.getElementById("classTime").defaultValue = "<?php echo $time; ?>"
+                            document.getElementById("classStaff").defaultValue = "<?php echo $classStaff; ?>"
+                        <?php 
+                        } ?>
+                    </script>
                  </div>
 
-                 <div class="form"> <!--Form for updating users-->
                  <h2>Update Students</h2>
+                 <br>
+                 <div class="form"> <!--Form for updating users-->
                  
                  
                  <?php
@@ -155,7 +209,7 @@ else {
                 <input class= "newMemberButton" type="submit" name="insert" value="Add Student" required>
                 <br>
                 </form>
-                    
+                <br> 
                 <?php
                 echo "<table class= 'table'>";
                 $counter=0;
@@ -180,7 +234,7 @@ else {
                             <form action="removeStudentFromClass.php" method="post" onsubmit="">
                                 <input type="hidden" name="studentIdToRemove" value="<?php echo $studentNum; ?>">
                                 <input type="hidden" name="classToUpdate" value="<?php echo $classToUpdate; ?>">
-                                <input type="submit" name="remove" value="Remove Student" class="newMemberbutton">
+                                <input type="submit" name="remove" value="Remove Student" class="newMemberbutton"  onclick="return confirm('Are you sure?')">
                             </form>
                         <?php
                         echo "</td>";
@@ -214,27 +268,5 @@ else {
     <!--javaScript files will be executed here-->
     <script src="../scripts/jquery-3.4.1.min.js"></script>
     <script src="../scripts/main.js"></script>
-    <script>
-        <?php
-        while ($row=mysqli_fetch_row($result))
-        {	
-            ?>
-            var temp;
-            var classDay = document.getElementById("classDay");
-            
-
-            for (var i = 1; i < 7; i++) // seven days in a week
-            {
-                if(classDay[i].value = "<?php echo $row[1]; ?>")
-                {
-                    classDay.selectedIndex = i;
-                    break;
-                }
-                
-            }
-            document.getElementById("classTime").defaultValue = "<?php echo $row[2]; ?>"
-            document.getElementById("classStaff").defaultValue = "<?php echo $row[3]; ?>"
-        <?php } ?>
-    </script>
 </body>
 </html>

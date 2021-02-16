@@ -9,6 +9,26 @@
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
 </head>
+
+<?php
+
+session_start();
+
+//$secure = $_COOKIE("Secure");
+
+//Checks if the cookie is true, welcomes back user
+//if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
+if (($_SESSION['valid']) && ($_SESSION['accessLevel'] == 2))
+    {
+        echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+    }   
+else {
+    //If not the user cannot view the page in full
+    header("Location: ../html/index.html? no_access");
+}
+
+?>
+
 <body>
     <div class="container">
         <header>
@@ -22,7 +42,7 @@
             <div class="loginLink">
                 <ul>
                     <li>
-                        <a href="../php/loginForm.php">Login</a>
+                    <a href="logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -41,7 +61,7 @@
                 <ul>
                     <li><a href="securehomepage.php">Home</a></li>
                     <li><a href="classes.php">Classes</a></li>
-                    <li><a href="../html/testing.html">Conduct a Test</a></li>
+                    <li><a href="conductTestForm.php">Conduct a Test</a></li>
                 </ul>
             </div>
         </nav>
@@ -67,17 +87,17 @@
                     <form action="../php/updateStudent.php" method="post" enctype="multipart/form-data">
                         <input name="studentIdToUpdate" type="hidden" value="<?php echo $_POST['studentIdToUpdate']; ?>">
                         <label for="studentName">Student's Name</label>
-                        <input type="text" id="studentName" name="studentName">
+                        <input type="text" id="studentName" name="studentName" required>
                         <label for="studentDOB">Student's Date of Birth</label>
-                        <input type="date" id="studentDOB" name="studentDOB">
+                        <input type="date" id="studentDOB" name="studentDOB" required>
                         <label for="studentAddress">Student's Home Address</label>
-                        <input type="text" id="studentAddress" name="studentAddress">
+                        <input type="text" id="studentAddress" name="studentAddress" required>
                         <label for="parentName">Student's Parent's Name (Only One Required)</label>
-                        <input type="text" id="parentName" name="parentName">
+                        <input type="text" id="parentName" name="parentName" required>
                         <label for="parentEmail">Parent's Email</label>
-                        <input type="email" id="parentEmail" name="parentEmail">
+                        <input type="email" id="parentEmail" name="parentEmail" required>
                         <label for="parentPhone">Parent's Phone</label>
-                        <input type="tel" id="parentPhone" name="parentPhone">
+                        <input type="tel" id="parentPhone" name="parentPhone" required>
                         <label for="studentMedical">Student's Medical Information</label>
                         <input type="text" id="studentMedical" name="studentMedical">
                         <br><br>

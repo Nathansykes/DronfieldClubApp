@@ -9,20 +9,32 @@
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
 </head>
+
+<?php
+session_start();
+//Checks if the cookie is true, welcomes back user
+if (($_SESSION['valid']) && ($_SESSION['accessLevel'] == 2))
+    {
+        echo "Welcome back ".$_COOKIE["User"].",  Access Level: ".$_SESSION['accessLevel'];
+    }   
+else {
+    //If not the user cannot view the page in full
+    header("Location: ../html/index.html? no_access");
+}
+?>
+
 <body>
     <div class="container">
         <header>
             <!--logo-->
             <div class="logo">
-                <!--image logo will go here-->
-                <
-
+                <img src="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
             </div>
             <!--login-->
             <div class="loginLink">
                 <ul>
                     <li>
-                        <a href="../php/loginForm.php">Login</a>
+                    <a href="logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -41,7 +53,7 @@
                 <ul>
                     <li><a href="securehomepage.php">Home</a></li>
                     <li><a href="../html/classes.html">Classes</a></li>
-                    <li><a href="../html/testing.html">Conduct a Test</a></li>
+                    <li><a href="conductTestForm.php">Conduct a Test</a></li>
                 </ul>
             </div>
         </nav>
@@ -64,7 +76,7 @@
                  ?>
 
                  <div class="form">
-                    <form action="../php/createNewStudent.php" method="post" enctype="multipart/form-data">
+                    <form action="" method="post" enctype="multipart/form-data">
                         <label for="studentNum">Student Number</label>
                         <input type="text" id="studentNum" name="studentNum">
                         <label for="studentName">Student's Name</label>

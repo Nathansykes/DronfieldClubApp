@@ -16,9 +16,8 @@ body
 .container
 {
     width: 100%;
-    min-width: 320px;
+    min-height: 100vh;
 }
-
 .darkMode /* SEE ISSUE #3 */
 {
     background-color: black;
@@ -78,8 +77,7 @@ h2
     float: left;
 }
 
-.logo
-{
+.logo {
     flex: 1;
 }
 
@@ -182,6 +180,11 @@ img
     
 }
 
+main
+{
+    width: 95%;
+    margin: auto;
+}
 
 /* Main Content */
 
@@ -273,12 +276,15 @@ label
 }
 
 #classDay 
+<<<<<<< HEAD
+=======
 {
     width: 100%;
     padding: 15px 10px;
 }
 
 #classDa
+>>>>>>> master
 {
     width: 100%;
     padding: 15px 10px;
@@ -347,20 +353,25 @@ input.updateClassButton
 {
     width:100%;
 }
-
-input.updateClassButton
+input.registerClassButton
 {
     width:100%;
 }
-
-input.updateClassButton
+.registerSubmit
 {
-    width:100%;
+    float:right;
+    width: 25%;
 }
 
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> master
 .table 
 {
     width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
     overflow-x:auto;
 }
@@ -399,8 +410,17 @@ td
     vertical-align: top;
     text-align: left;
 }
+.topRow2 
+{
+    
+    vertical-align: top;
+    text-align: left;
+}
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> master
 tr:hover 
 {
     background-color: #e6f9ff;
@@ -427,13 +447,17 @@ form > div
     display:none;
 }
 
+
 /*footer styling*/
 footer {
     width: 100%;
     left: 0;
     bottom: 0;
+    margin-top: 1em 0; /*TESTING 11:36 -ES*/
     background-color: #2e3e74;
     color: white;
+    min-height:inherit;
+    max-height: 20%;
 }
 
 footer .row 

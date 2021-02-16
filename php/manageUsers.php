@@ -24,7 +24,11 @@ else
 
 
 $key = "";
+<<<<<<< HEAD
+$characters = " 0123456789abcdefghihklmnopqrstuvwxyzABCDEFHIJKLMNOPQRSTUVWXYZ!@$.?,+"; // Could this be cleaned up to 0...1,a...z,A...Z etc.?
+=======
 $characters = " 012345678910abcdefghihklmnopqrstuvwxyzABCDEFHIJKLMNOPQRSTUVWXYZ!@$.?,+";
+>>>>>>> master
 
 $min = 0;
 $max = strlen($characters);

@@ -4,11 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dronfield Swimming Club - Conduct a Test</title>
+<<<<<<< HEAD
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 720px)" />
+    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" />
+=======
     <!--<link rel="icon" type="image/png" href="../images/favicon.png"/>-->
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 720px)" />
     <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" />
 
+>>>>>>> master
 </head>
 
 <?php
@@ -71,6 +77,22 @@ else {
         <main>
             <div class="mainContent">
                 <!--content goes here-->
+<<<<<<< HEAD
+                <h2>Update Students</h2>
+                <br>
+                <div class="form"> <!--Form for updating users-->
+                <?php
+                 //Student table
+
+                $studentNum = "";
+                $sql = "SELECT studentNum FROM  classmember WHERE classId = '$classToUpdate'";
+                $result = mysqli_query($link, $sql);
+                
+                ?>
+                <div class= "form">
+
+=======
+>>>>>>> master
             </div>
         </main>
     </div>
