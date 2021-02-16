@@ -3,13 +3,13 @@
     box-sizing: border-box;
 }
 
-body
+body 
 {
     height: 100%;
     width: 100%;
     font-family: Lato, Montserrat, sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 0; 
     background-color: #fefefe;
 }
 
@@ -32,21 +32,21 @@ body
     display: none;
 }
 
-.mainNav ul
+.mainNav ul 
 {
     list-style: none;
     padding-left: 0;
     margin: 0;
 }
 
-.mainNav ul li
+.mainNav ul li 
 {
     border-top: 0.5px solid #ccc;
     border-bottom: 0.5px solid #ccc;
     padding: 5px;
 }
 
-.mainNav ul li a
+.mainNav ul li a 
 {
     margin: auto;
     display: inline-block;
@@ -63,7 +63,7 @@ body
 
 .link:hover{
     color: lightslategray !important;
-
+    
 }
 
 header {
@@ -73,7 +73,7 @@ header {
     background-color: #2e3e74; /* Was #2e3e74, change to something lighter ,, background-color: #476082;*/
 }
 
-h2
+h2 
 {
     float: left;
 }
@@ -83,19 +83,19 @@ h2
     flex: 1;
 }
 
-.logo img
+.logo img 
 {
     max-width: 50px;
     padding: 5px;
     margin-top: 2px;
 }
 
-img
+img 
 {
     width: 100%;
 }
 /*style login button*/
-.loginLink
+.loginLink 
 {
     justify-content: right;
     padding: 0px 0px 0px 15px;
@@ -103,7 +103,7 @@ img
     font-size: 14px;
 }
 
-.loginLink > ul
+.loginLink > ul 
 {
     list-style: none;
     padding-left:  0;
@@ -111,7 +111,7 @@ img
     justify-content: flex-end;
 }
 
-.loginLink > ul > li
+.loginLink > ul > li 
 {
     border: 1px solid #000;
     box-shadow: #476082;
@@ -161,15 +161,11 @@ img
 
 .bars
 {
-    border: 1px solid lightblue;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    color: #000;
     float: right;
     cursor: pointer;
 }
 
-.bar1,.bar2,.bar3
+.bar1,.bar2,.bar3 
 {
     width: 30px;
     height: 5px;
@@ -177,13 +173,13 @@ img
     background-color: white;
 }
 
-.mainContent
+.mainContent 
 {
     height: 100%;
     margin: 0 10px;
     text-align: center;
     margin-bottom:100px;
-
+    
 }
 
 
@@ -238,7 +234,7 @@ img
     transition: 0.3s;
 }
 
-.cards
+.cards 
 {
     display: flex;
     flex-wrap: wrap;
@@ -260,7 +256,7 @@ img
 .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   }
-
+  
 
 .card img{
     /*border-radius: 25px;*/
@@ -269,14 +265,14 @@ img
 
 /*form stying*/
 
-label
+label 
 {
     display: block;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
-#classDay
+#classDay 
 {
     width: 100%;
     padding: 15px 10px;
@@ -308,7 +304,7 @@ input[type ='text'], input[type="password"], textarea
 
 }
 /*button styling*/
-input[type="submit"]
+input[type="submit"] 
 {
     margin-left: auto;
     margin-right: auto;
@@ -331,7 +327,7 @@ input[type="submit"]
     font-size: 17px;
 }
 
-.form
+.form 
 {
     text-align: left;
     padding-top: 5%;
@@ -362,7 +358,7 @@ input.updateClassButton
     width:100%;
 }
 
-.table
+.table 
 {
     width: 100%;
     border-collapse: collapse;
@@ -374,22 +370,22 @@ input.updateClassButton
     border: 1px solid  cadetblue;
 }
 
-th
+th 
 {
     height: 70px;
 }
 
-th, td
+th, td 
 {
     padding: 10px;
     text-align: left;
 }
 
-tr
+tr 
 {
     vertical-align: center;
 }
-td
+td 
 {
     vertical-align: center;
     border: none;
@@ -397,7 +393,7 @@ td
     border-bottom: 1px solid  cadetblue;
 }
 
-.topRow
+.topRow 
 {
     cursor: pointer;
     vertical-align: top;
@@ -405,12 +401,12 @@ td
 }
 
 
-tr:hover
+tr:hover 
 {
     background-color: #e6f9ff;
 }
 
-form > div
+form > div 
 {
     margin: 50px;
 }
@@ -418,7 +414,7 @@ form > div
 /*footer styling*/
 
 
-.form
+.form 
 {
     text-align: left;
     padding-top: 5%;
@@ -440,13 +436,13 @@ footer {
     color: white;
 }
 
-footer .row
+footer .row 
 {
     display: flex;
     flex-direction: column;
 }
 
-footer .row address
+footer .row address 
 {
     padding: 15px 0 5px 5px;
 }

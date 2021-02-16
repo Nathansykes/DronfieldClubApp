@@ -276,6 +276,15 @@ label
 }
 
 #classDay 
+<<<<<<< HEAD
+=======
+{
+    width: 100%;
+    padding: 15px 10px;
+}
+
+#classDa
+>>>>>>> master
 {
     width: 100%;
     padding: 15px 10px;
@@ -354,8 +363,11 @@ input.registerClassButton
     width: 25%;
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> master
 .table 
 {
     width: 100%;
@@ -405,6 +417,10 @@ td
     text-align: left;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 tr:hover 
 {
     background-color: #e6f9ff;
