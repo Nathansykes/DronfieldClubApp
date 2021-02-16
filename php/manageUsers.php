@@ -1,5 +1,5 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Untitled Document</title>
@@ -11,12 +11,11 @@ session_start();
 include "connect.php";
 
 
-if ($_SESSION['valid'] && ($_SESSION['accessLevel'] == 2))
-{
-    echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
-}   
-else 
-{
+if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
+    {
+        echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
+    }   
+else {
     //If not the user cannot view the page in full
     header("Location: ../html/index.html? no_access");
 }
@@ -24,11 +23,7 @@ else
 
 
 $key = "";
-<<<<<<< HEAD
 $characters = " 0123456789abcdefghihklmnopqrstuvwxyzABCDEFHIJKLMNOPQRSTUVWXYZ!@$.?,+"; // Could this be cleaned up to 0...1,a...z,A...Z etc.?
-=======
-$characters = " 012345678910abcdefghihklmnopqrstuvwxyzABCDEFHIJKLMNOPQRSTUVWXYZ!@$.?,+";
->>>>>>> master
 
 $min = 0;
 $max = strlen($characters);

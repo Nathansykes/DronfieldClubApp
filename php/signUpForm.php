@@ -8,7 +8,7 @@
     <!-- attach styles here -->
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
-    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png"/>
+    <link rel="icon" type="image/x-icon" href="../images/logoCOMP.png"/>
 </head>
 <body>
     <div class="container">
@@ -16,7 +16,7 @@
             <!--logo-->
             <div class="logo">
                 <!--image logo will go here-->
-                <img src="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
+                <img src="../images/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
 
             </div>
             <!--login-->

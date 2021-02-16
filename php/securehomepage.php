@@ -6,19 +6,19 @@
     <title>Dronfield Swimming Club - Home</title>
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)" />
-    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png"/>
+    <link rel="icon" type="image/x-icon" href="../images/logoCOMP.png"/>
 </head>
 <?php
 
 session_start();
 
-//$secure = $_COOKIE("Secure");
+//$secure = $_SESSION("Secure");
 
 //Checks if the cookie is true, welcomes back user
 //if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
-if ($_SESSION['valid'])
+if ($_SESSION['valid'] ?? "")
     {
-        echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else {  
     //If not the user cannot view the page in full, send them back to home with noaccess
@@ -33,7 +33,7 @@ else {
             <!--logo-->
             <div class="logo">
                 <!--image logo will go here-->
-                <img src="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
+                <img src="../images/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
 
             </div>
             <!--login-->
@@ -62,7 +62,8 @@ else {
                     <li><a href="classes.php">Classes</a></li>
                     <li><a href="conductTestForm.php">Conduct a Test</a></li>
                     <?php
-                    if ($_SESSION['accessLevel'] == 2) 
+                    $accessLevel = $_SESSION['accessLevel'] ?? "";
+                    if ($accessLevel == 2) 
                     {
                         ?>
                         <li><a href="databaseManagment.php">Manage Members</a></li>

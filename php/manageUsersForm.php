@@ -8,15 +8,15 @@
     <!-- attach styles here -->
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
-    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png"/>
+    <link rel="icon" type="image/x-icon" href="../images/logoCOMP.png"/>
 </head>
 
 <?php
 session_start();
 //Checks if the cookie is true, welcomes back user
-if (($_SESSION['valid']) && ($_SESSION['accessLevel'] == 2))
+if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
     {
-        echo "Welcome back ".$_COOKIE["User"].",  Access Level: ".$_SESSION['accessLevel'];
+        echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
 else {
     //If not the user cannot view the page in full
@@ -56,7 +56,8 @@ else {
                     <li><a href="classes.php">Classes</a></li>
                     <li><a href="../html/testing.html">Conduct a Test</a></li>
                     <?php
-                    if ($_SESSION['accessLevel'] == 2) // Access 1 is a coach, 2 is admin
+                    $accessLevel = $_SESSION['accessLevel'] ?? "";
+                    if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
                     {
                         ?>
                         <li><a href="databaseManagment.php">Manage Members</a></li>
@@ -83,7 +84,7 @@ else {
                  <?php
 
                     include "connect.php";
-                    $key = $_POST['key'];
+                    $key = $_POST['key'] ?? "";
 
                     if($key != "")
                     {
@@ -108,19 +109,5 @@ else {
     <!--javaScript files will be executed here-->
     <script src="../scripts/jquery-3.4.1.min.js"></script>
     <script src="../scripts/main.js"></script>
-    <script>
-        <?php
-        while ($row=mysqli_fetch_row($result))
-        {	
-            ?>
-            document.getElementById("studentName").defaultValue = "<?php echo $row[1]; ?>"
-            document.getElementById("studentDOB").defaultValue = "<?php echo $row[2]; ?>"
-            document.getElementById("studentAddress").defaultValue = "<?php echo $row[3]; ?>"
-            document.getElementById("parentName").defaultValue = "<?php echo $row[4]; ?>"
-            document.getElementById("parentEmail").defaultValue = "<?php echo $row[5]; ?>"
-            document.getElementById("parentPhone").defaultValue = "<?php echo $row[6]; ?>"
-            document.getElementById("studentMedical").defaultValue = "<?php echo $row[7]; ?>"
-        <?php } ?>
-    </script>
 </body>
 </html>

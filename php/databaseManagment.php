@@ -1,12 +1,9 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <!-- Viewport here -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dronfield Swimming Club - Student Records</title>
-    <!-- attach styles here -->
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
     <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png"/>
@@ -15,9 +12,9 @@
 <?php
 session_start();
 //Checks if the cookie is true, welcomes back user
-if (($_SESSION['valid']) && ($_SESSION['accessLevel'] == 2))
+if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
     {
-        echo "Welcome back ".$_COOKIE["User"].",  Access Level: ".$_SESSION['accessLevel'];
+        echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
 else {
     //If not the user cannot view the page in full
@@ -31,14 +28,13 @@ else {
             <!--logo-->
             <div class="logo">
                 <!--image logo will go here-->
-                <img src="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
+                <img src="../images/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
             </div>
             <!--login-->
             <div class="loginLink">
                 <ul>
                     <li>
-                        <a href="logout.php">Logout</a>
-                        
+                        <a href="logout.php">Logout</a> 
                     </li>
                 </ul>
             </div>
@@ -59,7 +55,8 @@ else {
                     <li><a href="classes.php">Classes</a></li>
                     <li><a href="conductTestForm.php">Conduct a Test</a></li>
                     <?php
-                    if ($_SESSION['accessLevel'] == 2) // Access 1 is a coach, 2 is admin
+                    $accessLevel = $_SESSION['accessLevel'] ?? "";
+                    if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
                     {
                         ?>
                         <li><a href="databaseManagment.php">Manage Members</a></li>

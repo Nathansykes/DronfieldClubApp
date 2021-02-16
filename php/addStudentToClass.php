@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Untitled Document</title>
+<title>Add Student to Class</title>
 </head>
 
 <?php
 
-$studentToAdd = $_POST['studentToAdd'];
-$classToUpdate = $_POST['classToUpdate'];
+$studentToAdd = $_POST['studentToAdd'] ?? "";
+$classToUpdate = $_POST['classToUpdate'] ?? "";
 
 
 include "connect.php";
 
-if ($_SESSION['valid'])
+if ($_SESSION['valid'] ?? "")
     {
-        echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else {  
     //If not the user cannot view the page in full, send them back to home with noaccess

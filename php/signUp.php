@@ -3,38 +3,44 @@
 <head>
     <meta charset="utf-8">
     <title>Sign Up</title>
-    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png"/>
+    <link rel="icon" type="image/x-icon" href="../images/logoCOMP.png"/>
 </head>
 
 
 <?php
     include "connect.php";
     session_start();
-    $user = $_POST['username'];
-    $pass = $_POST['password'];
-    $passConfirm = $_POST['password2'];
-    $signUpKey = $_POST['signUpKey'];
+    $user = $_POST['username'] ?? "";
+    $pass = $_POST['password'] ?? "";
+    $passConfirm = $_POST['password2'] ?? "";
+    $signUpKey = $_POST['signUpKey'] ?? "";
     
-        if(strpbrk($user, ';:"=-+/_%*&|\''))
-        {
-            header("Location: signUpForm.php?invalidcharacters");
-            exit (0);
-        }
-        if(strpbrk($pass, ';:"=-+/_%*&|\''))
-        {
-            header("Location: signUpForm.php?invalidcharacters");
-            exit (0);
-        }
-        if(strpbrk($passConfirm, ';:"=-+_%/*&|\''))
-        {
-            header("Location: signUpForm.php?invalidcharacters");
-            exit (0);
-        }
-        if(strpbrk($signUpKey, ';:"=-+/_%*&|\''))
-        {
-            header("Location: signUpForm.php?invalidcharacters");
-            exit (0);
-        }
+
+    if ($user == "" || $pass == "" || $passConfirm == "" || $signUpKey == "") 
+    {
+        header("Location: loginForm.php?invaliddetails");
+        exit (0);
+    }
+    if(strpbrk($user, ';:"=-+/_%*&|\''))
+    {
+        header("Location: signUpForm.php?invalidcharacters");
+        exit (0);
+    }
+    if(strpbrk($pass, ';:"=-+/_%*&|\''))
+    {
+        header("Location: signUpForm.php?invalidcharacters");
+        exit (0);
+    }
+    if(strpbrk($passConfirm, ';:"=-+_%/*&|\''))
+    {
+        header("Location: signUpForm.php?invalidcharacters");
+        exit (0);
+    }
+    if(strpbrk($signUpKey, ';:"=-+/_%*&|\''))
+    {
+        header("Location: signUpForm.php?invalidcharacters");
+        exit (0);
+    }
 
     $sql = "SELECT * FROM userKey";
     $result = mysqli_query($link, $sql);

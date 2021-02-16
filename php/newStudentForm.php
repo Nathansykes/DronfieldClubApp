@@ -8,15 +8,15 @@
     <!-- attach styles here -->
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
-    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png"/>
+    <link rel="icon" type="image/x-icon" href="../images/logoCOMP.png"/>
 </head>
 
 <?php
 session_start();
 //Checks if the cookie is true, welcomes back user
-if (($_SESSION['valid']) && ($_SESSION['accessLevel'] == 2))
+if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
     {
-        echo "Welcome back ".$_COOKIE["User"].",  Access Level: ".$_SESSION['accessLevel'];
+        echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
 else {
     //If not the user cannot view the page in full
@@ -45,6 +45,15 @@ else {
                     <div class="bar1"></div>
                     <div class="bar2"></div>
                     <div class="bar3"></div>
+                    <?php
+                    $accessLevel = $_SESSION['accessLevel'] ?? "";
+                    if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
+                    {
+                        ?>
+                        <li><a href="databaseManagment.php">Manage Members</a></li>
+                        <?php
+                    }
+                    ?>
                 </div>
             </div>
         </header>
@@ -69,8 +78,8 @@ else {
 
                     include "connect.php";
 
-                    $studentIdToUpdate = $_POST['studentIdToUpdate'];
-                    $update = $_POST['update'];
+                    $studentIdToUpdate = $_POST['studentIdToUpdate'] ?? "";
+                    $update = $_POST['update'] ?? "";
 
                     $sql = "SELECT * FROM  Students WHERE studentNum = '$studentIdToUpdate'";
                     $result = mysqli_query($link, $sql);

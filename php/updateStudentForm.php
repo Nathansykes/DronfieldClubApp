@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <!-- Viewport here -->
@@ -14,13 +14,13 @@
 
 session_start();
 
-//$secure = $_COOKIE("Secure");
+//$secure = $_SESSION("Secure");
 
 //Checks if the cookie is true, welcomes back user
 //if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
-if (($_SESSION['valid']) && ($_SESSION['accessLevel'] == 2))
+if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
     {
-        echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
 else {
     //If not the user cannot view the page in full
@@ -35,7 +35,7 @@ else {
             <!--logo-->
             <div class="logo">
                 <!--image logo will go here-->
-                <img src="https://media.discordapp.net/attachments/788419191870324769/798146408313782282/LOGO.png" alt="Dronfield Swimming Club Logo" />
+                <img src="../images/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
 
             </div>
             <!--login-->
@@ -52,6 +52,15 @@ else {
                     <div class="bar1"></div>
                     <div class="bar2"></div>
                     <div class="bar3"></div>
+                    <?php
+                    $accessLevel = $_SESSION['accessLevel'] ?? "";
+                    if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
+                    {
+                        ?>
+                        <li><a href="databaseManagment.php">Manage Members</a></li>
+                        <?php
+                    }
+                    ?>
                 </div>
             </div>
         </header>

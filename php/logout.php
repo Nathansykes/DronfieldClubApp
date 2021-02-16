@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Page Title</title>
@@ -7,19 +7,18 @@
 
 <?php
 session_start();
-echo "Logged out ".$_COOKIE["User"]."! ";
+echo "Logged out ".$_SESSION["User"]."! ";
 
-setcookie("User", '', null - 1, '/');
+$valid = ($session['valid'] ?? "");
 
-unset($session['valid']);
-ini_set($session, 0);
+unset($valid);
+ini_set($session ?? "", 0);
 session_destroy();
 
 
-exit(header("location: ../html/index.html"));
-
+exit("location: ../html/index.html");
+// exit(header())
 ?>
-
 
 <body>
 </body>

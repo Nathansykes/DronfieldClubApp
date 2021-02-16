@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Page Title</title>
@@ -7,14 +7,19 @@
 
 <?php
     session_start();
-    include "../php/connect.php";
-    $user = $_POST['username'];
-    $pass = $_POST['password'];
-    $credit = $_GET['credit'];
-    $cookie = $_GET['cookie'];
+    include "connect.php";
+    $user = $_POST['username'] ?? ""; // this mean if nothing return empty string rather than null
+    $pass = $_POST['password'] ?? "";
+    $credit = $_GET['credit'] ?? "";
     
     
     echo $user;
+
+    if ($user == "" || $pass == "") 
+    {
+        header("Location: loginForm.php?invaliddetails");
+        exit (0);
+    }
 
     if(strpbrk($user, ';:"=-+/*_%&|\''))
     {
@@ -37,7 +42,7 @@
     {
         $storedPassword = $row[0];
         
-        if((password_verify($pass,$storedPassword)))
+        if(password_verify($pass,$storedPassword))
         {
             $sql = "SELECT * FROM users WHERE userName ='$user'";
             $pass = "";
@@ -67,29 +72,31 @@
         //Stores user's accessLevel for secure page
         
         //Checks if cookie has not been created
-        if(!isset($_COOKIE["User"]))
+        if(!isset($_SESSION["User"]))
         {
             
             //creates cookie
-            setcookie("User", $row['userName'], time()+9000);
+            //setcookie("User", $row['userName'], time()+9000);
+            $_SESSION['User'] = $row['userName'];
             //Secure Page
             $_SESSION['valid'] = true;
             $_SESSION['accessLevel'] = $row['accessLevel'];
-            header("location: securehomepage.php?cookie=true");
+            header("location: securehomepage.php?session=true");
         }
         else
         {
             //checks cookie matches the username
-            if ($_COOKIE["User"] == $row['userName']) {
-                echo "Welcome ".$_COOKIE["User"];
+            if ($_SESSION["User"] == $row['userName']) {
+                echo "Welcome ".$_SESSION["User"];
             } else {
                 //creates cookie
-                setcookie("User", $row['userName'], time()+9000);
+                $_SESSION['User'] = $row['userName'];
+                //setcookie("User", $row['userName'], time()+9000);
             }
             //Secure Page where cookie exsists
             $_SESSION['valid'] = true;
             $_SESSION['accessLevel'] = $row['accessLevel'];
-            header("location: securehomepage.php?cookie=true");
+            header("location: securehomepage.php?session=true");
         }
     } else {
         //Login Page

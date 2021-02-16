@@ -3,35 +3,35 @@
 session_start();
 
 
-if ($_SESSION['valid'])
+if ($_SESSION['valid'] ?? "")
     {
-        echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
-else {
-    //If not the user cannot view the page in full
+else {  
+    //If not the user cannot view the page in full, send them back to home with noaccess
     header("Location: ../html/index.html? no_access");
 }
 
 ?>
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Untitled Document</title>
+<title>Create New Student</title>
 </head>
 
 <?php
 
 include "connect.php";
 
-$studentNum = $_POST['studentNum'];
-$studentName = $_POST['studentName'];
-$studentDOB = $_POST['studentDOB'];
-$studentAddress = $_POST['studentAddress'];
-$parentName = $_POST['parentName'];
-$parentEmail = $_POST['parentEmail'];
-$parentPhone = $_POST['parentPhone'];
-$studentMedical = $_POST['studentMedical'];
+$studentNum = $_POST['studentNum'] ?? "";
+$studentName = $_POST['studentName'] ?? "";
+$studentDOB = $_POST['studentDOB'] ?? "";
+$studentAddress = $_POST['studentAddress'] ?? "";
+$parentName = $_POST['parentName'] ?? "";
+$parentEmail = $_POST['parentEmail'] ?? "";
+$parentPhone = $_POST['parentPhone'] ?? "";
+$studentMedical = $_POST['studentMedical'] ?? "";
 
 //header("Location: databaseManagment.php? message=values received.$studentNum.$studentName.$studentDOB.$studentAddress.$parentName.$parentEmail.$parentPhone.$studentMedical");
 

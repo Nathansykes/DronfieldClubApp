@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <!-- Viewport here -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dronfield Swimming Club - Login</title>
     <!-- attach styles here -->
-    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/mobile.css"/>
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
-    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png"/>
-</head>
+    <link rel="icon" type="image/x-icon" href="../images/logoCOMP.png"/>
+</head> <!--https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418-->
 <body>
     <div class="container">
         <header>
             <!--logo-->
             <div class="logo">
                 <!--image logo will go here-->
-                <img src="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
-
+                <img src="../images/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
             </div>
             <!--login-->
             <div class="loginLink">

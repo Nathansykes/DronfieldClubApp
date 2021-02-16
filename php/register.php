@@ -9,9 +9,9 @@
     session_start();
     include "../php/connect.php";
 
-    if ($_SESSION['valid'] && ($_SESSION['accessLevel'] == 2))
+    if ($_SESSION['valid'] ?? "" && ($_SESSION['accessLevel'] == 2 ?? ""))
     {
-        echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
     else 
     {
@@ -19,13 +19,8 @@
         header("Location: ../html/index.html? no_access");
     }
 
-    $classId = $_POST['classIdToRegister'];
+    $classId = $_POST['classIdToRegister'] ?? "";
    
-    echo $timeOfAttendance;
-    echo "<br>";
-    echo $classId;
-    echo "<br>";
-    
     $studentNum = "";
     $sql = "SELECT studentNum FROM  classmember WHERE classId = '$classId'";        // getting all student numbers from database where classId matches
     $result = mysqli_query($link, $sql);

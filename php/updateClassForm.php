@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <!-- Viewport here -->
@@ -13,13 +13,13 @@
 
 session_start();
 
-//$secure = $_COOKIE("Secure");
+//$secure = $_SESSION("Secure");
 
 //Checks if the cookie is true, welcomes back user
 //if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
-if ($_SESSION['valid'])
+if ($_SESSION['valid']?? "")
     {
-        echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else {
     //If not the user cannot view the page in full
@@ -33,7 +33,7 @@ else {
             <!--logo-->
             <div class="logo">
                 <!--image logo will go here-->
-                <img src="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
+                <img src="../images/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
 
             </div>
             <!--login-->
@@ -50,6 +50,15 @@ else {
                     <div class="bar1"></div>
                     <div class="bar2"></div>
                     <div class="bar3"></div>
+                    <?php
+                    $accessLevel = $_SESSION['accessLevel'] ?? "";
+                    if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
+                    {
+                        ?>
+                        <li><a href="databaseManagment.php">Manage Members</a></li>
+                        <?php
+                    }
+                    ?>
                 </div>
             </div>
         </header>
@@ -61,7 +70,8 @@ else {
                     <li><a href="classes.php">Classes</a></li>
                     <li><a href="conducTestForm.php">Conduct a Test</a></li>
                     <?php
-                    if ($_SESSION['accessLevel'] == 2) 
+                    $accessLevel = $_SESSION['accessLevel'] ?? "";
+                    if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
                     {
                         ?>
                         <li><a href="databaseManagment.php">Manage Members</a></li>
@@ -82,8 +92,8 @@ else {
 
                     include "connect.php";
 
-                    $classToUpdate = $_POST['classToUpdate'];
-                    $update = $_POST['update'];
+                    $classToUpdate = $_POST['classToUpdate'] ?? "";
+                    $update = $_POST['update'] ?? "";
 
                     ?>
                         <script> console.info(<?php echo $classToUpdate; ?>) </script>
@@ -92,7 +102,7 @@ else {
 
                     if(empty($classToUpdate))
                     {
-                        $classToUpdate = $_GET['classToUpdate'];
+                        $classToUpdate = $_GET['classToUpdate'] ?? "";
                         ?>
                         <script> console.info(<?php echo $classToUpdate; ?>) </script>
                         <?php

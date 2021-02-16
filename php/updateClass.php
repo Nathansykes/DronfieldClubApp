@@ -6,27 +6,31 @@
 </head>
 
 <?php
-$classToUpdate = $_POST['classToUpdate'];
-$update = $_POST['update'];
-$classDay = $_POST['classDay'];
-$classTime = $_POST['classTime'];
-$classStaff = $_POST['classStaff'];
-
+$classToUpdate = $_POST['classToUpdate'] ?? "";
+$update = $_POST['update'] ?? "";
+$classDay = $_POST['classDay'] ?? "";
+$classTime = $_POST['classTime'] ?? "";
+$classStaff = $_POST['classStaff'] ?? "";
+$previous = "javascript:history.go(-1)" ?? "";
 
 include "connect.php";
 
-if ($_SESSION['valid'])
+if ($_SESSION['valid']?? "")
     {
-        echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else {  
     //If not the user cannot view the page in full, send them back to home with noaccess
     header("Location: ../html/index.html? no_access");
 }
 
-$dateTimeFormat = strtotime($datetime);
+if ($classToUpdate == "") 
+{
+    header("Location: $previous? no_class");
+    exit (0);
+}
 
-
+$dateTimeFormat = strtotime($datetime ?? "");
 
 $sql = "UPDATE classes SET 
                     classDay = '$classDay', 

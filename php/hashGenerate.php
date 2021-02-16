@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Page Title</title>
@@ -8,9 +8,9 @@
 <?php
 
 
-if ($_SESSION['valid'])
+if ($_SESSION['valid'] ?? "")
     {
-        echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else {  
     //If not the user cannot view the page in full, send them back to home with noaccess
@@ -18,12 +18,17 @@ else {
 }
 
 
+$user = $_POST['username'] ?? "";
+$pass = $_POST['password'] ?? "";
+$passConfirm = $_POST['password2'] ?? "";
+$signUpKey = $_POST['signUpKey'] ?? "";
+$destination = $_POST['destination'] ?? "";
 
-$user = $_POST['username'];
-$pass = $_POST['password'];
-$passConfirm = $_POST['password2'];
-$signUpKey = $_POST['signUpKey'];
-$destination = $_POST['destination'];
+if ($user == "" || $pass == "" || $passConfirm == "" || $signUpKey == "") 
+{
+    header("Location: loginForm.php?invaliddetails");
+    exit (0);
+}
 
  // two ; was missing
 

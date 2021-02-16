@@ -7,20 +7,26 @@
 
 <?php
 
-$studentIdToDelete = $_POST['studentIdToDelete'];
-$delete = $_POST['delete'];
+$studentIdToDelete = $_POST['studentIdToDelete'] ?? "";
+$delete = $_POST['delete'] ?? "";
+$previous = "javascript:history.go(-1)" ?? "";
 
 include "connect.php";
 
-if ($_SESSION['valid'])
+if ($_SESSION['valid'] ?? "")
     {
-        echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else {  
     //If not the user cannot view the page in full, send them back to home with noaccess
     header("Location: ../html/index.html? no_access");
 }
 
+if ($studentIdToDelete == "") 
+{
+    header("Location: $previous?no_student");
+    exit (0);
+}
 
 $sql = "DELETE FROM students WHERE studentNum = '$studentIdToDelete'";
 

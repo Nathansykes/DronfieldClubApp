@@ -4,25 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dronfield Swimming Club - Conduct a Test</title>
-<<<<<<< HEAD
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 720px)" />
-    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" />
-=======
-    <!--<link rel="icon" type="image/png" href="../images/favicon.png"/>-->
-    <link rel="stylesheet" href="../css/mobile.css">
-    <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 720px)" />
-    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" />
-
->>>>>>> master
+    <link rel="icon" type="image/x-icon" href="../images/logoCOMP.png" />
 </head>
 
 <?php
 session_start();
 //Checks if the cookie is true, welcomes back user
-if (($_SESSION['valid']) && ($_SESSION['accessLevel'] == 2))
+if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
     {
-        echo "Welcome back ".$_COOKIE["User"].",  Access Level: ".$_SESSION['accessLevel'];
+        echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
 else {
     //If not the user cannot view the page in full
@@ -36,7 +28,7 @@ else {
             <!--logo-->
             <div class="logo">
                 <!--image logo will go here-->
-                <img src="https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
+                <img src="../images/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
             </div>
             <!--login-->
             <div class="loginLink">
@@ -63,7 +55,8 @@ else {
                     <li><a href="classes.php">Classes</a></li>
                     <li><a href="conductTestForm.php">Conduct a Test</a></li>
                     <?php
-                    if ($_SESSION['accessLevel'] == 2) // Access 1 is a coach, 2 is admin
+                    $accessLevel = $_SESSION['accessLevel'] ?? "";
+                    if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
                     {
                         ?>
                         <li><a href="databaseManagment.php">Manage Members</a></li>
@@ -75,26 +68,93 @@ else {
         </nav>
         <!--the main content for the site-->
         <main>
-            <div class="mainContent">
+             <div class="mainContent">
                 <!--content goes here-->
-<<<<<<< HEAD
-                <h2>Update Students</h2>
-                <br>
-                <div class="form"> <!--Form for updating users-->
+                <h1 class="siteTitle">Dronfield Swimming Club | Student Records </h1>
+                <!--Here is the student records form which will execute the php script-->
+
                 <?php
-                 //Student table
 
-                $studentNum = "";
-                $sql = "SELECT studentNum FROM  classmember WHERE classId = '$classToUpdate'";
+                include "connect.php";
+
+                $sql = "SELECT students.studentNum, students.studentName, classmember.classId FROM students INNER JOIN classmember ON students.studentNum = classmember.studentNum ORDER BY classId asc;";
                 $result = mysqli_query($link, $sql);
-                
-                ?>
-                <div class= "form">
 
-=======
->>>>>>> master
-            </div>
+                //echo $_GET['message'];
+                //Student table
+                
+                echo "<br>";
+
+                if(isset($_GET['student']) && $_GET['student'] == "passed")
+                {
+                    ?>
+                    <h2 style="float:none">Student Passed Test</h2>
+                    <?php
+                }
+                else if(isset($_GET['student']) && $_GET['student'] == "failed")
+                {
+                    ?>
+                    <h2 style="float: none">Student Failed Test</h2> 
+                    <?php
+                }
+                else if(isset($_GET['sql']) && ($_GET['sql']) == "failed")
+                {
+                    ?>
+                    <h2 style="float: none">Student Passed, but SQL Failed. Please Change Student's Class in the Admin Page</h2> 
+                    <?php
+                }
+                ?>
+
+                <div class= 'form'>
+
+                <br><br>
+                <table class= 'table'>
+                <tr>
+
+                <?php
+                $counter=0;
+                while ($row=mysqli_fetch_row($result))
+                    {	
+                        $num = $row[0] ?? "";
+                        $name = $row[1] ?? "";
+                        $level = $row[2] ?? "";
+                        if($level =="")
+                        {
+                            $level = "N/A";
+                        }
+
+                        $counter++;
+
+                        echo "<td id=member".$counter." class='topRow1'><span style='font-weight:bold'>Student Name: </span><br/>". $row[1]. "</td>";
+                        echo "<td id=member".$counter." class='topRow1'><span style='font-weight:bold'>Student Number: </span><br/>". $row[0]. "</td>";
+                        echo "<td id=member".$counter." class='topRow1'><span style='font-weight:bold'>Level: </span><br/>". $level. "</td>";
+                        
+                        echo "<td id=member".$counter." class='topRow1'>";                //Rows from the database	
+                        ?>
+                            <form action="TestForms/testRedirect.php" method="post" >
+                                <input type="hidden" name="studentIdToTest" value="<?php echo $num; ?>">
+                                <input type="hidden" name="classId" value="<?php echo $level; ?>">
+                                <input type="submit" name="update" value="Test" class="updateButton">
+                            </form>
+                        <?php
+                        echo "</td>";
+                        echo "</tr>";
+                        echo "</form>";
+                        
+                    }
+                    //Form for insert function
+                
+                    
+                    
+                echo "</table>";
+                
+                
+                echo "</div";
+                ?>
+             </div>
+            
         </main>
+        <br/><br/>
     </div>
     <footer>
         <div class="row">
@@ -102,7 +162,7 @@ else {
                 Dronfield Sports Centre<br /> Dronfield<br /> Derbyshire<br /> S42 6NG
             </address>
         </div>
-    </footer>
+    </footer>    
     <script src="../scripts/jquery-3.4.1.min.js"></script>
     <script src="../scripts/main.js"></script>
 </body>

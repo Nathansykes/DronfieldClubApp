@@ -7,15 +7,15 @@
 
 <?php
 
-$studentIdToRemove = $_POST['studentIdToRemove'];
-$classToUpdate = $_POST['classToUpdate'];
-$remove = $_POST['remove'];
+$studentIdToRemove = $_POST['studentIdToRemove'] ?? "";
+$classToUpdate = $_POST['classToUpdate'] ?? "";
+$remove = $_POST['remove'] ?? "";
 
 include "connect.php";
 
-if ($_SESSION['valid'])
+if ($_SESSION['valid'] ?? "")
     {
-        echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else {  
     //If not the user cannot view the page in full, send them back to home with noaccess

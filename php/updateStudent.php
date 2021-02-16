@@ -6,26 +6,33 @@
 </head>
 
 <?php
-$studentIdToUpdate = $_POST['studentIdToUpdate'];
-$update = $_POST['update'];
-$studentName = $_POST['studentName'];
-$studentDOB = $_POST['studentDOB'];
-$studentAddress = $_POST['studentAddress'];
-$parentName = $_POST['parentName'];
-$parentEmail = $_POST['parentEmail'];
-$parentPhone = $_POST['parentPhone'];
-$studentMedical = $_POST['studentMedical'];
+$studentIdToUpdate = $_POST['studentIdToUpdate'] ?? "";
+$update = $_POST['update'] ?? "";
+$studentName = $_POST['studentName'] ?? "";
+$studentDOB = $_POST['studentDOB'] ?? "";
+$studentAddress = $_POST['studentAddress'] ?? "";
+$parentName = $_POST['parentName'] ?? "";
+$parentEmail = $_POST['parentEmail'] ?? "";
+$parentPhone = $_POST['parentPhone'] ?? "";
+$studentMedical = $_POST['studentMedical'] ?? "";
+$previous = "javascript:history.go(-1)" ?? "";
 
 
 include "connect.php";
 
-if ($_SESSION['valid'])
+if ($_SESSION['valid']?? "")
     {
-        echo "Welcome back ".$_COOKIE["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
-else {  
-    //If not the user cannot view the page in full, send them back to home with noaccess
+else {
+    //If not the user cannot view the page in full
     header("Location: ../html/index.html? no_access");
+}
+
+if ($studentIdToUpdate == "") 
+{
+    header("Location: $previous?no_student");
+    exit (0);
 }
 
 $sql = "UPDATE students SET 
