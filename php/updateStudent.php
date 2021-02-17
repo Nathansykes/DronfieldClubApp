@@ -6,6 +6,9 @@
 </head>
 
 <?php
+
+session_start();
+
 $studentIdToUpdate = $_POST['studentIdToUpdate'] ?? "";
 $update = $_POST['update'] ?? "";
 $studentName = $_POST['studentName'] ?? "";
@@ -27,6 +30,7 @@ if ($_SESSION['valid']?? "")
 else {
     //If not the user cannot view the page in full
     header("Location: ../html/index.html? no_access");
+    exit(0);
 }
 
 if ($studentIdToUpdate == "") 

@@ -24,6 +24,7 @@ if ($_SESSION['valid']?? "")
 else {
     //If not the user cannot view the page in full
     header("Location: ../html/index.html? no_access");
+    exit(0);
 }
 
 ?>
@@ -68,7 +69,7 @@ else {
                 <ul>
                     <li><a href="securehomepage.php">Home</a></li>
                     <li><a href="classes.php">Classes</a></li>
-                    <li><a href="conducTestForm.php">Conduct a Test</a></li>
+                    <li><a href="conductTestForm.php">Conduct a Test</a></li>
                     <?php
                     $accessLevel = $_SESSION['accessLevel'] ?? "";
                     if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
@@ -100,7 +101,7 @@ else {
                     <?php
 
 
-                    if(empty($classToUpdate))
+                    if($classToUpdate == "")
                     {
                         $classToUpdate = $_GET['classToUpdate'] ?? "";
                         ?>
@@ -111,16 +112,6 @@ else {
                     $sql = "SELECT * FROM  classes WHERE classId = '$classToUpdate'";
                     $result = mysqli_query($link, $sql);
                     
-                    //$row=mysqli_fetch_row($result);
-
-
-                    
-
-                    ?>
-                    <script>
-                    
-                    </script>
-                <?php 
                  ?>
 
 
@@ -169,25 +160,12 @@ else {
 
                             for (i = 0; i < 7; i++) // seven days in a week
                             {
-                                
-
-                                
-                                console.info(classDay[i].value);
-
                                 if(classDay[i].value == "<?php echo $classDay; ?>")
                                 {
                                     classDay.selectedIndex = i;
-
-                                    console.info(classDay.selectedIndex);
-                                    console.info("changed");
-                                    console.info("<?php echo $classDay; ?>");
                                     break;
-                                }
-                                
+                                }   
                             }
-                            console.info("<?php echo $time; ?>");
-                            console.info("<?php echo $classStaff; ?>");
-                            
                             document.getElementById("classTime").defaultValue = "<?php echo $time; ?>"
                             document.getElementById("classStaff").defaultValue = "<?php echo $classStaff; ?>"
                         <?php 
@@ -195,11 +173,11 @@ else {
                     </script>
                  </div>
 
-                 <h2>Update Students</h2>
+                 
                  <br>
                  <div class="form"> <!--Form for updating users-->
                  
-                 
+                 <h2>Update Students</h2>
                  <?php
                  //Student table
 
@@ -207,18 +185,13 @@ else {
                 //$result = mysqli_query($link, $sql);
                 $studentNum = "";
 
+
                 //echo $_GET['message'];
                 
                 $sql = "SELECT studentNum FROM  classmember WHERE classId = '$classToUpdate'";
                 $result = mysqli_query($link, $sql);
                 
                 ?>
-                <div class= "form">
-                <form action="addStudentToClassList.php" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="classToUpdate" value="<?php echo $classToUpdate; ?>">
-                <input class= "newMemberButton" type="submit" name="insert" value="Add Student" required>
-                <br>
-                </form>
                 <br> 
                 <?php
                 echo "<table class= 'table'>";
@@ -229,7 +202,7 @@ else {
                     echo "<tr class='tableRow'>";
                     echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Number: </span><br />". $row[0]."</td>";
                     $studentNum = $row[0];
-
+                    
                     $sql2 = "SELECT studentName FROM  students WHERE studentNum = '$studentNum'";
                     $result2 = mysqli_query($link, $sql2);
                     
@@ -237,7 +210,7 @@ else {
                     {	
                         
                         echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Name: </span><br />". $row2[0]."</td>";
-                       
+                        
                         echo "<tr id=member".$counter." class='tableRow hidden'>";
                         echo "<td id=member".$counter." class='tableRow hidden' colspan='2'>";                //Rows from the database	
                         ?>
@@ -246,7 +219,7 @@ else {
                                 <input type="hidden" name="classToUpdate" value="<?php echo $classToUpdate; ?>">
                                 <input type="submit" name="remove" value="Remove Student" class="newMemberbutton"  onclick="return confirm('Are you sure?')">
                             </form>
-                        <?php
+                            <?php
                         echo "</td>";
                         echo "</td>";
                         echo "</tr>";
@@ -260,11 +233,13 @@ else {
                 
                 echo "</table>";
                 ?>
-
-                 <br><br>
-                 
-                 </div>
-
+                <br>
+                <div style="padding-top: 0" class= "form">
+                <form action="addStudentToClassList.php" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="classToUpdate" value="<?php echo $classToUpdate; ?>">
+                <input class= "newMemberbutton" type="submit" name="insert" value="Add Student" required>
+                </form>
+                </div>
              </div>
          </main>
     </div>

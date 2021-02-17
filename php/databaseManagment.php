@@ -19,6 +19,7 @@ if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
 else {
     //If not the user cannot view the page in full
     header("Location: ../html/index.html? no_access");
+    exit(0);
 }
 ?>
 
@@ -87,13 +88,13 @@ else {
                 <div class= 'form'>
 
                 <form action='manageUsersForm.php' method='post' enctype='multipart/form-data'>
-                <input class= 'newMemberButton' type='submit' name='insert' value='Manage Users' required>
+                <input class= 'newMemberbutton' type='submit' name='insert' value='Manage Users' required>
                 </form>
 
                 <br><br>
 
                 <form action='newStudentForm.php' method='post' enctype='multipart/form-data'>
-                <input class= 'newMemberButton' type='submit' name='insert' value='Create New' required>
+                <input class= 'newMemberbutton' type='submit' name='insert' value='Add New Student' required>
                 </form>
 
                 <br><br>
@@ -105,13 +106,13 @@ else {
                 while ($row=mysqli_fetch_row($result))
                     {	
                         $counter++;
-                        echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Name: </span><br/>". $row[1]. "</td>";
-                        echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Number: </span><br/>". $row[0]. "</td>";
+                        echo "<td colspan=2 id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold;text-align:right'>Student Name: </span><span class='topRowRight'>". $row[1]."</span></td>";
+                        
                         echo "</tr>";
 
                         echo "<tr id=member".$counter." class='tableRow hidden'>";
-                        echo "<td><span style='font-weight:bold'>Student DOB: </span><br />". $row[2]."</td>";
-                        echo "<td><span style='font-weight:bold'>Address: </span><br />". $row[3]."</td>";
+                        echo "<td><span style='font-weight:bold'>Student DOB: </span><br/>". $row[2]."</td>";
+                        echo "<td><span style='font-weight:bold'>Student Number: </span><br/>". $row[0]. "</td>";
                         echo "</tr>";
 
                         echo "<tr id=member".$counter." class='tableRow hidden'>";
@@ -121,9 +122,12 @@ else {
 
                         echo "<tr id=member".$counter." class='tableRow hidden'>";
                         echo "<td><span style='font-weight:bold'>Phone No: </span><br />". $row[6]."</td>";
-                        echo "<td><span style='font-weight:bold'>Medical Information: </span><br />". $row[7]."</td>";
+                        echo "<td><span style='font-weight:bold'>Address: </span><br />". $row[3]."</td>";
                         echo "</tr>";
 
+                        echo "<tr id=member".$counter." class='tableRow hidden'>";
+                        echo "<td colspan=2><span style='font-weight:bold'>Medical Information: </span><br />". $row[7]."</td>";
+                        echo "</tr>";
 
                         echo "<tr id=member".$counter." class='tableRow hidden'>";
                         echo "<td id=member".$counter." class='tableRow hidden'>";                //Rows from the database	

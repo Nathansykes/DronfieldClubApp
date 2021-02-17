@@ -18,33 +18,24 @@ body
     width: 100%;
     min-height: 100vh;
 }
-.darkMode /* SEE ISSUE #3 */
-{
-    background-color: black;
-    color: white;
-}/* TODO: Set a cookie to make dark theme persist between pages, fix login button font and border */
-
 
 .mainNav
 {
     background-color: #476082;
     display: none;
 }
-
 .mainNav ul 
 {
     list-style: none;
     padding-left: 0;
     margin: 0;
 }
-
 .mainNav ul li 
 {
     border-top: 0.5px solid #ccc;
     border-bottom: 0.5px solid #ccc;
     padding: 5px;
 }
-
 .mainNav ul li a 
 {
     margin: auto;
@@ -59,7 +50,6 @@ body
 .link:active{
     color: lightslategray !important;
 }
-
 .link:hover{
     color: lightslategray !important;
     
@@ -69,7 +59,7 @@ header {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    background-color: #2e3e74; /* Was #2e3e74, change to something lighter ,, background-color: #476082;*/
+    background-color: #2e3e74; /* background-color: #476082;*/
 }
 
 h2 
@@ -83,6 +73,8 @@ h2
 
 .logo img 
 {
+    width:50px;
+    height:50px;
     max-width: 50px;
     padding: 5px;
     margin-top: 2px;
@@ -275,16 +267,13 @@ label
     padding-bottom: 10px;
 }
 
-#classDay 
-<<<<<<< HEAD
-=======
+#coachAdmin 
 {
     width: 100%;
     padding: 15px 10px;
 }
 
-#classDa
->>>>>>> master
+#classDay 
 {
     width: 100%;
     padding: 15px 10px;
@@ -319,6 +308,9 @@ input[type="submit"]
     padding-bottom: 10px;
     cursor: pointer;
 }
+
+
+
 .newMemberbutton
 {
     width: 100%;
@@ -357,23 +349,44 @@ input.registerClassButton
 {
     width:100%;
 }
+
+
+.radioButton
+{
+   display: flex;
+   justify-content: space-between;
+   border-bottom: 0px solid  cadetblue;
+
+}
+input[type=radio] 
+{
+    margin-right:20%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+#testTable 
+{
+    width : 50%; 
+    border-bottom: 0px;
+
+}
+
 .registerSubmit
 {
     float:right;
     width: 25%;
 }
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> master
 .table 
 {
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
+    border-spacing:0px;
     overflow-x:auto;
+    
 }
 
 .table, td, th
@@ -402,6 +415,7 @@ td
     border: none;
     border-top: 1px solid  cadetblue;
     border-bottom: 1px solid  cadetblue;
+
 }
 
 .topRow 
@@ -417,10 +431,12 @@ td
     text-align: left;
 }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> master
+.topRowRight
+{
+    float:right;
+}
+
 tr:hover 
 {
     background-color: #e6f9ff;
@@ -432,6 +448,8 @@ form > div
 }
 
 /*footer styling*/
+
+
 
 
 .form 

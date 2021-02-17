@@ -7,32 +7,42 @@
 
 <?php
 
+//Instantaite new POST method variables in relation to the database to add a student to a class 
+
 $studentToAdd = $_POST['studentToAdd'] ?? "";
 $classToUpdate = $_POST['classToUpdate'] ?? "";
 
-
-include "connect.php";
+//Initialise link to database in 'connect.php'
+session_start();
 
 if ($_SESSION['valid'] ?? "")
-    {
-        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
-    }   
-else {  
-    //If not the user cannot view the page in full, send them back to home with noaccess
-    header("Location: ../html/index.html? no_access");
-}
-
+{
+    //If the cookie is validated by a user/coach signing in, welcome them back to the page
+    echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+}   
+else 
+    {  
+        //If not the user cannot view the page in full, send them back to home with noaccess
+        header("Location: ../html/index.html? no_access");
+        exit(0);
+    }
+    
+    //SQL - Inserting a new student record in the database
+    
+include "connect.php";
 $sql = "INSERT INTO classmember(classId, studentNum) VALUES('$classToUpdate', '$studentToAdd')";
+
+//If the SQL statement is successful and valid, execute the mehtod, if not, echo a failed response
 
 if (mysqli_query($link, $sql))
 	{
 		echo "success";
-        header("Location: updateClassForm.php? classToUpdate=$classToUpdate");	
+        header("Location: updateClassForm.php? classToUpdate=$classToUpdate"); //Update class 
     }
 else 
     {
         echo "failed";
-        header("Location: updateClassForm.php? classToUpdate=$classToUpdate");
+        header("Location: updateClassForm.php? classToUpdate=$classToUpdate"); //Update Class
     }
 ?>
 

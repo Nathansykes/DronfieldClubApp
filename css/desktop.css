@@ -44,7 +44,6 @@ header, .mainContent, .row
     text-align: center;
 }
 
-
 .burgerMenu 
 {
     display: none;
@@ -63,12 +62,6 @@ header, .mainContent, .row
     max-width: 50px;
     padding: 5px;
     margin-top: 5px;
-}
-
-.darkMode /* PLACEHOLDER SEE ISSUE #3*/ 
-{
-    background-color: black;
-    color: white;
 }
 
 header nav ul li h1 {
@@ -146,6 +139,16 @@ input.updateClassButton
     cursor: pointer;
 }
 
+.topRowRight
+{
+    float:none;
+}
+
+#testTable
+{
+    width : 25%; 
+}
+
 .registerSubmit
 {
     width: 20%;
@@ -171,4 +174,3 @@ footer {
     background-color: #2e3e74;
     color: white;
 }
-

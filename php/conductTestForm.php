@@ -19,6 +19,7 @@ if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
 else {
     //If not the user cannot view the page in full
     header("Location: ../html/index.html? no_access");
+    exit(0);
 }
 ?>
 
@@ -126,7 +127,6 @@ else {
                         $counter++;
 
                         echo "<td id=member".$counter." class='topRow1'><span style='font-weight:bold'>Student Name: </span><br/>". $row[1]. "</td>";
-                        echo "<td id=member".$counter." class='topRow1'><span style='font-weight:bold'>Student Number: </span><br/>". $row[0]. "</td>";
                         echo "<td id=member".$counter." class='topRow1'><span style='font-weight:bold'>Level: </span><br/>". $level. "</td>";
                         
                         echo "<td id=member".$counter." class='topRow1'>";                //Rows from the database	

@@ -4,12 +4,31 @@
     <meta charset="UTF-8" />
     <!-- Viewport here -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Dronfield Swimming Club - Login</title>
+    <title>Dronfield Swimming Club - Sign Up</title>
     <!-- attach styles here -->
-    <link rel="stylesheet" href="../css/mobile.css"/>
+    <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
     <link rel="icon" type="image/x-icon" href="../images/logoCOMP.png"/>
-</head> <!--https://cdn.discordapp.com/attachments/788419191870324769/798955834453393418-->
+</head>
+<?php
+
+session_start();
+
+//$secure = $_SESSION("Secure");
+
+//Checks if the cookie is true, welcomes back user
+//if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
+if ($_SESSION['valid']?? "")
+    {
+        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+    }   
+else {
+    //If not the user cannot view the page in full
+    header("Location: ../html/index.html? no_access");
+    exit(0);
+}
+
+?>
 <body>
     <div class="container">
         <header>
@@ -17,6 +36,7 @@
             <div class="logo">
                 <!--image logo will go here-->
                 <img src="../images/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
+
             </div>
             <!--login-->
             <div class="loginLink">
@@ -47,27 +67,30 @@
         </nav>
          <!--the main content for the site-->
          <main>
+
+         
              <div class="mainContent">
                  <!--content goes here-->
-                 <h1 class="siteTitle">Dronfield Swimming Club | Login </h1>
+                 <h1 class="siteTitle">Dronfield Swimming Club | Sign Up </h1>
                  <!--Here is the login form which will execute the php script-->
+
+                 <?php
+                include "../php/connect.php";
+                $userName = $_POST['userName'] ?? "";
+                
+                ?>
                  <div class="form">
-
-
-                    <form action="../php/login.php" method="post" enctype="multipart/form-data">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" required>
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" required>
-                        <input type="hidden" name="destination" value="login">
+                    <form action="resetUserPassword.php" method="post" enctype="multipart/form-data">                        
+                        <label for="password">Enter New Password</label>
+                        <input type="password" id="password" name="password" onkeyup='checkPasswordsMatchReset()' required>
+                        <label for="confirm_password">Confirm New Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password" onkeyup='checkPasswordsMatchReset()' required>
+                        <input type="hidden" name="userName" value = "<?php echo $userName; ?>">
                         <br><br>
-                        <input type="submit" name="submit" class="newMemberbutton">
+                        <input disabled = true type="submit" name="signUpSubmit" id="signUpSubmit" value="Sign Up" class="newMemberbutton" >
                         <br><br>
                     </form>
-
-                    
-                </div>
-                
+                 </div>
              </div>
          </main>
     </div>
@@ -76,20 +99,7 @@
     <script src="../scripts/jquery-3.4.1.min.js"></script>
     <script src="../scripts/main.js"></script>
     
-    <?php
-    
-
-    include "../php/connect.php";
-    //This is the message the user will recive if they enter invalid details
-    if (isset($_GET['credit']) && $_GET['credit'] == "false")
-        {
-            echo '<br><span style="color:#F00; "> Either the username or password is incorrect, try again ';
-        }
-
-    
-    ?>
-
-     <footer>
+    <footer>
         <div class="row">
             <address>
                 Dronfield Sports Centre<br /> Dronfield<br /> Derbyshire<br /> S42 6NG

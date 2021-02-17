@@ -1,19 +1,23 @@
-;<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <!-- Viewport here -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Dronfield Swimming Club - New Student Form</title>
+    <title>Home</title>
     <!-- attach styles here -->
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
-    <link rel="icon" type="image/x-icon" href="../images/logoCOMP.png"/>
 </head>
 
 <?php
+
 session_start();
+
+//$secure = $_SESSION("Secure");
+
 //Checks if the cookie is true, welcomes back user
+//if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
 if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
     {
         echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
@@ -23,6 +27,7 @@ else {
     header("Location: ../html/index.html? no_access");
     exit(0);
 }
+
 ?>
 
 <body>
@@ -31,12 +36,14 @@ else {
             <!--logo-->
             <div class="logo">
                 <!--image logo will go here-->
+                <img src="../images/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
+
             </div>
             <!--login-->
             <div class="loginLink">
                 <ul>
                     <li>
-                        <a href="logout.php">Logout</a>
+                    <a href="logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -80,36 +87,52 @@ else {
 
                     include "connect.php";
 
-                    $studentIdToUpdate = $_POST['studentIdToUpdate'] ?? "";
+                    $userNameToUpdate = $_POST['userNameToUpdate'] ?? "";
                     $update = $_POST['update'] ?? "";
 
-                    $sql = "SELECT * FROM  Students WHERE studentNum = '$studentIdToUpdate'";
+                    $previous = "javascript:history.go(-1)" ?? "";
+                    if ($userNameToUpdate == "") 
+                    {
+                        header("Location: $previous? no_studenId");
+                        exit (0);
+                    }
+
+                    $sql = "SELECT * FROM  users WHERE userName = '$userNameToUpdate'";
                     $result = mysqli_query($link, $sql);
+
+                    
+
                  ?>
 
                  <div class="form">
-                    <form action="../php/createNewStudent.php" method="post" enctype="multipart/form-data">
-                        <label for="studentNum">Student Number</label>
-                        <input type="text" id="studentNum" name="studentNum" required>
-                        <label for="studentName">Student's Name</label>
-                        <input type="text" id="studentName" name="studentName" required>
-                        <label for="studentDOB">Student's Date of Birth</label>
-                        <input  type="date" id="studentDOB" name="studentDOB" required>
-                        <label for="studentAddress">Student's Home Address</label>
-                        <input type="text" id="studentAddress" name="studentAddress" required>
-                        <label for="parentName">Student's Parent's Name (Only One Required)</label>
-                        <input type="text" id="parentName" name="parentName" required>
-                        <label for="parentEmail">Parent's Email</label>
-                        <input type="email" id="parentEmail" name="parentEmail" required>
-                        <label for="parentPhone">Parent's Phone</label>
-                        <input type="tel" id="parentPhone" name="parentPhone" required>
-                        <label for="studentMedical">Student's Medical Information</label>
-                        <textarea  id="studentMedical" name="studentMedical"></textarea>
-                        <br><br>
-                        <input type="submit" name="submit">
-                        <br><br>
-                    </form>
-                 </div>
+                 <form action="updateUser.php" method="post" enctype="multipart/form-data">
+                        <input name="userNameToUpdate" type="hidden" value="<?php echo $userNameToUpdate; ?>">
+                        <label for="fullName">Name</label>
+                        <input type="text" name="fullName" id="fullName" required>
+                        <label for="accessLevel">Coach/Admin</label>
+                        <select name="accessLevel" id="coachAdmin" required>
+                            <option value="1">Coach</option>
+                            <option value="2">Admin</option>
+                        </select>
+                    <br><br>
+                    <input type="submit" name="remove" value="Update" class="newMemberbutton"  onclick="document.getElementById('coachAdmin').disabled = false;return confirm('Are you sure?')">
+
+                </form>
+
+                
+                <div class="form">
+                <br>
+                <h3>Reset Password</h3>
+                 <form action="resetUserPassword.php" method="post" enctype="multipart/form-data">
+                        <input name="userNameToUpdate" type="hidden" value="<?php echo $userNameToUpdate; ?>"> 
+                    <br>
+                    <input type="submit" name="remove" value="Generate new password" class="newMemberbutton"  onclick="return confirm('Are you sure?')">
+
+                </form>
+
+                
+
+                </div>
              </div>
          </main>
     </div>
@@ -128,14 +151,22 @@ else {
         while ($row=mysqli_fetch_row($result))
         {	
             ?>
-            document.getElementById("studentName").defaultValue = "<?php echo $row[1]; ?>"
-            document.getElementById("studentDOB").defaultValue = "<?php echo $row[2]; ?>"
-            document.getElementById("studentAddress").defaultValue = "<?php echo $row[3]; ?>"
-            document.getElementById("parentName").defaultValue = "<?php echo $row[4]; ?>"
-            document.getElementById("parentEmail").defaultValue = "<?php echo $row[5]; ?>"
-            document.getElementById("parentPhone").defaultValue = "<?php echo $row[6]; ?>"
-            document.getElementById("studentMedical").defaultValue = "<?php echo $row[7]; ?>"
-        <?php } ?>
+            var accessLevel = <?php echo $row[3]; ?>
+            //console.info(accessLevel)
+            document.getElementById("fullName").defaultValue = "<?php echo $row[2]; ?>"
+            document.getElementById("coachAdmin").selectedIndex = accessLevel-1
+        <?php 
+        if($_SESSION["User"] == $userNameToUpdate)
+        {
+            ?>
+            console.info("editing self")
+            document.getElementById("coachAdmin").disabled = true
+            <?php
+        }
+
+        
+        } 
+        ?>
     </script>
 </body>
 </html>

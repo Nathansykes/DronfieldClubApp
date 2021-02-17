@@ -17,16 +17,20 @@ session_start();
 
 //$secure = $_COOKIE("Secure");
 
-//Checks if the cookie is true, welcomes back user
+//Checks if the cookie is true
 //if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
+
 if (($_SESSION['valid'] ?? "") && (($_SESSION['accessLevel'] == 1 ?? "") || ($_SESSION['accessLevel'] > 1 ?? "")))
     {
+        //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
-else {
-    //If not the user cannot view the page in full
-    header("Location: ../html/index.html? no_access");
-}
+else 
+    {
+        //If not the user cannot view the page in full
+        header("Location: ../html/index.html? no_access");
+        exit(0);
+    }
 
 ?>
 <body>
@@ -62,6 +66,9 @@ else {
                     <li><a href="classes.php">Classes</a></li>
                     <li><a href="conductTestForm.php">Conduct a Test</a></li>
                     <?php
+
+                    //If the access level of the current session is equal to 2, grant access to the database management system, exclusivisty for coaches
+
                     $accessLevel = $_SESSION['accessLevel'] ?? "";
                     if ($accessLevel == 2)  
                     {
@@ -82,7 +89,11 @@ else {
 
                 <?php
 
+                //Initialise link to database in 'connect.php'
+
                 include "connect.php";
+
+                //SQL - Retreiving Class data and order then by class ID ascending order (30 max)
 
                 $sql = "SELECT * FROM  `Classes` ORDER BY  `classId` ASC LIMIT 0 , 30";
                 $result = mysqli_query($link, $sql);
@@ -91,18 +102,14 @@ else {
 
                 //echo $_GET['message'];
                 //Student table
-                echo "<br>
-                <div class= 'form'>";
-                echo "<form action='newClassForm.php' method='post' enctype='multipart/form-data'>"; // SEeE Trello
-                echo "<input class= 'newMemberButton' type='submit' name='insert' value='Create New' required";
-                echo "<br>";
-                echo "</form>";
                 echo "<br>";
                 echo "<table class= 'table'>";
                 echo "<tr>";
                 $counter=0;
 
                 //$list= array();
+
+                //Whilst recieiving data from the result, order and update data appropriately dependent on the users input
 
                 while ($row=mysqli_fetch_row($result))
                 {	
@@ -121,6 +128,8 @@ else {
                     echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Staff: </span><br/>". $row[3]. "</td>";
                     echo "</tr>";
                     $classId = $row[0]; 
+
+                    //Post repsonses to accept a reques to update the class or register a new class
 
                     echo "</tr>";
                         echo "<td id=member".$counter." class='tableRow hidden' colspan='2'>";
@@ -143,19 +152,26 @@ else {
                         </tr>
                         
                         <?php
+
+                    //SQL - Select the StundentNum where the classID is equal to the first row selected
                         
-                    
                     $sqlA = "SELECT studentNum FROM  classmember WHERE classId = '$classId'";
                     $resultA = mysqli_query($link, $sqlA);
+
+                    //Whilst the result is true of the requested class
                     
                     while ($rowA=mysqli_fetch_row($resultA))
                     {	
                         echo "<tr id='member$counter' class='tableRow hidden'>";
                         echo "<td class='classRecord' colspan='2'><span style='font-weight:bold'>Student Number: </span><br/>". $rowA[0]."</td>";
                         $studentNum = $rowA[0];
+
+                        //SQL - Select studentName where the studentNum is equal to the first row selected
     
                         $sql2 = "SELECT studentName FROM  students WHERE studentNum = '$studentNum'";
                         $result2 = mysqli_query($link, $sql2);
+
+                        //Whilst the result is true of the fecthed class, display appropriate data
                         
                         while ($row2=mysqli_fetch_row($result2))
                         {	
