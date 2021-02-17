@@ -22,6 +22,20 @@ else {
 
 <?php
 
+session_start();
+//Checks if the cookie is true, welcomes back user
+if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
+    {
+        echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
+    }   
+else {
+    //If not the user cannot view the page in full
+    header("Location: ../html/index.html? no_access");
+    exit(0);
+}
+
+
+
 include "connect.php";
 
 $studentNum = $_POST['studentNum'] ?? "";
@@ -32,6 +46,13 @@ $parentName = $_POST['parentName'] ?? "";
 $parentEmail = $_POST['parentEmail'] ?? "";
 $parentPhone = $_POST['parentPhone'] ?? "";
 $studentMedical = $_POST['studentMedical'] ?? "";
+$previous = "javascript:history.go(-1)" ?? "";
+
+if ($studentNum == "") 
+{
+    header("Location: $previous? no_class");
+    exit (0);
+}
 
 //header("Location: databaseManagment.php? message=values received.$studentNum.$studentName.$studentDOB.$studentAddress.$parentName.$parentEmail.$parentPhone.$studentMedical");
 

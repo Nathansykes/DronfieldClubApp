@@ -7,6 +7,8 @@
 
 <?php
 
+session_start();
+
 $studentIdToRemove = $_POST['studentIdToRemove'] ?? "";
 $classToUpdate = $_POST['classToUpdate'] ?? "";
 $remove = $_POST['remove'] ?? "";
@@ -20,6 +22,7 @@ if ($_SESSION['valid'] ?? "")
 else {  
     //If not the user cannot view the page in full, send them back to home with noaccess
     header("Location: ../html/index.html? no_access");
+    exit(0);
 }
 
 

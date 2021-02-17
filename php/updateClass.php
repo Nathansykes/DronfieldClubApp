@@ -6,6 +6,9 @@
 </head>
 
 <?php
+
+session_start();
+
 $classToUpdate = $_POST['classToUpdate'] ?? "";
 $update = $_POST['update'] ?? "";
 $classDay = $_POST['classDay'] ?? "";
@@ -15,13 +18,14 @@ $previous = "javascript:history.go(-1)" ?? "";
 
 include "connect.php";
 
-if ($_SESSION['valid']?? "")
+if ($_SESSION['valid'] ?? "")
     {
         echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else {  
     //If not the user cannot view the page in full, send them back to home with noaccess
     header("Location: ../html/index.html? no_access");
+    exit(0);
 }
 
 if ($classToUpdate == "") 

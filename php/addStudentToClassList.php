@@ -21,6 +21,7 @@ if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
 else {
     //If not the user cannot view the page in full
     header("Location: ../html/index.html? no_access");
+    exit(0);
 }
 ?>
 
@@ -79,9 +80,13 @@ else {
 
                 <?php
 
+                //Initialise link to database in 'connect.php'
+
                 include "connect.php";
 
-                $sql = "SELECT * FROM  `Students` ORDER BY  `studentNum` DESC LIMIT 0 , 30";
+                //SQL - Retreiving student data in database, descending value (30 max)
+
+                $sql = "SELECT students.studentNum, students.studentName, classmember.classId FROM  Students LEFT OUTER JOIN classmember ON Students.studentNum = classmember.studentNum WHERE classId IS NULL ORDER BY  studentNum DESC LIMIT 0 , 30";
                 $result = mysqli_query($link, $sql);
 
                 //echo $_GET['message'];
@@ -93,9 +98,15 @@ else {
                 echo "<tr>";
                 $counter=0;
                 $classToUpdate = $_POST['classToUpdate'];
+
+                //Event for every row in the table in which data is polymorphic - can be shown and hidden once clicked on, each time a record is added, the field list increases in the table
+                //Once updated, data is then echoed back and updated in the database
                 
                 while ($row=mysqli_fetch_row($result))
                 {	
+                        
+                        //Each time a row is added, modify exisiting variable and add amount present to a counter variable
+
                         $studentToAdd = $row[0];
                         $counter++;
                         echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Number: </span>". $row[0]. "</td>";

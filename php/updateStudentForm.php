@@ -25,6 +25,7 @@ if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
 else {
     //If not the user cannot view the page in full
     header("Location: ../html/index.html? no_access");
+    exit(0);
 }
 
 ?>
@@ -52,15 +53,7 @@ else {
                     <div class="bar1"></div>
                     <div class="bar2"></div>
                     <div class="bar3"></div>
-                    <?php
-                    $accessLevel = $_SESSION['accessLevel'] ?? "";
-                    if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
-                    {
-                        ?>
-                        <li><a href="databaseManagment.php">Manage Members</a></li>
-                        <?php
-                    }
-                    ?>
+                    
                 </div>
             </div>
         </header>
@@ -71,6 +64,15 @@ else {
                     <li><a href="securehomepage.php">Home</a></li>
                     <li><a href="classes.php">Classes</a></li>
                     <li><a href="conductTestForm.php">Conduct a Test</a></li>
+                    <?php
+                    $accessLevel = $_SESSION['accessLevel'] ?? "";
+                    if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
+                    {
+                        ?>
+                        <li><a href="databaseManagment.php">Manage Members</a></li>
+                        <?php
+                    }
+                    ?>
                 </ul>
             </div>
         </nav>
@@ -85,8 +87,15 @@ else {
 
                     include "connect.php";
 
-                    $studentIdToUpdate = $_POST['studentIdToUpdate'];
-                    $update = $_POST['update'];
+                    $studentIdToUpdate = $_POST['studentIdToUpdate'] ?? "";
+                    $update = $_POST['update'] ?? "";
+
+                    $previous = "javascript:history.go(-1)" ?? "";
+                    if ($studentIdToUpdate == "") 
+                    {
+                        header("Location: $previous? no_studenId");
+                        exit (0);
+                    }
 
                     $sql = "SELECT * FROM  Students WHERE studentNum = '$studentIdToUpdate'";
                     $result = mysqli_query($link, $sql);

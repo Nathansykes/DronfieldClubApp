@@ -15,6 +15,7 @@ if ($_SESSION['valid'] ?? "")
 else {  
     //If not the user cannot view the page in full, send them back to home with noaccess
     header("Location: ../html/index.html? no_access");
+    exit(0);
 }
 
 
@@ -77,8 +78,5 @@ if($destination == "login")
 }
 
 ?>
-
-
-
 
 </html>

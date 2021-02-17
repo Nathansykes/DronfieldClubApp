@@ -19,7 +19,8 @@ if (($_SESSION['valid'] ?? "") && (($_SESSION['accessLevel'] == 1 ?? "") || ($_S
     }   
 else {
     //If not the user cannot view the page in full
-    header("Location: ../html/index.html? no_access");
+    header("Location: ../../html/index.html? no_access");
+    exit(0);
 }
 
 

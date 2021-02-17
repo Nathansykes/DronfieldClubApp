@@ -12,6 +12,7 @@
         $("nav ul").attr("style", "");
         }
     });
+
     function navHighlight(elem, home, active) {
         var url = location.href.split('/'),
             loc = url[url.length -1],
@@ -45,48 +46,77 @@ function OpenRows(clickedRow)//rows id passed in from database management.php
     
 }
 
-/*
 $('input').on('keypress', function (event) {
     var newInput = new RegExp("^[a-zA-Z0-9 !@$.?,+]"); // white listed characters
         /*
     var r = [/0-9/, /a-z/, /A-Z/]; // Test if password contains one uppercase, lowercase and number
     var goodPass = r.every(function (testPass) { return r.testPass(newInput); }); // TODO
         */ 
-       /*
     var checkSymbl = String.fromCharCode(!event.charCode ? event.which : event.charCode);
     if (!newInput.test(checkSymbl)) { // & testPass(newInput = TRUE)
+       console.info("invalid character input");
        event.preventDefault();
        return false;
     }
-});*/
+    
+});
 
 
 var checkPasswordsMatch = function() 
+{
+    var user;
+    var pass = document.getElementById('password');
+    var passConfirm = document.getElementById('confirm_password');
+    var key = document.getElementById('signUpKey');
+
+    if (pass.value == passConfirm.value) 
     {
-        var user;
-        var pass = document.getElementById('password');
-        var passConfirm = document.getElementById('confirm_password');
-        var key = document.getElementById('signUpKey');
+        pass.style.borderColor = 'green';
+        passConfirm.style.borderColor = 'green';
+        document.getElementById("signUpSubmit").disabled = false;
+    }
+    else if(user.value == "" && pass.value == "" && user.value == "" && user.value == "")
+    {
+        document.getElementById("signUpSubmit").disabled = true;
 
-        if (pass.value == passConfirm.value) 
-        {
-            pass.style.borderColor = 'green';
-            passConfirm.style.borderColor = 'green';
-            document.getElementById("signUpSubmit").disabled = false;
-        }
-        else if(user.value == "" && pass.value == "" && user.value == "" && user.value == "")
-        {
-            document.getElementById("signUpSubmit").disabled = true;
+    }
+    else
+    {
+        document.getElementById('password').style.borderColor = 'red';
+        document.getElementById('confirm_password').style.borderColor = 'red';
+        document.getElementById("signUpSubmit").disabled = true;
 
-        }
-        else
-        {
-            document.getElementById('password').style.borderColor = 'red';
-            document.getElementById('confirm_password').style.borderColor = 'red';
-            document.getElementById("signUpSubmit").disabled = true;
+    }
+};
 
-        }
-    };
+
+
+
+var checkPasswordsMatchReset = function() 
+{
+    
+    var pass = document.getElementById('password');
+    var passConfirm = document.getElementById('confirm_password');
+
+    if (pass.value == passConfirm.value) 
+    {
+        pass.style.borderColor = 'green';
+        passConfirm.style.borderColor = 'green';
+        document.getElementById("signUpSubmit").disabled = false;
+    }
+    else if(pass.value == "" || passConfirm.value == "")
+    {
+        document.getElementById("signUpSubmit").disabled = true;
+
+    }
+    else
+    {
+        document.getElementById('password').style.borderColor = 'red';
+        document.getElementById('confirm_password').style.borderColor = 'red';
+        document.getElementById("signUpSubmit").disabled = true;
+
+    }
+};
 
 
 function copyToClipboard(text) 

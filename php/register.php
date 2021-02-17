@@ -17,6 +17,7 @@
     {
         //If not the user cannot view the page in full
         header("Location: ../html/index.html? no_access");
+        exit(0);
     }
 
     $classId = $_POST['classIdToRegister'] ?? "";

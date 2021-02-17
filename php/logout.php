@@ -15,8 +15,7 @@ unset($valid);
 ini_set($session ?? "", 0);
 session_destroy();
 
-
-exit("location: ../html/index.html");
+header("Location: ../html/index.html?logout=true");
 // exit(header())
 ?>
 

@@ -15,6 +15,7 @@ if ($_SESSION['valid'] ?? "")
 else {  
     //If not the user cannot view the page in full, send them back to home with noaccess
     header("Location: ../../html/index.html? no_access");
+    exit(0);
 }
 
 $studentNum = $_POST['studentIdToTest'] ?? "";
@@ -100,12 +101,42 @@ if($passed)
     }
     else 
     {
-        header("Location: ../conductTestForm.php? student=passed");
-        exit(0);
+        $sqlArchive = "INSERT INTO archivestudents (studentNum, studentName, studentDOB, studentAddress, parentName, parentEmail, parentPhone, studentMedical) SELECT * FROM students WHERE studentNum = '$studentNum'"; 
+        echo "<br><br>";
+        echo $sqlArchive;
+        echo "<br><br>";
+        if (mysqli_query($link, $sqlArchive)) 
+        {
+            $sqlDelete1 = "DELETE FROM classmember WHERE studentNum = '$studentNum'";
+            if (mysqli_query($link, $sqlDelete1)) 
+            {
+                $sqlDelete2 = "DELETE FROM students WHERE studentNum = '$studentNum'";
+                if (mysqli_query($link, $sqlDelete2)) 
+                {
+                    header("Location: ../conductTestForm.php?success!student=archived");
+                    exit(0);
+                }
+                else 
+                {
+                    header("Location: ../conductTestForm.php?sqldelete=failed");
+                    exit(0);
+                }
+            }
+            else 
+            {
+                header("Location: ../conductTestForm.php?sqldelete=failed");
+                exit(0);
+            }
+        }
+        else 
+        {
+            header("Location: ../conductTestForm.php?sqlinsert=failed");
+            exit(0);
+        }
     }
 
     $sql = "UPDATE classmember SET classId = '$newClassId' WHERE studentNum = '$studentNum'";
-
+ 
     if (mysqli_query($link, $sql)) 
     {
         echo "success";
@@ -114,7 +145,7 @@ if($passed)
     else 
     {
         echo "failed";
-		header("Location: ../conductTestForm.php? sql=failed");
+		header("Location: ../conductTestForm.php? sqlupdate=failed");
     }
     // Move them up a group
 }
