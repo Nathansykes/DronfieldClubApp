@@ -7,10 +7,13 @@
 
 <?php
     session_start();
+    
+    //Extend thread with connect.php
     include "../php/connect.php";
 
     if ($_SESSION['valid'] ?? "" && ($_SESSION['accessLevel'] == 2 ?? ""))
     {
+        //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
     else 
@@ -20,9 +23,14 @@
         exit(0);
     }
 
+    //Instantiate POST method variables to the database
+
     $classId = $_POST['classIdToRegister'] ?? "";
    
     $studentNum = "";
+
+    //SQL -
+
     $sql = "SELECT studentNum FROM  classmember WHERE classId = '$classId'";        // getting all student numbers from database where classId matches
     $result = mysqli_query($link, $sql);
     $numOfStudents = mysqli_num_rows($result);                                      // storing number of students from registration form
@@ -87,16 +95,15 @@
                 $success = true;   
             }   
         }        
-        
     }
 
     if($success)
     {
-        //header("Location: securehomepage.php?message=register+success");
+        header("Location: securehomepage.php?message=register+success"); //return success in header
     }
     else 
     {
-        //header("Location: securehomepage.php?message=register+failed");
+        header("Location: securehomepage.php?message=register+failed"); //return failed in header
     }
 
     

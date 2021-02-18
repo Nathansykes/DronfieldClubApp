@@ -12,8 +12,6 @@
 
 session_start();
 
-//$secure = $_SESSION("Secure");
-
 //Checks if the cookie is true, welcomes back user
 //if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
 if ($_SESSION['valid'] ?? "")
@@ -80,7 +78,7 @@ else {
                 <h1 class="siteTitle">Dronfield Swimming Club | Welcome! </h1>
                 <img src="../images/swimmer-min.png" alt="" />
                 <p class="siteDesc">Our swimming club has been around for over 30 years! With an incredible team behind us, 
-                    we welcomes all coaches and faculty staff to our online application!</p>
+                    we welcome all coaches and faculty staff to our online application!</p>
                 <br><br>
                 
                 <div class="sectionBreak">

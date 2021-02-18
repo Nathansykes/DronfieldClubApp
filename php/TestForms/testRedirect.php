@@ -10,6 +10,7 @@ session_start();
 
 if ($_SESSION['valid'] ?? "")
     {
+        //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else {  
@@ -18,34 +19,38 @@ else {
     exit(0);
 }
 
+//Instantaite new POST method variables in relation to the database to add a student to a class 
 
 $studentNum = $_POST['studentIdToTest'] ?? "";
 $classId = $_POST['classId'] ?? "";
 
+//Empty variable 
+
 $destination = "";
 
+//If classID is equal to a switch case option, retrieve relevant php file post form submission
 
 switch ($classId) {
     case '1':
-        $destination = "level1Test.php";
+        $destination = "level1Test.php"; //level 1
         break;
     case '2':
-        $destination = "level2Test.php";
+        $destination = "level2Test.php"; //level 2
         break;
     case '3':
-        $destination = "level3Test.php";
+        $destination = "level3Test.php"; //level 3
         break;
     case '4':
-        $destination = "level4Test.php";
+        $destination = "level4Test.php"; //level 4
         break;
     case '5':
-        $destination = "level5Test.php";
+        $destination = "level5Test.php"; //level 5
         break;
     case '6':
-        $destination = "level6Test.php";
+        $destination = "level6Test.php"; //level 6
         break;
     case '7':
-        $destination = "level7Test.php";
+        $destination = "level7Test.php"; //level 7
         break;
     default:
         # code...
@@ -58,7 +63,7 @@ switch ($classId) {
                 <input type="hidden" name="classId" value="<?php echo $classId; ?>">
             </form>
             <script>
-                document.getElementById("formToSubmit").submit();
+                document.getElementById("formToSubmit").submit(); //Submit response to form and post onsubmit
             </script>
     </body>
    

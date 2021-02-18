@@ -2,10 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <!-- Viewport here -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Home</title>
-    <!-- attach styles here -->
+    <title>Add Student to Class List</title>
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 800px)"/>
     <link rel="icon" type="image/x-icon" href="../images/logoCOMP.png"/>
@@ -16,21 +14,21 @@ session_start();
 //Checks if the cookie is true, welcomes back user
 if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
     {
+         //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
-else {
-    //If not the user cannot view the page in full
-    header("Location: ../html/index.html? no_access");
-    exit(0);
-}
+else 
+    {
+        //If not the user cannot view the page in full
+        header("Location: ../html/index.html? no_access");
+        exit(0);
+    }
 ?>
 
 <body>
     <div class="container">
         <header>
-            <!--logo-->
             <div class="logo">
-                <!--image logo will go here-->
                 <img src="../images/logoCOMP.png" alt="Dronfield Swimming Club Logo" />
 
             </div>
@@ -61,6 +59,9 @@ else {
                     <li><a href="conductTestForm.php">Conduct a Test</a></li>
                     <?php
                     $accessLevel = $_SESSION['accessLevel'] ?? "";
+
+                    //If session is valid
+
                     if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
                     {
                         ?>
@@ -88,6 +89,21 @@ else {
 
                 $sql = "SELECT students.studentNum, students.studentName, classmember.classId FROM  Students LEFT OUTER JOIN classmember ON Students.studentNum = classmember.studentNum WHERE classId IS NULL ORDER BY  studentNum DESC LIMIT 0 , 30";
                 $result = mysqli_query($link, $sql);
+
+                $noData = false; //set noData to false
+                
+                $numOfRows = mysqli_num_rows($result) ?? 0; //database result casted to the num_rows query
+
+
+                if($numOfRows == 0) 
+                { 
+                    //if no rows are return from database(no students that are not in a class)                    
+                    $noData = true;
+                }
+                else if($numOfRows > 0)
+                {
+                    $noData = false;
+                }                
 
                 //echo $_GET['message'];
                 //Student table
@@ -124,12 +140,12 @@ else {
                         <?php
                         echo "</td>";
                         
-                        echo "</tr>";
-                        echo "</form>";
                         
                     }
                     //Form for insert function
-                
+                    
+                    echo "</tr>";
+                    
                     
                     
                 echo "</table>";
@@ -137,7 +153,14 @@ else {
                 echo"<meta http-equiv='refresh' content='1'>";
                 ?>
              </div>
-            
+                <?php
+                if($noData) //If noData is true
+                {
+                ?>
+                    <h2>All students are already in a class<h2>
+                <?php
+                }
+                ?>
         </main>
         <br/><br/>
     </div>

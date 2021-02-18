@@ -13,19 +13,20 @@
 
 session_start();
 
-//$secure = $_SESSION("Secure");
-
 //Checks if the cookie is true, welcomes back user
 //if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
+
 if ($_SESSION['valid']?? "")
     {
+        //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
-else {
-    //If not the user cannot view the page in full
-    header("Location: ../html/index.html? no_access");
-    exit(0);
-}
+else 
+    {
+        //If not the user cannot view the page in full
+        header("Location: ../html/index.html? no_access");
+        exit(0);
+    }
 
 ?>
 <body>
@@ -51,15 +52,7 @@ else {
                     <div class="bar1"></div>
                     <div class="bar2"></div>
                     <div class="bar3"></div>
-                    <?php
-                    $accessLevel = $_SESSION['accessLevel'] ?? "";
-                    if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
-                    {
-                        ?>
-                        <li><a href="databaseManagment.php">Manage Members</a></li>
-                        <?php
-                    }
-                    ?>
+                    
                 </div>
             </div>
         </header>
@@ -91,10 +84,10 @@ else {
 
                  <?php
 
+                 //Extend thread on connect.php
+
                     include "connect.php";
                  ?>
-
-
 
                  <div class="form"> <!--Form for updating meeting-->
                  <h2>Create New User</h2>
@@ -113,8 +106,10 @@ else {
 
                     </form>
                     <?php
-                    if(isset($_GET['newUser']) && $_GET['newUser'] == "success")
+                    if(isset($_GET['newUser']) && $_GET['newUser'] == "success") //If newUser is not null and is equal to 'success'
                     {
+                        //Initialise new POST methods and set the field to an empty primitive if null
+
                         $userName = $_POST['userName'] ?? "";
                         $pass = $_POST['password'] ?? "";
                         
@@ -127,11 +122,6 @@ else {
                     <?php
                     }
                     ?>
-
-
-                
-                    
-                
                     
                  </div>
 
@@ -143,12 +133,9 @@ else {
                  <?php
                  //Student table
 
-                //$sql = "SELECT * FROM  `Classes` ORDER BY  `classDay` DESC LIMIT 0 , 30";
-                //$result = mysqli_query($link, $sql);
                 $studentNum = "";
 
-
-                //echo $_GET['message'];
+                //SQL - select username, fullname and accesslevel from users record
                 
                 $sql = "SELECT username, fullname, accessLevel FROM users";
                 $result = mysqli_query($link, $sql);
@@ -158,15 +145,17 @@ else {
                 <?php
                 echo "<table class= 'table'>";
                 $counter=0;
+
+                //Whilst the query returns the relevant row casted to the result
+
                 while ($row=mysqli_fetch_row($result))
                 {	
+
+                    //Initialise new POST methods and set the field to an empty primitive if null
 
                     $userName = $row[0] ?? "";
                     $name = $row[1] ?? "";
                     $accessLevel = $row[2] ?? "";
-
-                   
-                    
 
                     $coachAdmin = "";
 
@@ -178,8 +167,6 @@ else {
                     {
                         $coachAdmin = "Admin";
                     }
-                    
-
 
                     $counter++;
                     echo "<tr class='tableRow'>";
@@ -191,7 +178,7 @@ else {
                     ?>
                     <form action="removeUser.php" method="post" onsubmit="">
                         <input type="hidden" name="userNameToRemove" value="<?php echo $userName; ?>">
-                        <input type="submit" name="remove" value="Remove User" class="newMemberbutton"  onclick="return confirm('Are you sure?')">
+                        <input type="submit" name="remove" value="Remove User" class="newMemberbutton"  onclick="return confirm('Are you sure?')"> <!--Remove User-->
                     </form>
                     <?php
                     echo "</td>";
@@ -200,16 +187,12 @@ else {
                     ?>
                     <form action="updateUserForm.php" method="post" onsubmit="">
                         <input type="hidden" name="userNameToUpdate" value="<?php echo $userName; ?>">
-                        <input type="submit" name="remove" value="Update User" class="newMemberbutton">
+                        <input type="submit" name="remove" value="Update User" class="newMemberbutton"> <!--Update User-->
                     </form>
 
                     <?php
                     echo "</td>";
                     echo "</tr>";
-
-                        
-                    
-                    
                     
                 }
                 echo "</form>";
@@ -221,7 +204,7 @@ else {
                 <div style="padding-top: 0" class= "form">
                 <form action="addStudentToClassList.php" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="classToUpdate" value="<?php echo $classToUpdate; ?>">
-                <input class= "newMemberbutton" type="submit" name="insert" value="Add Student" required>
+                <input class= "newMemberbutton" type="submit" name="insert" value="Add Student" required> <!--Add student to class-->
                 </form>
                 </div>
              </div>

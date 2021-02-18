@@ -2,9 +2,9 @@
 
 session_start();
 
-
 if ($_SESSION['valid'] ?? "")
     {
+        //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else {  
@@ -28,15 +28,18 @@ if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
     {
         echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
-else {
-    //If not the user cannot view the page in full
-    header("Location: ../html/index.html? no_access");
-    exit(0);
-}
+else 
+    {
+        //If not the user cannot view the page in full
+        header("Location: ../html/index.html? no_access");
+        exit(0);
+    }
 
-
+//Extend thread on connect.php
 
 include "connect.php";
+
+//Instantiate POST method variables and leave an empty primitive in the field if null
 
 $studentNum = $_POST['studentNum'] ?? "";
 $studentName = $_POST['studentName'] ?? "";
@@ -48,26 +51,32 @@ $parentPhone = $_POST['parentPhone'] ?? "";
 $studentMedical = $_POST['studentMedical'] ?? "";
 $previous = "javascript:history.go(-1)" ?? "";
 
+//If studentNum is empty
+
 if ($studentNum == "") 
 {
-    header("Location: $previous? no_class");
+    header("Location: $previous? no_class"); //No class found
     exit (0);
 }
 
 //header("Location: databaseManagment.php? message=values received.$studentNum.$studentName.$studentDOB.$studentAddress.$parentName.$parentEmail.$parentPhone.$studentMedical");
 
+//SQL - Insert student data into students record
+
 $sql = "INSERT INTO students(studentNum,studentName,studentDOB,studentAddress,parentName,parentEmail,parentPhone,studentMedical) 
                     VALUES('$studentNum','$studentName','$studentDOB','$studentAddress','$parentName','$parentEmail','$parentPhone','$studentMedical')";
+
+//if database query is recieved
 
 if (mysqli_query($link, $sql))
 	{
 		echo "success";
-		header("Location: databaseManagment.php? message=update success.$studentNum");
+		header("Location: databaseManagment.php? message=update success.$studentNum"); //student record has been updated successfully
 	}
 else 
     {
         echo "failed";
-        header("Location: databaseManagment.php? message=deletion failed.$studentNum");
+        header("Location: databaseManagment.php? message=deletion failed.$studentNum"); //student record has not been updated successfully
     }
 
 

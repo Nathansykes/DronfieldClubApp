@@ -1,4 +1,5 @@
-(function(){
+// Viewport is the users visible area of the display, it is used to estimate screen size and scale accordingly
+(function () {
     var viewportwidth;
     var viewportheight;
      

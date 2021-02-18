@@ -14,19 +14,19 @@
 
 session_start();
 
-//$secure = $_SESSION("Secure");
-
 //Checks if the cookie is true, welcomes back user
 //if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
 if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
     {
+        //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
-else {
-    //If not the user cannot view the page in full
-    header("Location: ../html/index.html? no_access");
-    exit(0);
-}
+else 
+    {
+        //If not the user cannot view the page in full
+        header("Location: ../html/index.html? no_access");
+        exit(0);
+    }
 
 ?>
 
@@ -85,39 +85,59 @@ else {
 
                  <?php
 
+                 //Extend thread on connect.php
+
                     include "connect.php";
+
+                    //Instantiate new POST methods and set the primitive to empty if null
 
                     $studentIdToUpdate = $_POST['studentIdToUpdate'] ?? "";
                     $update = $_POST['update'] ?? "";
 
+                    //Previous post form oncubmit method
+
                     $previous = "javascript:history.go(-1)" ?? "";
+
+                    //If field is empty/null
+
                     if ($studentIdToUpdate == "") 
                     {
-                        header("Location: $previous? no_studenId");
+                        header("Location: $previous? no_studenId"); //No student found
                         exit (0);
                     }
 
-                    $sql = "SELECT * FROM  Students WHERE studentNum = '$studentIdToUpdate'";
+                    $sql = "SELECT * FROM  Students WHERE studentNum = '$studentIdToUpdate'"; //select all from students where studentNum is equal to the student selected
                     $result = mysqli_query($link, $sql);
                  ?>
 
                  <div class="form">
                     <form action="../php/updateStudent.php" method="post" enctype="multipart/form-data">
                         <input name="studentIdToUpdate" type="hidden" value="<?php echo $_POST['studentIdToUpdate']; ?>">
+
                         <label for="studentName">Student's Name</label>
                         <input type="text" id="studentName" name="studentName" required>
+
                         <label for="studentDOB">Student's Date of Birth</label>
                         <input type="date" id="studentDOB" name="studentDOB" required>
+
                         <label for="studentAddress">Student's Home Address</label>
                         <input type="text" id="studentAddress" name="studentAddress" required>
+
                         <label for="parentName">Student's Parent's Name (Only One Required)</label>
                         <input type="text" id="parentName" name="parentName" required>
+
                         <label for="parentEmail">Parent's Email</label>
                         <input type="email" id="parentEmail" name="parentEmail" required>
+
                         <label for="parentPhone">Parent's Phone</label>
                         <input type="tel" id="parentPhone" name="parentPhone" required>
+
+                        <label for="lastPaidDate">Last Paid Date</label>
+                        <input type="date" id="lastPaidDate" name="lastPaidDate" required>
+
                         <label for="studentMedical">Student's Medical Information</label>
                         <input type="text" id="studentMedical" name="studentMedical">
+
                         <br><br>
                         <input type="submit" name="submit">
                         <br><br>
@@ -140,6 +160,8 @@ else {
         <?php
         while ($row=mysqli_fetch_row($result))
         {	
+            //Display all data
+
             ?>
             document.getElementById("studentName").defaultValue = "<?php echo $row[1]; ?>"
             document.getElementById("studentDOB").defaultValue = "<?php echo $row[2]; ?>"

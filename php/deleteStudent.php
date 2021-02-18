@@ -7,42 +7,76 @@
 
 <?php
 
-session_start();
+    session_start();
 
-$studentIdToDelete = $_POST['studentIdToDelete'] ?? "";
-$delete = $_POST['delete'] ?? "";
-$previous = "javascript:history.go(-1)" ?? "";
+    //Instantaite new POST method variables in relation to the database to add a student to a class but set primitive to empty if null
 
-include "connect.php";
+    $studentIdToDelete = $_POST['studentIdToDelete'] ?? "";
+    $archived = $_POST['archived'] ?? "";
+    $delete = $_POST['delete'] ?? "";
 
-if ($_SESSION['valid'] ?? "")
+    //Variable for previous instance of javascript, reload previous action made
+
+    $previous = "javascript:history.go(-1)" ?? "";
+
+    //Extend thread with connect.php
+
+    include "connect.php";
+
+    if ($_SESSION['valid'] ?? "")
+        {
+            //If the cookie is validated by a user/coach signing in, welcome them back to the page
+            echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        }   
+    else 
+        {  
+            //If not the user cannot view the page in full, send them back to home with noaccess
+            header("Location: ../html/index.html? no_access");
+            exit(0);
+        }
+
+    //If field is empty
+
+    if ($studentIdToDelete == "") 
     {
-        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
-    }   
-else {  
-    //If not the user cannot view the page in full, send them back to home with noaccess
-    header("Location: ../html/index.html? no_access");
-    exit(0);
-}
+        header("Location: $previous?no_student"); //no student found
+        exit (0);
+    }
 
-if ($studentIdToDelete == "") 
-{
-    header("Location: $previous?no_student");
-    exit (0);
-}
+    $sql="";
 
-$sql = "DELETE FROM students WHERE studentNum = '$studentIdToDelete'";
+    //If student is archived
 
-if (mysqli_query($link, $sql))
-	{
-		echo "success";
-		header('Location: databaseManagment.php? message=deletion success');
-	}
-	else 
-		{
-            echo "failed";
-            header("Location: databaseManagment.php? message=deletion failed.$studentIdToDelete");
-		}
+    if($archived = "true") 
+    {
+        $sql = "DELETE FROM archiveStudents WHERE studentNum = '$studentIdToDelete'"; //Delete field from archive students where studentNum is equal to user being deleted
+    }
+
+    //If not
+
+    else if($archived = "false")
+    {
+        $sql = "DELETE FROM students WHERE studentNum = '$studentIdToDelete'"; //Delete field from students where studentNum is equal to user being deleted
+    }
+    else
+    {
+        header("Location: $previous?no_student"); //No student found
+        exit (0);
+    }
+
+
+    //If database recieves query
+
+    if (mysqli_query($link, $sql))
+    {
+        echo "success";
+        header('Location: databaseManagment.php? message=deletion success'); //Deletion success
+    }
+    else 
+    {
+        echo "failed";
+        header("Location: databaseManagment.php? message=deletion failed.$studentIdToDelete"); //Deletion failed for (student)
+    }
 ?>
 
 <body>

@@ -12,19 +12,19 @@
 
 session_start();
 
-//$secure = $_SESSION("Secure");
-
 //Checks if the cookie is true, welcomes back user
 //if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
 if (($_SESSION['valid'] ?? "") && (($_SESSION['accessLevel'] == 1 ?? "") || ($_SESSION['accessLevel'] > 1 ?? "")))
     {
+        //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".($_SESSION["User"]?? "").",  Access Level: ".$_SESSION['accessLevel'];
     }   
-else {
-    //If not the user cannot view the page in full
-    header("Location: ../html/index.html? no_access");
-    exit(0);
-}
+else 
+    {
+        //If not the user cannot view the page in full
+        header("Location: ../html/index.html? no_access");
+        exit(0);
+    }
 
 ?>
 <body>
@@ -124,7 +124,7 @@ else {
                 {	
                     $counter++;
                     echo "<tr class='tableRow'>";
-                    echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow2'><span style='font-weight:bold'>Student Number: </span><br />". $row[0]."</td>";
+                    echo "<td style='display: none' id=member".$counter." onclick='OpenRows(this.id)' class='topRow2'><span style='font-weight:bold'>Student Number: </span><br />". $row[0]."</td>";
                     $studentNum = $row[0];
 
                     $sql2 = "SELECT studentName FROM students WHERE studentNum = '$studentNum'";
@@ -165,8 +165,6 @@ else {
                     }                     
                     
                 }
-
-
                 ?>
                 <script>
                     function hideAbsent() 
@@ -182,8 +180,97 @@ else {
                 echo "<input type='hidden' name='classIdToRegister' value='$classToRegister'>";
                 ?>
                 </table>
+                <?php
+                
+                    $currentDate = date("Y-m-d 00:00:00");
+                    $dateShouldPay1 = date("Y-01-01 00:00:00");
+                    $dateShouldPay2 = date("Y-04-01 00:00:00");
+                    $dateShouldPay3 = date("Y-09-01 00:00:00");
+                    
+
+                    $diff = strtotime($currentDate)-strtotime($dateShouldPay1);
+                    $diff = ($diff/86400);//gets the amount of days between the current date and the date should have paid
+
+
+                   
+
+                    if($diff >= 21)
+                    {
+                        
+                        $sqlHasPaid =  "SELECT students.studentNum, students.studentName, students.lastPaidDate, students.parentEmail FROM students 
+                                        INNER JOIN classmember ON classmember.studentNum = students.studentNum 
+                                        WHERE lastPaidDate <= '$dateShouldPay1' AND classmember.classId = '$classToRegister'";
+                        
+                        
+                        
+                        $resultPaid = mysqli_query($link, $sqlHasPaid);
+                        
+                        echo "<br><br>";
+                        echo "<h2>These students have not yet paid membership: </h2>";
+                        
+                        
+                        echo "<table class= 'table'>";
+                        
+                        
+                        $counter = 0;
+                        while($row=mysqli_fetch_row($resultPaid)) // no $link needed
+                        {
+                            $counter++;
+                            $studentName = $row[1];     
+                            $parentEmail = $row[3];
+                            echo "<form action='page.html' class='mailForm' id='mailForm$counter'>";
+                            echo "<tr class='tableRow'>";
+                            echo "<td class='topRow2'><span style='font-weight:bold'>Student Name: </span>". $studentName."</td>";
+                            ?>
+                            <td class='topRow2' style="width :50%">
+                                <span style='font-weight:bold; float:right'> Send reminder email to parent </span>
+                                <br>
+                                <?php
+                                echo "<input type='checkbox' style='float:right' class='emailBox' id='emailBox$counter' name='email' value='1'>"
+                                ?>
+                            <?php
+                            echo "</td>";
+                            echo "</tr>";
+                            echo "</form>";
+
+
+                        }
+
+                        ?>
+                        </table>
+                        <br>
+                        <button class="emailButton" type="button" onclick="sendEmail()">Send email</button>
+                        <br>
+                        <script>
+                            function sendEmail() 
+                            {
+                                var formElements = document.querySelectorAll(".mailForm")
+                                var boxElements = document.querySelectorAll(".emailBox")
+                                for(var i = 0;i < formElements.length ;i++) 
+                                {
+                                    if(formElements[i].id == boxElements[i].id)
+                                    {
+                                        formElements[i].submit
+                                    }
+                                }
+                                
+                            }
+
+                        </script>
+
+                        
+                        
+                        <?php
+
+                        
+                    }
+                    
+                        
+                    
+
+                ?>
                 <br>
-                <input class='registerSubmit' type='submit' value='Submit' style="float: right">
+                <input class='registerSubmit' type='submit' value='Submit Register' style="float: right">
                 </form>
 
             </div>

@@ -12,15 +12,18 @@
 <?php
 session_start();
 //Checks if the cookie is true, welcomes back user
-if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
+if (($_SESSION['valid'] ?? "") && (($_SESSION['accessLevel'] == 1 ?? "") || ($_SESSION['accessLevel'] > 1 ?? "")))
     {
+        //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
-else {
-    //If not the user cannot view the page in full
-    header("Location: ../html/index.html? no_access");
-    exit(0);
-}
+else 
+    {
+        //If not the user cannot view the page in full
+        header("Location: ../html/index.html? no_access");
+        exit(0);
+    }
+
 ?>
 
 <body>
@@ -57,6 +60,9 @@ else {
                     <li><a href="conductTestForm.php">Conduct a Test</a></li>
                     <?php
                     $accessLevel = $_SESSION['accessLevel'] ?? "";
+
+                    //If session is valid 
+
                     if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
                     {
                         ?>
@@ -76,7 +82,11 @@ else {
 
                 <?php
 
+                //Extend thread with connect.php
+
                 include "connect.php";
+
+                //SQL - Select student data and order byh classID
 
                 $sql = "SELECT students.studentNum, students.studentName, classmember.classId FROM students INNER JOIN classmember ON students.studentNum = classmember.studentNum ORDER BY classId asc;";
                 $result = mysqli_query($link, $sql);
@@ -86,19 +96,19 @@ else {
                 
                 echo "<br>";
 
-                if(isset($_GET['student']) && $_GET['student'] == "passed")
+                if(isset($_GET['student']) && $_GET['student'] == "passed") //If student field is not null and is value set to passed
                 {
                     ?>
                     <h2 style="float:none">Student Passed Test</h2>
                     <?php
                 }
-                else if(isset($_GET['student']) && $_GET['student'] == "failed")
+                else if(isset($_GET['student']) && $_GET['student'] == "failed") //If student field is not null and is value set to failed
                 {
                     ?>
                     <h2 style="float: none">Student Failed Test</h2> 
                     <?php
                 }
-                else if(isset($_GET['sql']) && ($_GET['sql']) == "failed")
+                else if(isset($_GET['sql']) && ($_GET['sql']) == "failed") //SQL statement failed to process
                 {
                     ?>
                     <h2 style="float: none">Student Passed, but SQL Failed. Please Change Student's Class in the Admin Page</h2> 
@@ -114,17 +124,23 @@ else {
 
                 <?php
                 $counter=0;
+
+                //Whilst the fetch row query is true to result
+
                 while ($row=mysqli_fetch_row($result))
                     {	
-                        $num = $row[0] ?? "";
-                        $name = $row[1] ?? "";
-                        $level = $row[2] ?? "";
+                        $num = $row[0] ?? ""; //set variable in row to an empty type 
+                        $name = $row[1] ?? ""; //set variable in row to an empty type 
+                        $level = $row[2] ?? ""; //set variable in row to an empty type 
+                        
+                        //if level is resulted to an empty type
+
                         if($level =="")
                         {
-                            $level = "N/A";
+                            $level = "N/A"; 
                         }
 
-                        $counter++;
+                        $counter++; //Increment counter
 
                         echo "<td id=member".$counter." class='topRow1'><span style='font-weight:bold'>Student Name: </span><br/>". $row[1]. "</td>";
                         echo "<td id=member".$counter." class='topRow1'><span style='font-weight:bold'>Level: </span><br/>". $level. "</td>";

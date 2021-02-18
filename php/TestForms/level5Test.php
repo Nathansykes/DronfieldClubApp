@@ -15,6 +15,7 @@ session_start();
 
 if (($_SESSION['valid'] ?? "") && (($_SESSION['accessLevel'] == 1 ?? "") || ($_SESSION['accessLevel'] > 1 ?? "")))
     {
+        //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".($_SESSION["User"]?? "").",  Access Level: ".$_SESSION['accessLevel'];
     }   
 else {
@@ -23,6 +24,7 @@ else {
     exit(0);
 }
 
+//Instantaite new POST method variables in relation to the database to add a student to a class 
 
 $studentNum = $_POST['studentIdToTest'] ?? "";
 $classId = $_POST['classId'] ?? "";
@@ -39,7 +41,7 @@ $classId = $_POST['classId'] ?? "";
             <div class="loginLink">
                 <ul>
                     <li>
-                    <a href="logout.php">Logout</a>
+                    <a href="../logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -61,6 +63,9 @@ $classId = $_POST['classId'] ?? "";
                     <li><a href="../conductTestForm.php">Conduct a Test</a></li>
                     <?php
                     $accessLevel = $_SESSION['accessLevel'] ?? "";
+
+                    //If session is valid
+
                     if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
                     {
                         ?>
@@ -215,8 +220,8 @@ $classId = $_POST['classId'] ?? "";
                     
 
                         
-                <input type='hidden' name='classIdToRegister' value='<?php echo $classId ?>'>
-                <input type='hidden' name='studentIdToTest' value='<?php echo $studentNum ?>'>
+                <input type='hidden' name='classIdToRegister' value='<?php echo $classId ?>'> <!--Return classID-->
+                <input type='hidden' name='studentIdToTest' value='<?php echo $studentNum ?>'> <!--Return studentNum-->
                 
                 </table>
                 <br>
@@ -237,7 +242,7 @@ $classId = $_POST['classId'] ?? "";
     </footer>
     
 
-    <script src="../scripts/jquery-3.4.1.min.js"></script>
-    <script src="../scripts/main.js"></script>
+    <script src="../../scripts/jquery-3.4.1.min.js"></script>
+    <script src="../../scripts/main.js"></script>
 </body>
 </html>

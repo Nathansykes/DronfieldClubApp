@@ -16,13 +16,15 @@ session_start();
 //Checks if the cookie is true, welcomes back user
 if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
     {
+        //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
-else {
-    //If not the user cannot view the page in full
-    header("Location: ../html/index.html? no_access");
-    exit(0);
-}
+else 
+    {
+        //If not the user cannot view the page in full
+        header("Location: ../html/index.html? no_access");
+        exit(0);
+    }
 ?>
 
 <body>
@@ -80,8 +82,12 @@ else {
 
                     include "connect.php";
 
+                    //Instantiate new POST methods and set field to empty primitive if null
+
                     $studentIdToUpdate = $_POST['studentIdToUpdate'] ?? "";
                     $update = $_POST['update'] ?? "";
+
+                    //SQL - select all data from students where the studentNum is equal to the ID updated
 
                     $sql = "SELECT * FROM  Students WHERE studentNum = '$studentIdToUpdate'";
                     $result = mysqli_query($link, $sql);
@@ -125,6 +131,9 @@ else {
     <script src="../scripts/main.js"></script>
     <script>
         <?php
+
+        //Whilst the query returns the relevant row casted to the result
+
         while ($row=mysqli_fetch_row($result))
         {	
             ?>

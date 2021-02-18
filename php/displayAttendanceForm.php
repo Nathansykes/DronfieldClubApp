@@ -1,9 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <!-- Viewport here -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Classes</title>
+    <!-- attach styles here -->
     <link rel="stylesheet" href="../css/mobile.css"/>
     <link rel="stylesheet" href="../css/desktop.css" media="only screen and (min-width : 720px)"/>
     <link rel="icon" type="image/x-icon" href="../images/logoCOMP.png"/>
@@ -12,8 +15,9 @@
 
 session_start();
 
-//Checks if the cookie is true
+//$secure = $_COOKIE("Secure");
 
+//Checks if the cookie is true
 //if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
 
 if (($_SESSION['valid'] ?? "") && (($_SESSION['accessLevel'] == 1 ?? "") || ($_SESSION['accessLevel'] > 1 ?? "")))
@@ -66,9 +70,6 @@ else
                     //If the access level of the current session is equal to 2, grant access to the database management system, exclusivisty for coaches
 
                     $accessLevel = $_SESSION['accessLevel'] ?? "";
-
-                    //If session is valid
-
                     if ($accessLevel == 2)  
                     {
                         ?>
@@ -94,9 +95,12 @@ else
 
                 //SQL - Retreiving Class data and order then by class ID ascending order (30 max)
 
-                $sql = "SELECT * FROM  `Classes` ORDER BY  `classId` ASC LIMIT 0 , 30";
+                //Instantiate new POST method and set field to empty primitive if null
+
+                $classId = $_POST['classIdForAttendance'] ?? "";
+
+                $sql = "SELECT classId,timeOfAttendance FROM  attendance WHERE classId = '$classId' GROUP BY timeOfAttendance ORDER BY timeOfAttendance DESC LIMIT 0,52";
                 $result = mysqli_query($link, $sql);
-                $classId = 0;
                 $studentNum = "";
 
                 //echo $_GET['message'];
@@ -105,63 +109,48 @@ else
                 echo "<table class= 'table'>";
                 echo "<tr>";
                 $counter=0;
-
+                
+                
                 //Whilst recieiving data from the result, order and update data appropriately dependent on the users input
-
-                while ($row=mysqli_fetch_row($result)) 
+                
+                $noData = false;
+                if(mysqli_num_rows($result) == 0) 
+                { 
+                    //if no rows are return from database(no attendance has been taken for that class yet)
+                    $noData = true; //there is attendence
+                }
+                else 
+                {
+                    $noData = false; //there is no attendence
+                }
+                
+                while ($row=mysqli_fetch_row($result)) //If query has been recieved in database
                 {	
-
-                    $datetime =strtotime($row[2]); //Parse the time (3rd postion of data) in row array to new datetime varible
-                    $time = date('H:i',$datetime); //Cast datetime to date variable
-
-                    $counter++;
-              
-                    echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Class Number: </span><br/>". $row[0]. "</td>";
-                    echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Day: </span><br/>". $row[1]. "</td>";
-                    echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Time: </span><br/>". $time. "</td>";
-                    echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Staff: </span><br/>". $row[3]. "</td>";
+                    
+                    
+                    $datetime =strtotime($row[1]); //parse row variable into datetuime variable
+                    $date = date('d/M/Y',$datetime); //Instantiate new date variable which has passed in value of datetime variable
+                    
+                    $counter++; //increment 
+                    
+                    
+                    
+                    echo "<td colspan='2' id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Date: </span>". $date. "</td>";
                     echo "</tr>";
-                    $classId = $row[0]; 
+                     
 
-                    //Post repsonses to accept a request to update the class or register a new class after form onsumbmitted
+                    //Post repsonses to accept a reques to update the class or register a new class
 
+                    
                     echo "</tr>";
-                        echo "<td id=member".$counter." class='tableRow hidden' colspan='2'>";
-                        ?>
-                        <form action="updateClassForm.php" method="post" onsubmit="">
-                            <input type="hidden" name="classToUpdate" value="<?php echo $classId; ?>">
-                            <input type="submit" name="editClass" value="Update Class" class="updateClassButton">
-                        </form>
-                        </td>
-
-                        <?php
-                        echo "<td id=member".$counter." class='tableRow hidden' colspan='2'>";
-                        ?>
-
-                        <form action="registrationForm.php" method="post" onsubmit="">
-                            <input type="hidden" name="classToRegister" value="<?php echo $classId; ?>">
-                            <input type="submit" name="registerClass" value="Register Class" class="registerClassButton">
-                        </form>
-                        </td>
-                        </tr>
-                        <?php
-                        echo "</tr>";
-                        echo "<tr>";
-                        echo "<td id=member".$counter." class='tableRow hidden' colspan='4'>";
-                        ?>
-
-                        <form action="displayAttendanceForm.php" method="post" onsubmit="">
-                            <input type="hidden" name="classIdForAttendance" value="<?php echo $classId; ?>">
-                            <input type="submit" name="editClass" value="View Previous Attendance" class="updateClassButton">
-                        </form>
-                        </td>
                         
-                        <?php
-                        echo "</tr>";
 
                     //SQL - Select the StundentNum where the classID is equal to the first row selected
-                        
-                    $sqlA = "SELECT studentNum FROM  classmember WHERE classId = '$classId'";
+                    
+                    
+                    $sqlA = "SELECT studentNum,Attendance FROM attendance WHERE classId = '$classId' AND timeOfAttendance = '$row[1]'";
+
+
                     $resultA = mysqli_query($link, $sqlA);
 
                     //Whilst the result is true of the requested class
@@ -169,29 +158,50 @@ else
                     while ($rowA=mysqli_fetch_row($resultA))
                     {	
                         echo "<tr id='member$counter' class='tableRow hidden'>";
-                        echo "<td style='display: none' class='classRecord' colspan='2'><span style='font-weight:bold'>Student Number: </span><br/>". $rowA[0]."</td>";
-                        $studentNum = $rowA[0];
-
+                        
                         //SQL - Select studentName where the studentNum is equal to the first row selected
-    
+                        
+                        $studentNum = $rowA[0];
                         $sql2 = "SELECT studentName FROM  students WHERE studentNum = '$studentNum'";
                         $result2 = mysqli_query($link, $sql2);
-
+                        
                         //Whilst the result is true of the fecthed class, display appropriate data
                         
                         while ($row2=mysqli_fetch_row($result2))
                         {	
-                            
-                            echo "<td class='classRecord' colspan='4'><span style='font-weight:bold'>Student Name: </span><br />". $row2[0]."</td>"; //return relevant row
-                            
+                            $studentName = $row2[0];
+                            echo "<td class='classRecord' colspan='1'><span style='font-weight:bold'>Student Name: </span><br />". $studentName."</td>";
                         }
+
+                        $attendance = "";
+
+                        //If the value returned from the query method is equal to 1
+
+                        if ($rowA[1] == 1)
+                        {
+                            $attendance = "Present"; //That student is present in the class
+                        }
+                        else
+                        {
+                            $attendance = "Absent"; //That student is not present in the class
+                        }
+                        echo "<td class='classRecord' colspan='1'><span style='font-weight:bold'>Attendance: </span><br/>". $attendance."</td>"; //return the attendence for each class once displayed
                         echo "</tr>";
                     }
                     
+                    
                 } 
-            
+                
                 echo "</table>";
-                    ?>
+
+                if($noData) //If no data is true
+                {
+                ?>
+                    <h2>No registers have been taken for this class<h2>
+                <?php
+                }
+                ?>
+
             </div>
         </main>
     </div>

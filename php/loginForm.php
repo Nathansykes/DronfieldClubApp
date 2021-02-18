@@ -40,8 +40,6 @@
             <div class="row">
                 <ul>
                     <li><a href="../html/index.html">Home</a></li>
-                    <!-- <li><a href="../html/classes.html">Classes</a></li>
-                    <li><a href="../html/testing.html">Conduct a Test</a></li> -->
                 </ul>
             </div>
         </nav>
@@ -78,8 +76,10 @@
     
     <?php
     
+    //Extend thread on connect.php
 
     include "../php/connect.php";
+
     //This is the message the user will recive if they enter invalid details
     if (isset($_GET['credit']) && $_GET['credit'] == "false")
         {

@@ -1,4 +1,5 @@
-(function(){
+(function  ()  {
+        // Burgermenu, drop-down if in mobile mode to allow easeir navigation of pages
     $(".burgerMenu").on("click", function(ev) 
     {
         ev.preventDefault();
@@ -13,6 +14,7 @@
         }
     });
 
+        // Highlight function for navigation 
     function navHighlight(elem, home, active) {
         var url = location.href.split('/'),
             loc = url[url.length -1],
@@ -30,38 +32,47 @@
     }
 )();
 
+
+// Password checking function, whitelists 
+$('input').on('keypress', function (event) {
+    var newInput = new RegExp("^[a-zA-Z0-9 !@$.?,+]"); // white listed characters
+    /*
+    var r = [/0-9/, /a-z/, /A-Z/]; // Test if password contains one uppercase, lowercase and number
+    var goodPass = r.every(function (testPass) { return r.testPass(newInput); });
+    */ 
+   var checkSymbl = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+   if (!newInput.test(checkSymbl)) { // & testPass(newInput = TRUE)
+    console.info("invalid character input");
+    event.preventDefault();
+    return false;
+}
+
+});
+
+//open drop down rows to
 function OpenRows(clickedRow)//rows id passed in from database management.php
 {
     var elements = document.querySelectorAll(".tableRowButton,.tableRow");
 
-    for(var i = 0;i < elements.length ;i++)
-    {
+    for(var i = 0;i < elements.length ;i++) { // FOR loop to go through the array of elements and hide toggled rows
         if(clickedRow == elements[i].id)
-        {
-            elements.item(i).classList.toggle("hidden");
-
-        }
-            
+            elements.item(i).classList.toggle("hidden"); // IF row is clicked, hide classList
     }
-    
 }
 
-$('input').on('keypress', function (event) {
-    var newInput = new RegExp("^[a-zA-Z0-9 !@$.?,+]"); // white listed characters
-        /*
-    var r = [/0-9/, /a-z/, /A-Z/]; // Test if password contains one uppercase, lowercase and number
-    var goodPass = r.every(function (testPass) { return r.testPass(newInput); }); // TODO
-        */ 
-    var checkSymbl = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-    if (!newInput.test(checkSymbl)) { // & testPass(newInput = TRUE)
-       console.info("invalid character input");
-       event.preventDefault();
-       return false;
+function OpenRows2(clickedRow)//rows id passed in from database management.php
+{
+    var elements = document.querySelectorAll(".tableRowButton2,.tableRow2");
+
+    for(var i = 0;i < elements.length ;i++) { // FOR loop to go through the array of elements and hide toggled rows
+        if(clickedRow == elements[i].id)
+            elements.item(i).classList.toggle("hidden"); // IF row is clicked, hide classList
     }
-    
-});
+}
 
 
+
+// Checking password entered matches that stored in database
 var checkPasswordsMatch = function() 
 {
     var user;
@@ -89,8 +100,7 @@ var checkPasswordsMatch = function()
     }
 };
 
-
-
+//Functions to check if passwords match
 
 var checkPasswordsMatchReset = function() 
 {
@@ -98,12 +108,17 @@ var checkPasswordsMatchReset = function()
     var pass = document.getElementById('password');
     var passConfirm = document.getElementById('confirm_password');
 
+    //If both passwords match
+
     if (pass.value == passConfirm.value) 
     {
         pass.style.borderColor = 'green';
         passConfirm.style.borderColor = 'green';
         document.getElementById("signUpSubmit").disabled = false;
     }
+
+    //if they do not match
+    
     else if(pass.value == "" || passConfirm.value == "")
     {
         document.getElementById("signUpSubmit").disabled = true;
@@ -118,6 +133,7 @@ var checkPasswordsMatchReset = function()
     }
 };
 
+//function to copy text to clipboard
 
 function copyToClipboard(text) 
 {

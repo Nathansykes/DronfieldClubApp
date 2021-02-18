@@ -10,6 +10,7 @@ session_start();
 
 if ($_SESSION['valid'] ?? "")
     {
+        //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else {  
@@ -17,6 +18,8 @@ else {
     header("Location: ../../html/index.html? no_access");
     exit(0);
 }
+
+//Instantaite new POST method variables in relation to the database to add a student to a class 
 
 $studentNum = $_POST['studentIdToTest'] ?? "";
 $classId = $_POST['classIdToRegister'] ?? "";
@@ -32,34 +35,36 @@ $numOfObjective = 0;
 
 //$classId = str_replace($classId,"\"","")
 
+//switch case for the value of classID, if the classID is equal to a certain number, display relevant objectives
+
 $classId = (int)$classId;
 
 switch ($classId) {
     case 1:
-        $numOfObjective = 13;
+        $numOfObjective = 13; //If classID is 1
         break;
     case 2:
-        $numOfObjective = 10;
+        $numOfObjective = 10; //If classID is 2
         break;
     case 3:
-        $numOfObjective = 9;
+        $numOfObjective = 9; //If classID is 3
         break;
     case 4:
-        $numOfObjective = 13;
+        $numOfObjective = 13; //If classID is 4
         break;
     case 5:
-        $numOfObjective = 12;
+        $numOfObjective = 12; //If classID is 5
         break;
     case 6:
-        $numOfObjective = 11;
+        $numOfObjective = 11; //If classID is 6
         break;
     case 7:
-        $numOfObjective = 10;
+        $numOfObjective = 10; //If classID is 7
         break;
     default:
         break;
 }
-echo "Num of Objectives: ".$numOfObjective;
+echo "Num of Objectives: ".$numOfObjective; //return
 echo "<br><br>";
 
 $objectives = [];
@@ -70,7 +75,7 @@ for ($i= 0; $i < $numOfObjective; $i++) // loop through number of tests
 {
     $testPassFail = $_POST['test'.$i] ?? "";
    
-    array_push($objectives,$testPassFail);
+    array_push($objectives,$testPassFail); //push elements on the end of the array (objectives and testPassFail)
 }
 
 $passed = true; // Define passed with no default or false and set it as true if criteria is met
@@ -87,13 +92,13 @@ for ($i= 0; $i < count($objectives); $i++) //
 }
 
 
-
+//Extend thread to connect.php
 
 include "../connect.php";
 
 $newClassId = 0;
 
-if($passed) 
+if($passed)  //If the test has been passed, increment the classID
 {
     if ($classId < 7) 
     {
@@ -101,50 +106,63 @@ if($passed)
     }
     else 
     {
-        $sqlArchive = "INSERT INTO archivestudents (studentNum, studentName, studentDOB, studentAddress, parentName, parentEmail, parentPhone, studentMedical) SELECT * FROM students WHERE studentNum = '$studentNum'"; 
+        //SQL - Insert Student data into Student archive once posted
+
+        $sqlArchive = "INSERT INTO archivestudents (studentNum, studentName, studentDOB, studentAddress, parentName, parentEmail, parentPhone, studentMedical) SELECT studentNum, studentName, studentDOB, studentAddress, parentName, parentEmail, parentPhone, studentMedical FROM students WHERE studentNum = '$studentNum'"; 
         echo "<br><br>";
         echo $sqlArchive;
         echo "<br><br>";
+
+        //f
+
         if (mysqli_query($link, $sqlArchive)) 
         {
+            //SQL - Delete data from classmember if studentNum is true
+
             $sqlDelete1 = "DELETE FROM classmember WHERE studentNum = '$studentNum'";
             if (mysqli_query($link, $sqlDelete1)) 
             {
+                //SQL - Delete data from students if studentNum is true
+
                 $sqlDelete2 = "DELETE FROM students WHERE studentNum = '$studentNum'";
                 if (mysqli_query($link, $sqlDelete2)) 
                 {
                     header("Location: ../conductTestForm.php?success!student=archived");
-                    exit(0);
+                    exit(0); //exit method
                 }
                 else 
                 {
                     header("Location: ../conductTestForm.php?sqldelete=failed");
-                    exit(0);
+                    exit(0); //exit method
                 }
             }
             else 
             {
                 header("Location: ../conductTestForm.php?sqldelete=failed");
-                exit(0);
+                exit(0); //exit method
             }
         }
         else 
         {
             header("Location: ../conductTestForm.php?sqlinsert=failed");
-            exit(0);
+            exit(0); //exit method
         }
     }
 
+    //SQL - Update classmember and set the classID to the value of newClassID where studentNum is true 
+
     $sql = "UPDATE classmember SET classId = '$newClassId' WHERE studentNum = '$studentNum'";
+
+    //If database has recieved query
  
     if (mysqli_query($link, $sql)) 
     {
-        echo "success";
+        echo "success"; //success
 		header("Location: ../conductTestForm.php? student=passed");
     }
     else 
     {
-        echo "failed";
+        echo "failed"; //failed
 		header("Location: ../conductTestForm.php? sqlupdate=failed");
     }
     // Move them up a group

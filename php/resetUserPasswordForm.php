@@ -14,19 +14,19 @@
 
 session_start();
 
-//$secure = $_SESSION("Secure");
-
 //Checks if the cookie is true, welcomes back user
 //if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
 if ($_SESSION['valid']?? "")
     {
+        //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
-else {
-    //If not the user cannot view the page in full
-    header("Location: ../html/index.html? no_access");
-    exit(0);
-}
+else 
+    {
+        //If not the user cannot view the page in full
+        header("Location: ../html/index.html? no_access");
+        exit(0);
+    }
 
 ?>
 <body>
@@ -60,8 +60,6 @@ else {
             <div class="row">
                 <ul>
                     <li><a href="../html/index.html">Home</a></li>
-                    <!-- <li><a href="../html/classes.html">Classes</a></li>
-                    <li><a href="../html/testing.html">Conduct a Test</a></li> -->
                 </ul>
             </div>
         </nav>
@@ -71,7 +69,7 @@ else {
          
              <div class="mainContent">
                  <!--content goes here-->
-                 <h1 class="siteTitle">Dronfield Swimming Club | Sign Up </h1>
+                 <h1 class="siteTitle">Dronfield Swimming Club | Reset Password </h1>
                  <!--Here is the login form which will execute the php script-->
 
                  <?php

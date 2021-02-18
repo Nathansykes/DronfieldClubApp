@@ -14,12 +14,11 @@
 
 session_start();
 
-//$secure = $_SESSION("Secure");
-
 //Checks if the cookie is true, welcomes back user
 //if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
 if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
     {
+        //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
 else {
@@ -66,6 +65,9 @@ else {
                     <li><a href="conductTestForm.php">Conduct a Test</a></li>
                     <?php
                     $accessLevel = $_SESSION['accessLevel'] ?? "";
+
+                    //If session valid
+
                     if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
                     {
                         ?>
@@ -85,17 +87,23 @@ else {
 
                  <?php
 
+                 //Extend thread on connect.php
+
                     include "connect.php";
+
+                    //Instantiate new POST methods and set the primitive to empty if null
 
                     $userNameToUpdate = $_POST['userNameToUpdate'] ?? "";
                     $update = $_POST['update'] ?? "";
 
                     $previous = "javascript:history.go(-1)" ?? "";
-                    if ($userNameToUpdate == "") 
+                    if ($userNameToUpdate == "") //If the field is empty/null
                     {
-                        header("Location: $previous? no_studenId");
+                        header("Location: $previous? no_studenId"); //no student found
                         exit (0);
                     }
+
+                    //SQL - select all from users where the userName is equal to the user selected
 
                     $sql = "SELECT * FROM  users WHERE userName = '$userNameToUpdate'";
                     $result = mysqli_query($link, $sql);
@@ -116,23 +124,42 @@ else {
                         </select>
                     <br><br>
                     <input type="submit" name="remove" value="Update" class="newMemberbutton"  onclick="document.getElementById('coachAdmin').disabled = false;return confirm('Are you sure?')">
-
+                    <!--to remove the user-->
                 </form>
 
-                
+                </div>
                 <div class="form">
                 <br>
                 <h3>Reset Password</h3>
-                 <form action="resetUserPassword.php" method="post" enctype="multipart/form-data">
-                        <input name="userNameToUpdate" type="hidden" value="<?php echo $userNameToUpdate; ?>"> 
+                <form action="generateUserPassword.php" method="post" enctype="multipart/form-data">
+                    <input name="userNameToReset" type="hidden" value="<?php echo $userNameToUpdate; ?>"> 
                     <br>
                     <input type="submit" name="remove" value="Generate new password" class="newMemberbutton"  onclick="return confirm('Are you sure?')">
-
+                    <!--to remove the user-->
                 </form>
-
-                
-
                 </div>
+
+                <?php
+
+                    //If password reset is not null and is equal to 'success'
+
+                    if(isset($_GET['passwordReset']) && $_GET['passwordReset'] == "success")
+                    {
+                        $userName = $_POST['userName'] ?? "";
+                        $pass = $_POST['password'] ?? "";
+                        
+                        ?>
+                        <div id='newUserDetails'>
+                        <p>Current username: <?php echo $userName; ?></p>
+                        <p>Users New password: <?php echo $pass; ?></p>
+                        </div>
+
+                    <?php
+                    }
+                    ?>
+
+
+
              </div>
          </main>
     </div>
@@ -156,6 +183,8 @@ else {
             document.getElementById("fullName").defaultValue = "<?php echo $row[2]; ?>"
             document.getElementById("coachAdmin").selectedIndex = accessLevel-1
         <?php 
+
+        //If user is equal to user currently being edited
         if($_SESSION["User"] == $userNameToUpdate)
         {
             ?>

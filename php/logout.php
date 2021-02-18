@@ -7,15 +7,18 @@
 
 <?php
 session_start();
+
+//the session is no longer valid/ the user has been logged out
+
 echo "Logged out ".$_SESSION["User"]."! ";
 
-$valid = ($session['valid'] ?? "");
+$valid = ($session['valid'] ?? ""); //set session to empty primitive if null
 
-unset($valid);
-ini_set($session ?? "", 0);
+unset($valid); //unset value
+ini_set($session ?? "", 0); //set the new value of session to either be null or 0
 session_destroy();
 
-header("Location: ../html/index.html?logout=true");
+header("Location: ../html/index.html?logout=true"); //logout has been successful
 // exit(header())
 ?>
 

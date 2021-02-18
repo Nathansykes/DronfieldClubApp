@@ -13,19 +13,19 @@
 
 session_start();
 
-//$secure = $_SESSION("Secure");
-
 //Checks if the cookie is true, welcomes back user
 //if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
 if ($_SESSION['valid']?? "")
     {
+        //If the cookie is validated by a user/coach signing in, welcome them back to the page
         echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
-else {
-    //If not the user cannot view the page in full
-    header("Location: ../html/index.html? no_access");
-    exit(0);
-}
+else 
+    {
+        //If not the user cannot view the page in full
+        header("Location: ../html/index.html? no_access");
+        exit(0);
+    }
 
 ?>
 <body>
@@ -51,15 +51,6 @@ else {
                     <div class="bar1"></div>
                     <div class="bar2"></div>
                     <div class="bar3"></div>
-                    <?php
-                    $accessLevel = $_SESSION['accessLevel'] ?? "";
-                    if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
-                    {
-                        ?>
-                        <li><a href="databaseManagment.php">Manage Members</a></li>
-                        <?php
-                    }
-                    ?>
                 </div>
             </div>
         </header>
@@ -93,6 +84,8 @@ else {
 
                     include "connect.php";
 
+                    //Instantiate new POST methods and set the primitive to empty if null
+
                     $classToUpdate = $_POST['classToUpdate'] ?? "";
                     $update = $_POST['update'] ?? "";
 
@@ -103,11 +96,13 @@ else {
 
                     if($classToUpdate == "")
                     {
-                        $classToUpdate = $_GET['classToUpdate'] ?? "";
+                        $classToUpdate = $_GET['classToUpdate'] ?? ""; //Get current value of classtoupdate anfd set null
                         ?>
                         <script> console.info(<?php echo $classToUpdate; ?>) </script>
                         <?php
                     }
+
+                    //SQL - select all from classes where the classID is the same to the class selected
 
                     $sql = "SELECT * FROM  classes WHERE classId = '$classToUpdate'";
                     $result = mysqli_query($link, $sql);
@@ -143,12 +138,17 @@ else {
                     
                     <script>
                         <?php
+
+                        //Whilst the query has returned the relevant row response
+
                         while ($row=mysqli_fetch_row($result))
                         {	
 
                             $classDay = $row[1];
                             $classTime = $row[2];
                             $classStaff = $row[3];
+
+                            //Parse and split string into new time variable
 
                             $datetime=strtotime($classTime);
                             $time=date('H:i',$datetime);
@@ -166,8 +166,8 @@ else {
                                     break;
                                 }   
                             }
-                            document.getElementById("classTime").defaultValue = "<?php echo $time; ?>"
-                            document.getElementById("classStaff").defaultValue = "<?php echo $classStaff; ?>"
+                            document.getElementById("classTime").defaultValue = "<?php echo $time; ?>" //echo the time 
+                            document.getElementById("classStaff").defaultValue = "<?php echo $classStaff; ?>" //echo the class stuff
                         <?php 
                         } ?>
                     </script>
@@ -181,12 +181,7 @@ else {
                  <?php
                  //Student table
 
-                //$sql = "SELECT * FROM  `Classes` ORDER BY  `classDay` DESC LIMIT 0 , 30";
-                //$result = mysqli_query($link, $sql);
                 $studentNum = "";
-
-
-                //echo $_GET['message'];
                 
                 $sql = "SELECT studentNum FROM  classmember WHERE classId = '$classToUpdate'";
                 $result = mysqli_query($link, $sql);
@@ -200,7 +195,7 @@ else {
                 {	
                     $counter++;
                     echo "<tr class='tableRow'>";
-                    echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Number: </span><br />". $row[0]."</td>";
+                    echo "<td style='display: none' id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Number: </span><br />". $row[0]."</td>";
                     $studentNum = $row[0];
                     
                     $sql2 = "SELECT studentName FROM  students WHERE studentNum = '$studentNum'";
@@ -209,10 +204,10 @@ else {
                     while ($row2=mysqli_fetch_row($result2))
                     {	
                         
-                        echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Name: </span><br />". $row2[0]."</td>";
+                        echo "<td colspan='2' id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Name: </span><br />". $row2[0]."</td>";
                         
                         echo "<tr id=member".$counter." class='tableRow hidden'>";
-                        echo "<td id=member".$counter." class='tableRow hidden' colspan='2'>";                //Rows from the database	
+                        echo "<td colspan='2' id=member".$counter." class='tableRow hidden' colspan='2'>";                //Rows from the database	
                         ?>
                             <form action="removeStudentFromClass.php" method="post" onsubmit="">
                                 <input type="hidden" name="studentIdToRemove" value="<?php echo $studentNum; ?>">
