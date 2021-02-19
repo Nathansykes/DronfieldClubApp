@@ -65,20 +65,20 @@ $passhash = password_hash($password, PASSWORD_BCRYPT, $pwoptions);
 //SQL - update users and set the userPass to 1 (reset password) where the userName is equal to the user updated
 
 $sql = "UPDATE users SET userPass = '$passhash', resetPassword = '1' WHERE userName = '$userName'";
-echo "<br><br>";
-echo $sql;
 
 //If the database has recieved the query
 
 if (mysqli_query($link, $sql))
 {
+    
     ?>
     <form id= "newUserForm" action="updateUserForm.php?passwordReset=success" method="post" enctype="multipart/form-data">
         <input name="password" type="hidden" value="<?php echo $password; ?>"> 
         <input name="userName" type="hidden" value="<?php echo $userName; ?>"> 
+        <input name="userNameToUpdate" type="hidden" value="<?php echo $userName; ?>"> 
     </form>
     <script>
-        document.getElementById("newUserForm").submit(); //submit and POST the user form to generate a password
+        document.forms["newUserForm"].submit(); //submit and POST the user form to generate a password
     </script>
     <?php
 }

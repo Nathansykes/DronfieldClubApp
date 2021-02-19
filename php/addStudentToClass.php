@@ -18,7 +18,7 @@ session_start();
 if ($_SESSION['valid'] ?? "")
 {
     //If the cookie is validated by a user/coach signing in, welcome them back to the page
-    echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+    
 }   
 else 
     {  

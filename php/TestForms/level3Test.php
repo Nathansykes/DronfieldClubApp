@@ -29,6 +29,14 @@ else {
 $studentNum = $_POST['studentIdToTest'] ?? "";
 $classId = $_POST['classId'] ?? "";
 
+$previous = "javascript:history.go(-1)" ?? "";
+if ($studentNum == "" || $classId == "") //If field is empty
+{
+    header("Location: $previous?no_student"); //No student has been found
+    exit (0);
+}
+
+
 ?>
 <body>
     <div class="container">
@@ -69,7 +77,7 @@ $classId = $_POST['classId'] ?? "";
                     if ($accessLevel == 2)  // Access 1 is a coach, 2 is admin
                     {
                         ?>
-                        <li><a href="databaseManagment.php">Manage Members</a></li>
+                        <li><a href="../databaseManagment.php">Manage Members</a></li>
                         <?php
                     }
                     ?>

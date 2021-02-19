@@ -17,28 +17,29 @@ $update = $_POST['update'] ?? "";
 
 //Esxtend threat 
 
-include "connect.php";
 
 //If session valid
 
 if ($_SESSION['valid']?? "")
-    {
-        //If the cookie is validated by a user/coach signing in, welcome them back to the page
-        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
-    }   
+{
+    //If the cookie is validated by a user/coach signing in, welcome them back to the page
+    echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+}   
 else 
-    {
-        //If not the user cannot view the page in full
-        header("Location: ../html/index.html? no_access");
-        exit(0);
-    }
+{
+    //If not the user cannot view the page in full
+    header("Location: ../html/index.html? no_access");
+    exit(0);
+}
 
+$previous = "javascript:history.go(-1)" ?? "";
 if ($userNameToUpdate == "") //If field is empty
 {
     header("Location: $previous?no_student"); //No student has been found
     exit (0);
 }
 
+include "connect.php";
 //SQL - update users and set relevant data where the userName is equal to the user selected
 
 $sql = "UPDATE users SET 

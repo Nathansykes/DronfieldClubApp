@@ -95,14 +95,15 @@ else
                 <script> console.info(<?php echo $classToRegister; ?>) </script>
                 <?php
 
+                $previous = "javascript:history.go(-1)" ?? "";
                 if(empty($classToRegister))
                 {
-                    $classToRegister = $_GET['classToRegister'];
-                    ?>
-                    <script> console.info(<?php echo $classToRegister; ?>) </script>
-                    <?php
+                    header("Location: $previous?no_classId"); //No student has been found
+                    exit (0);
                 }
+                
                 ?>
+                
                 <div class="form"> <!--Form for updating users-->
                   
                 <?php
@@ -115,9 +116,9 @@ else
                 ?>
                 
                 <br> 
-                <?php
                 
-                echo "<form action='register.php' method='post' enctype='multipart/form-data'>";
+                <form action='register.php' method='post' enctype='multipart/form-data'>
+                <?php
                 echo "<table class= 'table'>";
                 $counter=0;
                 while ($row=mysqli_fetch_row($result))
@@ -177,27 +178,64 @@ else
                     }
                 </script>
                 <?php
-                echo "<input type='hidden' name='classIdToRegister' value='$classToRegister'>";
+                    echo "<input type='hidden' name='classIdToRegister' value='$classToRegister'>";
                 ?>
+                <br>
+                <input class='registerSubmit' type='submit' value='Submit Register' style="float: right">
                 </table>
+                </form>
+                
+
+
+
+
+
                 <?php
                 
                     $currentDate = date("Y-m-d 00:00:00");
-                    $dateShouldPay1 = date("Y-01-01 00:00:00");
-                    $dateShouldPay2 = date("Y-04-01 00:00:00");
-                    $dateShouldPay3 = date("Y-09-01 00:00:00");
+                    $dateShouldPay1 = date("Y-01-31 00:00:00");
+                    $dateShouldPay2 = date("Y-04-30 00:00:00");
+                    $dateShouldPay3 = date("Y-09-30 00:00:00");
+            
+                    $dueDate = "";
+                    $dateSet = false;
+
+                    if (strtotime($currentDate) < strtotime($dateShouldPay3)) 
+                    {
+                        //if its between april and september due date should be april
+                        $dueDate = $dateShouldPay2;
+                    }
+                    if (strtotime($currentDate) < strtotime($dateShouldPay2)) 
+                    {
+                        //if between january and april due date should be january
+                        $dueDate = $dateShouldPay1;    
+                                     
+                    }
+                    if (strtotime($currentDate) < strtotime($dateShouldPay1)) // 
+                    {
+                        //if later than september but in next year set due date as septmeber of the previous year
+                        $dateSeconds = strtotime($dateShouldPay3);
+                        $dateSeconds -= 31536000; // how many seconds in a year
+                        $dueDate = date("Y-m-d 00:00:00",$dateSeconds);
+                    }
+                    
+                    if(strtotime($currentDate) < strtotime(date("Y-12-31 00:00:00")) && strtotime($currentDate) < strtotime($dateShouldPay1))
+                    {
+                        // if later than september but same year set due date as septmeber of the current year
+                        $dueDate = $dateShouldPay3;
+                    }
+
+                    echo $dueDate;
+                    
+                    $diff = strtotime($currentDate)-strtotime($dueDate);
+                    $diff = ($diff/86400);//gets the amount of days between the current date and the date should have paid
                     
 
-                    $diff = strtotime($currentDate)-strtotime($dateShouldPay1);
-                    $diff = ($diff/86400);//gets the amount of days between the current date and the date should have paid
-
-
                    
-
                     if($diff >= 21)
                     {
                         
-                        $sqlHasPaid =  "SELECT students.studentNum, students.studentName, students.lastPaidDate, students.parentEmail FROM students 
+                        $sqlHasPaid =  "SELECT students.studentNum, students.studentName, students.lastPaidDate, students.parentEmail, students.parentName FROM students 
                                         INNER JOIN classmember ON classmember.studentNum = students.studentNum 
                                         WHERE lastPaidDate <= '$dateShouldPay1' AND classmember.classId = '$classToRegister'";
                         
@@ -212,68 +250,43 @@ else
                         echo "<table class= 'table'>";
                         
                         
+                        $dueDateFormat = date("01/01/Y");
                         $counter = 0;
                         while($row=mysqli_fetch_row($resultPaid)) // no $link needed
                         {
                             $counter++;
                             $studentName = $row[1];     
                             $parentEmail = $row[3];
-                            echo "<form action='page.html' class='mailForm' id='mailForm$counter'>";
+                            $parentName = $row[4];
                             echo "<tr class='tableRow'>";
                             echo "<td class='topRow2'><span style='font-weight:bold'>Student Name: </span>". $studentName."</td>";
+
+                            $message = "Dear $parentName %0D%0A%0D%0ARegarding memberships payments for $studentName %0D%0AYour membership payment was due on $dueDateFormat %0D%0ACould please pay this as soon as possible. %0D%0A%0D%0AKind Regards %0D%0ADronfield Swimming Club%0D%0A";
+
                             ?>
-                            <td class='topRow2' style="width :50%">
-                                <span style='font-weight:bold; float:right'> Send reminder email to parent </span>
-                                <br>
-                                <?php
-                                echo "<input type='checkbox' style='float:right' class='emailBox' id='emailBox$counter' name='email' value='1'>"
-                                ?>
-                            <?php
-                            echo "</td>";
-                            echo "</tr>";
-                            echo "</form>";
+                            <td class='topRow2' style="width :50%">                                
+                                <input type="submit" style="float:right" target="_blank"
 
-
+                                onclick="location.href='mailto:<?php echo $parentEmail ;?>?subject=Late Payment&body=<?php echo $message ;?>'" 
+                                value="Send Reminder Email To Parent"/>
+                        </td>
+                        </tr>
+                        <?php
                         }
-
                         ?>
                         </table>
                         <br>
-                        <button class="emailButton" type="button" onclick="sendEmail()">Send email</button>
-                        <br>
-                        <script>
-                            function sendEmail() 
-                            {
-                                var formElements = document.querySelectorAll(".mailForm")
-                                var boxElements = document.querySelectorAll(".emailBox")
-                                for(var i = 0;i < formElements.length ;i++) 
-                                {
-                                    if(formElements[i].id == boxElements[i].id)
-                                    {
-                                        formElements[i].submit
-                                    }
-                                }
-                                
-                            }
-
-                        </script>
 
                         
                         
                         <?php
-
                         
                     }
-                    
-                        
-                    
-
-                ?>
-                <br>
-                <input class='registerSubmit' type='submit' value='Submit Register' style="float: right">
-                </form>
+					?>
+                
 
             </div>
+        </div>
             
         </main> <!--Main body ends here-->
     </div>
