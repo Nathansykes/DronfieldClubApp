@@ -123,11 +123,7 @@ header, .mainContent, .row
 
 
 
-input.registerClassButton
-{
-    width:50%;
-    margin-left:50%;
-}
+
 
 input.updateClassButton
 {
@@ -136,6 +132,15 @@ input.updateClassButton
     padding-top: 10px;
     padding-bottom: 10px;
     width: 50%;
+    cursor: pointer;
+}
+input.updateClassButton2
+{
+    
+    padding: 15px 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
     cursor: pointer;
 }
 
@@ -159,6 +164,17 @@ input.updateClassButton
     justify-content: center;
     width: 200px;
     height: 50px
+}
+
+.managementButton
+{
+    display:inline;
+    padding-bottom:10px;
+}
+
+.managementButton:nth-child(1)
+{
+    float:right;
 }
 
 .main{

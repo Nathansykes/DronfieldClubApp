@@ -19,7 +19,7 @@ session_start();
 if ($_SESSION['valid']?? "")
     {
         //If the cookie is validated by a user/coach signing in, welcome them back to the page
-        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        //echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else 
     {
@@ -201,12 +201,7 @@ else
                 echo "</table>";
                 ?>
                 <br>
-                <div style="padding-top: 0" class= "form">
-                <form action="addStudentToClassList.php" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="classToUpdate" value="<?php echo $classToUpdate; ?>">
-                <input class= "newMemberbutton" type="submit" name="insert" value="Add Student" required> <!--Add student to class-->
-                </form>
-                </div>
+                
              </div>
          </main>
     </div>

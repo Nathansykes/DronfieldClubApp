@@ -19,7 +19,7 @@ session_start();
 if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
     {
         //If the cookie is validated by a user/coach signing in, welcome them back to the page
-        echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
+        //echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
 else 
     {
@@ -161,6 +161,7 @@ else
         while ($row=mysqli_fetch_row($result))
         {	
             //Display all data
+            $lastPaidDateFormat = date("Y-m-d",strtotime($row[8]));
 
             ?>
             document.getElementById("studentName").defaultValue = "<?php echo $row[1]; ?>"
@@ -169,6 +170,7 @@ else
             document.getElementById("parentName").defaultValue = "<?php echo $row[4]; ?>"
             document.getElementById("parentEmail").defaultValue = "<?php echo $row[5]; ?>"
             document.getElementById("parentPhone").defaultValue = "<?php echo $row[6]; ?>"
+            document.getElementById("lastPaidDate").defaultValue = "<?php echo $lastPaidDateFormat; ?>"
             document.getElementById("studentMedical").defaultValue = "<?php echo $row[7]; ?>"
         <?php } ?>
     </script>

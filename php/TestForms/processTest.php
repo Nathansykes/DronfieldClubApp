@@ -11,7 +11,7 @@ session_start();
 if ($_SESSION['valid'] ?? "")
     {
         //If the cookie is validated by a user/coach signing in, welcome them back to the page
-        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        //echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else {  
     //If not the user cannot view the page in full, send them back to home with noaccess
@@ -23,13 +23,6 @@ else {
 
 $studentNum = $_POST['studentIdToTest'] ?? "";
 $classId = $_POST['classIdToRegister'] ?? "";
-
-echo "<br><br>";
-echo "Student ID: ".$studentNum;
-echo "<br><br>";
-
-echo "Class ID: ".$classId;
-echo "<br><br>";
 
 $numOfObjective = 0;
 
@@ -64,12 +57,8 @@ switch ($classId) {
     default:
         break;
 }
-echo "Num of Objectives: ".$numOfObjective; //return
-echo "<br><br>";
 
 $objectives = [];
-
-
 
 for ($i= 0; $i < $numOfObjective; $i++) // loop through number of tests
 {
@@ -82,8 +71,6 @@ $passed = true; // Define passed with no default or false and set it as true if 
 
 for ($i= 0; $i < count($objectives); $i++) //
 {
-    echo "test".$i." ".$objectives[$i];
-    echo "<br><br>";
     if ($objectives[$i] == '0') // if test returned a zero
     {
         $passed = false;
@@ -109,11 +96,6 @@ if($passed)  //If the test has been passed, increment the classID
         //SQL - Insert Student data into Student archive once posted
 
         $sqlArchive = "INSERT INTO archivestudents (studentNum, studentName, studentDOB, studentAddress, parentName, parentEmail, parentPhone, studentMedical) SELECT studentNum, studentName, studentDOB, studentAddress, parentName, parentEmail, parentPhone, studentMedical FROM students WHERE studentNum = '$studentNum'"; 
-        echo "<br><br>";
-        echo $sqlArchive;
-        echo "<br><br>";
-
-        //f
 
         if (mysqli_query($link, $sqlArchive)) 
         {

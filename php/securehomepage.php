@@ -16,14 +16,14 @@ session_start();
 //if (isset($_GET['cookie']) && $_GET['cookie'] == "true")
 if ($_SESSION['valid'] ?? "")
     {
-        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        //echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else {  
     //If not the user cannot view the page in full, send them back to home with noaccess
     header("Location: ../html/index.html? no_access");
     exit(0);
 }
-
+$accessLevel = $_SESSION['accessLevel'] ?? "";
 ?>
 
 <body>
@@ -61,7 +61,6 @@ else {
                     <li><a href="classes.php">Classes</a></li>
                     <li><a href="conductTestForm.php">Conduct a Test</a></li>
                     <?php
-                    $accessLevel = $_SESSION['accessLevel'] ?? "";
                     if ($accessLevel == 2) 
                     {
                         ?>
@@ -76,6 +75,18 @@ else {
          <main>
              <div class="mainContent">
                 <h1 class="siteTitle">Dronfield Swimming Club | Welcome! </h1>
+                <?php 
+                    $coachAdmin = "";
+                    if($accessLevel == 1)
+                    {
+                        $coachAdmin = "coach";
+                    }
+                    else if($accessLevel ==2)
+                    {
+                        $coachAdmin = "admin";
+                    }
+                ?>
+                <p>Welcome <?php echo $_SESSION['Name']?>. Logged in as <?php echo $coachAdmin?><p>
                 <img src="../images/swimmer-min.png" alt="" />
                 <p class="siteDesc">Our swimming club has been around for over 30 years! With an incredible team behind us, 
                     we welcome all coaches and faculty staff to our online application!</p>

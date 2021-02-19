@@ -16,7 +16,7 @@ session_start();
 if (($_SESSION['valid'] ?? "") && (($_SESSION['accessLevel'] == 1 ?? "") || ($_SESSION['accessLevel'] > 1 ?? "")))
     {
         //If the cookie is validated by a user/coach signing in, welcome them back to the page
-        echo "Welcome back ".($_SESSION["User"]?? "").",  Access Level: ".$_SESSION['accessLevel'];
+        //echo "Welcome back ".($_SESSION["User"]?? "").",  Access Level: ".$_SESSION['accessLevel'];
     }   
 else {
     //If not the user cannot view the page in full

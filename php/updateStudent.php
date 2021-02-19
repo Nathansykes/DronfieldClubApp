@@ -32,7 +32,7 @@ include "connect.php";
 if ($_SESSION['valid']?? "")
     {
         //If the cookie is validated by a user/coach signing in, welcome them back to the page
-        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        //echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else 
     {
@@ -59,7 +59,6 @@ $sql = "UPDATE students SET
                     studentMedical = '$studentMedical',
                     lastPaidDate = '$lastPaidDate'
                     WHERE studentNum = '$studentIdToUpdate'";
-echo $sql;
 
 //If database recieves query
 

@@ -23,7 +23,7 @@ session_start();
 if (($_SESSION['valid'] ?? "") && (($_SESSION['accessLevel'] == 1 ?? "") || ($_SESSION['accessLevel'] > 1 ?? "")))
     {
         //If the cookie is validated by a user/coach signing in, welcome them back to the page
-        echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
+        //echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
 else 
     {
@@ -107,7 +107,7 @@ else
                 //Student table
                 echo "<br>";
                 echo "<table class= 'table'>";
-                echo "<tr>";
+                
                 $counter=0;
                 
                 
@@ -133,7 +133,7 @@ else
                     
                     $counter++; //increment 
                     
-                    
+                    echo "<tr>";
                     
                     echo "<td colspan='2' id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Date: </span>". $date. "</td>";
                     echo "</tr>";
@@ -142,13 +142,13 @@ else
                     //Post repsonses to accept a reques to update the class or register a new class
 
                     
-                    echo "</tr>";
+                    
                         
 
                     //SQL - Select the StundentNum where the classID is equal to the first row selected
                     
                     
-                    $sqlA = "SELECT studentNum,Attendance FROM attendance WHERE classId = '$classId' AND timeOfAttendance = '$row[1]'";
+                    $sqlA = "SELECT studentNum, Attendance FROM attendance WHERE classId = '$classId' AND timeOfAttendance = '$row[1]'";
 
 
                     $resultA = mysqli_query($link, $sqlA);
@@ -167,10 +167,17 @@ else
                         
                         //Whilst the result is true of the fecthed class, display appropriate data
                         
+                        $counter2 = 0;
                         while ($row2=mysqli_fetch_row($result2))
                         {	
+                            $counter2++;
                             $studentName = $row2[0];
                             echo "<td class='classRecord' colspan='1'><span style='font-weight:bold'>Student Name: </span><br />". $studentName."</td>";
+                        }
+                        if($counter2 == 0)
+                        {
+                            echo "<td class='classRecord' colspan='1'><span style='font-weight:bold'>Student Name: </span><br />Student no longer in club</td>";
+                            $counter2 = 0;
                         }
 
                         $attendance = "";
@@ -184,6 +191,11 @@ else
                         else
                         {
                             $attendance = "Absent"; //That student is not present in the class
+                        }
+                        if($counter2 == 0)
+                        {
+                            $attendance = "null";
+                            $counter2 = 0;
                         }
                         echo "<td class='classRecord' colspan='1'><span style='font-weight:bold'>Attendance: </span><br/>". $attendance."</td>"; //return the attendence for each class once displayed
                         echo "</tr>";

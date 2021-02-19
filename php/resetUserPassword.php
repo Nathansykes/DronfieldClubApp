@@ -11,14 +11,13 @@
 
     //Extend thread on connect.php
 
-    include "connect.php";
     session_start();
-
+    
     //Instantiate new POST methods and set field to empty primitive if null
-
+    
     $username = $_POST['userName'] ?? "";
     $password = $_POST['password'] ?? "";
-
+    
     if ($username == "" || $password == "") //If fields are empty/null
     {
         header("Location: loginForm.php?invaliddetails"); //Invalid details 
@@ -34,7 +33,8 @@
         header("Location: signUpForm.php?invalidcharacters"); //Invalid details 
         exit (0);
     }
-
+    
+    include "connect.php";
     //utilsie PHP pre-isntalled library to encrypt new password created via a password hash
     
     $pwoptions   = ['cost' => 8,];

@@ -15,6 +15,8 @@
     $archived = $_POST['archived'] ?? "";
     $delete = $_POST['delete'] ?? "";
 
+    
+
     //Variable for previous instance of javascript, reload previous action made
 
     $previous = "javascript:history.go(-1)" ?? "";
@@ -26,7 +28,7 @@
     if ($_SESSION['valid'] ?? "")
         {
             //If the cookie is validated by a user/coach signing in, welcome them back to the page
-            echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+            //echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
         }   
     else 
         {  
@@ -43,39 +45,93 @@
         exit (0);
     }
 
-    $sql="";
+    $sqlClass = "";
+    $sqlDelete = "";
+    $sqlAttendance = "";
 
     //If student is archived
 
-    if($archived = "true") 
+    
+    if($archived == "true") 
     {
-        $sql = "DELETE FROM archiveStudents WHERE studentNum = '$studentIdToDelete'"; //Delete field from archive students where studentNum is equal to user being deleted
+        $sqlDelete = "DELETE FROM archiveStudents WHERE studentNum = '$studentIdToDelete'"; //Delete field from archive students where studentNum is equal to user being deleted
     }
 
     //If not
 
-    else if($archived = "false")
+    if($archived == "false")
     {
-        $sql = "DELETE FROM students WHERE studentNum = '$studentIdToDelete'"; //Delete field from students where studentNum is equal to user being deleted
+        $sql = "SELECT classId FROM classmember WHERE studentNum = '$studentIdToDelete'";//get class number of student
+        $result = mysqli_query($link, $sql);
+        $classId ="";
+        while ($row=mysqli_fetch_row($result)) 
+        {
+            $classId=$row[0];
+        }
+        $sqlClass = "DELETE FROM classmember WHERE studentNum = '$studentIdToDelete' AND classId ='$classId'"; // must remove from class
+        $sqlDelete = "DELETE FROM students WHERE studentNum = '$studentIdToDelete'"; //Delete field from students where studentNum is equal to user being deleted
+        $sqlAttendance = "DELETE FROM attendance WHERE studentNum = '$studentIdToDelete'";
     }
-    else
+    else if($studentIdToDelete ="")
     {
         header("Location: $previous?no_student"); //No student found
         exit (0);
     }
-
+    $success = false;
+    $success2 = false;
 
     //If database recieves query
+    if ($archived == "false") 
+    {
+        if(mysqli_query($link, $sqlClass))
+        {
+            if (mysqli_query($link, $sqlDelete))
+            {
+                $success = true;
+            }
+            else 
+            {
+                $success = false;
+            }
+            
+            if (mysqli_query($link, $sqlAttendance))
+            {
+                $success2 = true;
+            }
+            else 
+            {
+                $success2 = false;
+            }
 
-    if (mysqli_query($link, $sql))
-    {
-        echo "success";
-        header('Location: databaseManagment.php? message=deletion success'); //Deletion success
+            if($success && $success2)
+            {
+                header('Location: databaseManagment.php? message=deletion success'); //Deletion success
+            }
+            else 
+            {
+                header("Location: databaseManagment.php? message=deletion from database failed.$studentIdToDelete"); //Deletion failed for (student)
+            }
+        }
+        else 
+        {
+            echo "failed";
+            header("Location: databaseManagment.php? message=deletion from class failed.$studentIdToDelete"); //Deletion failed for (student)
+        }
     }
-    else 
+    else if ($archived == "true")
     {
-        echo "failed";
-        header("Location: databaseManagment.php? message=deletion failed.$studentIdToDelete"); //Deletion failed for (student)
+        
+        if (mysqli_query($link, $sqlDelete))
+            {
+                echo "success";
+                header('Location: databaseManagment.php? message=deletion success'); //Deletion success
+            }
+        else 
+        {
+            echo "failed";
+            header("Location: databaseManagment.php? message=deletion from database failed.$studentIdToDelete"); //Deletion failed for (student)
+        }
+        
     }
 ?>
 

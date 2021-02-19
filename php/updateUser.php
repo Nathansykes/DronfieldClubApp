@@ -23,7 +23,7 @@ $update = $_POST['update'] ?? "";
 if ($_SESSION['valid']?? "")
 {
     //If the cookie is validated by a user/coach signing in, welcome them back to the page
-    echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+    //echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
 }   
 else 
 {
@@ -46,8 +46,7 @@ $sql = "UPDATE users SET
                     fullName = '$fullName', 
                     accessLevel = '$accessLevel'
                     WHERE userName = '$userNameToUpdate'";
-echo $sql;
-
+                    
 //If database has recieived the query
 
 if (mysqli_query($link, $sql))

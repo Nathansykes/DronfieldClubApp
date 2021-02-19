@@ -13,16 +13,18 @@ $studentToAdd = $_POST['studentToAdd'] ?? "";
 $classToUpdate = $_POST['classToUpdate'] ?? "";
 
 //Initialise link to database in 'connect.php'
-session_start();
 
+
+session_start();
+//Checks if the cookie is true, welcomes back user
 if ($_SESSION['valid'] ?? "")
-{
-    //If the cookie is validated by a user/coach signing in, welcome them back to the page
-    
-}   
+    {
+         //If the cookie is validated by a user/coach signing in, welcome them back to the page
+        //echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
+    }   
 else 
-    {  
-        //If not the user cannot view the page in full, send them back to home with noaccess
+    {
+        //If not the user cannot view the page in full
         header("Location: ../html/index.html? no_access");
         exit(0);
     }

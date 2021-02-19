@@ -12,10 +12,10 @@
 <?php
 session_start();
 //Checks if the cookie is true, welcomes back user
-if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
+if ($_SESSION['valid'] ?? "")
     {
          //If the cookie is validated by a user/coach signing in, welcome them back to the page
-        echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
+        //echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
 else 
     {
@@ -111,7 +111,7 @@ else
                 <div class= 'form'>";
                 
                 echo "<table class= 'table'>";
-                echo "<tr>";
+                
                 $counter=0;
                 $classToUpdate = $_POST['classToUpdate'];
 
@@ -123,6 +123,7 @@ else
                         
                         //Each time a row is added, modify exisiting variable and add amount present to a counter variable
 
+                        echo "<tr>";
                         $studentToAdd = $row[0];
                         $counter++;
                         echo "<td id=member".$counter." onclick='OpenRows(this.id)' class='topRow'><span style='font-weight:bold'>Student Number: </span>". $row[0]. "</td>";

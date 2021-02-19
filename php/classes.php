@@ -19,7 +19,7 @@ session_start();
 if (($_SESSION['valid'] ?? "") && (($_SESSION['accessLevel'] == 1 ?? "") || ($_SESSION['accessLevel'] > 1 ?? "")))
     {
         //If the cookie is validated by a user/coach signing in, welcome them back to the page
-        echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
+        //echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
 else 
     {
@@ -126,37 +126,34 @@ else
                     //Post repsonses to accept a request to update the class or register a new class after form onsumbmitted
 
                     echo "</tr>";
-                        echo "<td id=member".$counter." class='tableRow hidden' colspan='2'>";
+                        echo "<td id=member".$counter." class='tableRow hidden' colspan='1'>";
                         ?>
                         <form action="updateClassForm.php" method="post" onsubmit="">
                             <input type="hidden" name="classToUpdate" value="<?php echo $classId; ?>">
-                            <input type="submit" name="editClass" value="Update Class" class="updateClassButton">
+                            <input type="submit" name="editClass" value="Update" class="updateClassButton2">
                         </form>
                         </td>
-
                         <?php
-                        echo "<td id=member".$counter." class='tableRow hidden' colspan='2'>";
+                            echo "<td id=member".$counter." class='tableRow hidden' colspan='2'>";
+                        ?>
+                            
+                            <form action="displayAttendanceForm.php" method="post" onsubmit="">
+                                <input type="hidden" name="classIdForAttendance" value="<?php echo $classId; ?>">
+                                <input style= 'white-space: normal' type="submit" name="editClass" value="View Previous Attendance" class="updateClassButton2">
+                            </form>
+                            </td>
+                        <?php
+                        echo "<td id=member".$counter." class='tableRow hidden' colspan='1'>";
                         ?>
 
                         <form action="registrationForm.php" method="post" onsubmit="">
                             <input type="hidden" name="classToRegister" value="<?php echo $classId; ?>">
-                            <input type="submit" name="registerClass" value="Register Class" class="registerClassButton">
+                            <input type="submit" name="registerClass" value="Register" class="registerClassButton">
                         </form>
                         </td>
                         </tr>
-                        <?php
-                        echo "</tr>";
-                        echo "<tr>";
-                        echo "<td id=member".$counter." class='tableRow hidden' colspan='4'>";
-                        ?>
-
-                        <form action="displayAttendanceForm.php" method="post" onsubmit="">
-                            <input type="hidden" name="classIdForAttendance" value="<?php echo $classId; ?>">
-                            <input type="submit" name="editClass" value="View Previous Attendance" class="updateClassButton">
-                        </form>
-                        </td>
+                        <?php                        
                         
-                        <?php
                         echo "</tr>";
 
                     //SQL - Select the StundentNum where the classID is equal to the first row selected

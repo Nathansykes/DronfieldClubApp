@@ -15,7 +15,7 @@ session_start();
 if (($_SESSION['valid'] ?? "") && ($_SESSION['accessLevel'] == 2) ?? "")
     {
         //If the cookie is validated by a user/coach signing in, welcome them back to the page
-        echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
+        //echo "Welcome back ".$_SESSION["User"].",  Access Level: ".$_SESSION['accessLevel'];
     }   
 else 
     {
@@ -149,7 +149,7 @@ else
 
                         echo "<tr id=member".$counter." class='tableRow hidden'>";
                         echo "<td><span style='font-weight:bold'>Parent Name: </span><br />". $row[4]."</td>";
-                        echo "<td><span style='font-weight:bold'>Parent Email: </span><br />". $row[5]."</td>";
+                        echo "<td style='word-wrap: break-word'><span style='font-weight:bold'>Parent Email: </span><br />". $row[5]."</td>";
                         echo "</tr>";
 
                         echo "<tr id=member".$counter." class='tableRow hidden'>";
@@ -181,7 +181,7 @@ else
 
                             <form action="deleteStudent.php" method="post" onsubmit="">
                                 <input type="hidden" name="studentIdToDelete" value="<?php echo $row[0]; ?>">
-                                <imput type="hidden" name="archived" value="false">
+                                <input type="hidden" name="archived" value="false">
                                 <input type="submit" name="delete" value="Delete" class="deleteButton" onclick="return confirm('Are you sure?')"> <!--if field wants to be removed-->
                             </form>
                       

@@ -25,7 +25,7 @@ include "connect.php";
 if ($_SESSION['valid'] ?? "")
     {
         //If the cookie is validated by a user/coach signing in, welcome them back to the page
-        echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
+        //echo "Welcome back ".$_SESSION["User"].", Access Level: ".$_SESSION['accessLevel']."! ";
     }   
 else 
     {  
@@ -52,17 +52,7 @@ $sql = "UPDATE classes SET
                     classTime = '0000-00-00 $classTime:00',
                     classStaff = '$classStaff'
                     WHERE classId = '$classToUpdate'";
-                    echo $classToUpdate;
-                    echo "\n";
-                    echo $classDay;
-                    echo "\n";
-                    echo $classTime;
-                    echo "\n";
-                    echo $dateTimeFormat;
-                    echo "\n";
-                    echo $classStaff;
-                    echo "\n";
-                    echo "0000-00-00 $classTime:00";
+                
                     if (mysqli_query($link, $sql))
                         {
                             echo "success";

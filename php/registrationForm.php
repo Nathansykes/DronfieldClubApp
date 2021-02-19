@@ -17,7 +17,7 @@ session_start();
 if (($_SESSION['valid'] ?? "") && (($_SESSION['accessLevel'] == 1 ?? "") || ($_SESSION['accessLevel'] > 1 ?? "")))
     {
         //If the cookie is validated by a user/coach signing in, welcome them back to the page
-        echo "Welcome back ".($_SESSION["User"]?? "").",  Access Level: ".$_SESSION['accessLevel'];
+        //echo "Welcome back ".($_SESSION["User"]?? "").",  Access Level: ".$_SESSION['accessLevel'];
     }   
 else 
     {
@@ -71,15 +71,6 @@ else
             </div>
         </nav>
 
-        <script>
-            function darkMode() {
-                var element = document.body;
-                var element2 = document.loginLink;
-                element.classList.toggle("darkMode");
-                element2.classList.toggle("darkMode");
-            }
-        </script>
-
         <main>
             <div class="mainContent">
                 <!--content goes here-->
@@ -87,6 +78,8 @@ else
                 <!--Here is the student records form which will execute the php script-->
                 <?php
                 include "connect.php";
+
+                //Instantiate new POST methods and set field to empty primitive if null
 
                 $classToRegister = $_POST['classToRegister'] ?? "";
                 $update = $_POST['update'] ?? "";
@@ -111,11 +104,12 @@ else
                 $timeOfAttendance = date("Y-m-d 00:00:00");
 
                 $studentNum = "";
+
+                //SQL - select studentNum from classmember where classID is equal to the class currently being registered
+
                 $sql = "SELECT studentNum FROM  classmember WHERE classId = '$classToRegister'";
                 $result = mysqli_query($link, $sql);
                 ?>
-                
-                <br> 
                 
                 <form action='register.php' method='post' enctype='multipart/form-data'>
                 <?php
@@ -127,6 +121,8 @@ else
                     echo "<tr class='tableRow'>";
                     echo "<td style='display: none' id=member".$counter." onclick='OpenRows(this.id)' class='topRow2'><span style='font-weight:bold'>Student Number: </span><br />". $row[0]."</td>";
                     $studentNum = $row[0];
+
+                    //SQL - select studentName from students where studentNum is equal to student selected
 
                     $sql2 = "SELECT studentName FROM students WHERE studentNum = '$studentNum'";
                     $result2 = mysqli_query($link, $sql2);
@@ -168,7 +164,7 @@ else
                 }
                 ?>
                 <script>
-                    function hideAbsent() 
+                    function hideAbsent() //hide absent student if register checked
                     {
                         if(document.getElementById("register").checked) 
                         {
@@ -181,19 +177,15 @@ else
                     echo "<input type='hidden' name='classIdToRegister' value='$classToRegister'>";
                 ?>
                 <br>
-                <input class='registerSubmit' type='submit' value='Submit Register' style="float: right">
-                </table>
+            </table>
+            <br>
+            <input class='updateClassbutton' type='submit' value='Submit Register' style="float: right">
                 </form>
-                
-
-
-
-
 
                 <?php
                 
                     $currentDate = date("Y-m-d 00:00:00");
-                    $dateShouldPay1 = date("Y-01-31 00:00:00");
+                    $dateShouldPay1 = date("Y-01-01 00:00:00");
                     $dateShouldPay2 = date("Y-04-30 00:00:00");
                     $dateShouldPay3 = date("Y-09-30 00:00:00");
             
@@ -224,8 +216,6 @@ else
                         // if later than september but same year set due date as septmeber of the current year
                         $dueDate = $dateShouldPay3;
                     }
-
-                    echo $dueDate;
                     
                     $diff = strtotime($currentDate)-strtotime($dueDate);
                     $diff = ($diff/86400);//gets the amount of days between the current date and the date should have paid
@@ -265,7 +255,7 @@ else
 
                             ?>
                             <td class='topRow2' style="width :50%">                                
-                                <input type="submit" style="float:right" target="_blank"
+                                <input class='emailSubmit' type="submit" style="float:right" target="_blank"
 
                                 onclick="location.href='mailto:<?php echo $parentEmail ;?>?subject=Late Payment&body=<?php echo $message ;?>'" 
                                 value="Send Reminder Email To Parent"/>

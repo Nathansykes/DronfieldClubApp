@@ -93,6 +93,7 @@
             //setcookie("User", $row['userName'], time()+9000);
 
             $_SESSION['User'] = $row['userName'];
+            $_SESSION['Name'] = $row[2];
 
             //Secure Page / If session valid 
 
@@ -127,6 +128,7 @@
             {
                 //creates cookie
                 $_SESSION['User'] = $row['userName'];
+                $_SESSION['Name'] = $row[2];
 
             }
 
@@ -170,12 +172,7 @@
                 //will check all records in archived students and delete if older than 4 years
                 $sqlSelect = "SELECT studentNum FROM archivestudents WHERE timeOfArchive <= now() - INTERVAL 1460 DAY";
                 
-                echo "<br><br>";
-                echo $sqlSelect;
-                echo "<br><br>";
-
                 $result = mysqli_query($link, $sqlSelect);
-                echo "here";
                 
                 //Whilst the query has returned the relevant row response
 
@@ -188,9 +185,7 @@
 
                 while($row = mysqli_fetch_row($result))
                 {
-                    echo "<br><br>";
-                    echo "student num : ".$row[0];
-                    echo "<br><br>";
+                    
 
                     //SQL - delete from archivestudents where the studentNum is the first row
 
