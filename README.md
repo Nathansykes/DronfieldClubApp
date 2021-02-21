@@ -8,7 +8,7 @@ Currently not 100% working due to moving from locally hosted to 000webbhosting.
 
 All date is made up for demo purposes.
 
-If you wish to view the website in full [contact me](mailto:nathan.sykes1@hotmail.com?subject=Login%20Detail%20Request%20Dronfield%20Club%20App)
+If you wish to view the website in full [contact me](mailto:nathan.sykes1@hotmail.com?subject=Login%20Detail%20Request%20Dronfield%20Club%20App) to get login details.
 
 `git clone https://github.com/Nathansykes/DronfieldClubApp`
 
