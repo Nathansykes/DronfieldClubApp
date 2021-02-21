@@ -4,6 +4,8 @@ This is a membership tracking application for Dronfield Swimming Club in the Gro
 
 # [View the website here](https://swimmingclubdemo.000webhostapp.com/)
 Currently not 100% working due to moving from locally hosted to 000webbhosting
+All date is made up for demo purposes
+If you wish to view the website in full [contact me](mailto:nathan.sykes1@hotmail.com?subject=Login Detail Request Dronfield Club App)
 
 `git clone https://github.com/Nathansykes/DronfieldClubApp`
 
