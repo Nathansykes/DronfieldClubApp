@@ -3,9 +3,12 @@
 This is a membership tracking application for Dronfield Swimming Club in the Group Software Development module using HTML, CSS, PHP, MySQL and JavaScript. It is designed to track and update membership and can be used by members, coaches and administrators.
 
 # [View the website here](https://swimmingclubdemo.000webhostapp.com/)
-Currently not 100% working due to moving from locally hosted to 000webbhosting
-All date is made up for demo purposes
-If you wish to view the website in full [contact me](mailto:nathan.sykes1@hotmail.com?subject=Login Detail Request Dronfield Club App)
+
+Currently not 100% working due to moving from locally hosted to 000webbhosting.
+
+All date is made up for demo purposes.
+
+If you wish to view the website in full [contact me](mailto:nathan.sykes1@hotmail.com?subject=Login%20Detail%20Request%20Dronfield%20Club%20App)
 
 `git clone https://github.com/Nathansykes/DronfieldClubApp`
 
